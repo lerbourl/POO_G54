@@ -8,4 +8,5 @@
  */
 public class Case {
  int size;
+ double f;
 }
