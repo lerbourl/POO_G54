@@ -1,9 +1,13 @@
+package poog54.dataclasses;
+import poog54.enums.TypeField;
+
 /**
  * Represents a tile of the map
  */
 
 /**
  * @author Rey-Ricord Yoann 
+ * 
  */
 
 
