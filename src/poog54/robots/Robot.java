@@ -5,11 +5,11 @@ import gui.GUISimulator;
 
 /**
   * Represents a basic firefighter robot.
-  * This class is abstract because you can not (must) instantiate a generic robot.
-  * Only more specific class robots can be.
+  * This class is abstract because you can (should) not instantiate a generic robot,
+  * more specific robot classes can.
   *
   * A robot has access to the following external data:
-  * - the map (to locate fires, water points and calculate its trajectories)
+  * - the map (to locate fires, water points and compute trajectories)
   * - the graphic window (to be able to display its current position)
   *
   * A robot moves one cell / tile at a time, as mentioned in the specifications.
@@ -46,25 +46,18 @@ public abstract class Robot {
 	protected Speed speed;
 
 	/** Fire target location:
-	 * position of the targeted fire on the map
+	 *  position of the targeted fire on the map
+	 *  Target fire path:
+	 *  path to the assigned fire.
+	 *  path[0] is always the current location.
 	 */
-	protected Tile target_fire;
-
-	/** Target fire path:
-	 * path to the assigned fire.
-	 * path[0] is always the current location.
-	 */
-	protected Tile target_fire_path[];
+	protected Target fire;
 
 	/** Nearest water location:
-	 * position of the water reserve on the map
+	 *  position of the water reserve on the map and path to it
+	 *  path[0] is always the current location.
 	 */
-	protected Tile target_water;
-
-	/** Path to the water reserve
-	 * path[0] is always the current location.
-	 */
-	protected Tile target_water_path[];
+	protected Target water;
 	
 	/** Water capacity:
 	 * tank size
@@ -76,40 +69,58 @@ public abstract class Robot {
 	 */
 	protected int water_level;
 	
-	/** Constructor */
+	/** Constructor with default speed
+	 *  Initialises the generic attributes of a firefighter:
+	 *  - gui
+	 *  - map
+	 *  - initial location
+	 *  - state (IDLE)
+	 */
 	//TODO: REPLACE MAP[][] with correct class implementation
-	Robot(Tile map[][], Tile inital_location, int initial_water_level, GUISimulator gui){
-		//Speeds and water capacity must be set in the overridden constructor
+	Robot(Tile map[][], Tile initial_location, GUISimulator gui){
+		//Speeds and water capacity must be set in the child constructors
 		this.gui = gui;
 		this.map = map;
-		this.location = inital_location;
-		this.water_level = initial_water_level;
+		this.location = initial_location;
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target 
 	}
 	
+	/** Constructor with custom speed
+	 *  Initialises the generic attributes of a firefighter:
+	 *  - gui
+	 *  - map
+	 *  - initial location
+	 *  - state (IDLE)
+	 */
+	//TODO: REPLACE MAP[][] with correct class implementation
+	Robot(Tile map[][], Tile initial_location, int custom_speed, GUISimulator gui){
+		this(map, initial_location, gui);
+	}
+	
 	/** Target fire assignment*/
-	public void setTargetFire(Tile target_fire){
-		this.target_fire = target_fire;
-		this.target_fire_path = this.buildTargetPath(target_fire);
+	public void setTargetFire(Target fire){
+		this.fire = fire;
 	}
 	
 	/** Target water assignment*/
-	public void setTargetWater(Tile target_water){
-		this.target_water = target_water;
-		this.target_water_path = this.buildTargetPath(target_water);
+	public void setTargetWater(Target water){
+		this.water = water;
 	}
 
-	/** Path builder:
-	 *  provide the fastest path to the specified target according to speeds & map 
+	/** Target builder:
+	 *  - provides the fastest path to the specified tile according to speeds & map
+	 *  - provides the time required to reach the target 
 	 */
-	public Tile[] buildTargetPath(Tile target){
-		Tile path[]=new Tile[2];
+	public Target buildTargetPath(Tile location){
+		Target target = new Target();
+		target.path = new Tile[2];
 		
-		//TODO
-		path[0]=this.location;
-		path[1]=target;
+		//TODO compute the fastest (full) path
+		target.location = location;
+		target.path[0]=this.location;
+		target.path[1]=location;
 		
-		return path;
+		return target;
 	}
 
 	/** Tank up:
@@ -124,7 +135,7 @@ public abstract class Robot {
 	/** Pouring water:
 	 *  extinguish fire
 	 */
-	public void pouring(int water_volume){
+	public void pourOut(int water_volume){
 		
 		//TODO
 

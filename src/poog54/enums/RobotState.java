@@ -1,7 +1,7 @@
 package poog54.enums;
 
 /**
- * Etat d'un robot pompier
+ * Firefighter states
  */
 
 /**
