@@ -1,4 +1,4 @@
-package poog54.robots;
+package poog54.dataclasses.robots;
 import poog54.dataclasses.Tile;
 import poog54.enums.RobotState;
 import gui.GUISimulator;

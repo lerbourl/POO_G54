@@ -1,4 +1,4 @@
-package poog54.robots;
+package poog54.dataclasses.robots;
 
 import gui.GUISimulator;
 import poog54.dataclasses.Tile;

@@ -1,4 +1,4 @@
-package poog54.robots;
+package poog54.dataclasses.robots;
 /**
  * Provide every speed that can reach a robot
  * A fire does not change the speed of a particular field

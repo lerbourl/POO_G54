@@ -1,4 +1,4 @@
-package poog54.robots;
+package poog54.dataclasses.robots;
 import poog54.dataclasses.Tile;
 /**
  * Represents a target:
