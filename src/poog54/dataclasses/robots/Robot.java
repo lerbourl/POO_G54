@@ -32,7 +32,7 @@ public abstract class Robot {
 	protected RobotState state;
 
 	/** Map */
-	//TODO: REPLACE MAP[][] with correct class implementation
+	//TODO: REPLACE MAP[][] with correct class implementation louis : UTILE?
 	protected Tile map[][];
 	
 	/** Current location:
