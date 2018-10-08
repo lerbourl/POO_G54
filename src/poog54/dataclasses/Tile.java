@@ -15,7 +15,7 @@ public class Tile {
 	/** Coordinates */
 	int line, column;
 	/** Type of the field  */
-	TypeField nature;
+	TypeField type;
 	
 	/** Access to line*/
 	private int getLine(){
@@ -27,6 +27,6 @@ public class Tile {
 	}
 	/** Acces to Type Field*/
 	private TypeField getTypeField(){
-		return this.nature;
+		return this.type;
 	}
 }
