@@ -1,7 +1,6 @@
 package poog54.dataclasses.robots;
 
-import gui.GUISimulator;
-import poog54.dataclasses.Tile;
+import poog54.dataclasses.*;
 
 /**
   * Represents a paw firefighter.
@@ -29,16 +28,16 @@ public class Paw extends Robot{
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
-	Paw(Tile[][] map, Tile inital_location, GUISimulator gui) {
-		this(map, inital_location, 30, gui);
+	Paw(Map map, Tile inital_location) {
+		this(map, inital_location, 30);
 	}
 	
 	/** Constructor with custom speed
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
-	Paw(Tile[][] map, Tile inital_location, int custom_speed, GUISimulator gui) {
-		super(map, inital_location, custom_speed, gui);
+	Paw(Map map, Tile inital_location, int custom_speed) {
+		super(map, inital_location, custom_speed);
 		
 		int speed;
 		if (custom_speed > 30) {
@@ -55,14 +54,6 @@ public class Paw extends Robot{
 
 		this.water_capacity = Integer.MAX_VALUE;
 		this.water_level = Integer.MAX_VALUE;
-
-	}
-
-	/** Draw: display a drone on the map */
-	@Override
-	public void draw(){
-		
-		//TODO
 
 	}
 

@@ -1,7 +1,6 @@
 package poog54.dataclasses.robots;
 
-import gui.GUISimulator;
-import poog54.dataclasses.Tile;
+import poog54.dataclasses.*;
 
 /**
   * Represents a caterpillar firefighter.
@@ -30,16 +29,16 @@ public class Caterpillar extends Robot{
 	 *  This constructor sets the specific speed and water capacity of a caterpillar.
 	 *  It also executes the generic constructor method
 	 */
-	Caterpillar(Tile[][] map, Tile inital_location, GUISimulator gui) {
-		this(map, inital_location, 60, gui);
+	Caterpillar(Map map, Tile inital_location) {
+		this(map, inital_location, 60);
 	}
 	
 	/** Constructor with custom speed
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
-	Caterpillar(Tile[][] map, Tile inital_location, int custom_speed, GUISimulator gui) {
-		super(map, inital_location, custom_speed, gui);
+	Caterpillar(Map map, Tile inital_location, int custom_speed) {
+		super(map, inital_location, custom_speed);
 		
 		int speed;
 		if (custom_speed > 80) {
@@ -56,14 +55,6 @@ public class Caterpillar extends Robot{
 
 		this.water_capacity = 2000;
 		this.water_level = 2000;
-
-	}
-
-	/** Draw: display a drone on the map */
-	@Override
-	public void draw(){
-		
-		//TODO
 
 	}
 
