@@ -22,14 +22,14 @@ import poog54.dataclasses.*;
  * @author POO_G54
  * 
  */
-public class Paw extends Robot{
+public class WalkingRob extends Robot{
 	
 	/** Constructor with default speed
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
 
-	Paw(Map map, Tile inital_location) {
+	WalkingRob(Map map, Tile inital_location) {
 		this(map, inital_location, 30);
 	}
 	
@@ -38,7 +38,7 @@ public class Paw extends Robot{
 	 *  It also executes the generic constructor method
 	 */
 
-	Paw(Map map, Tile inital_location, int custom_speed) {
+	WalkingRob(Map map, Tile inital_location, int custom_speed) {
 		super(map, inital_location, custom_speed);
 		
 		int speed;

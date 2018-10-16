@@ -357,9 +357,10 @@ public class LecteurDonnees {
             }
 
         } catch (NoSuchElementException e) {
-            throw new DataFormatException("Format invalide. "
+        	throw new DataFormatException("Format invalide. "
                     + "Attendu: nbRobots");
         }
+        Robot robot;
     }
 
 
@@ -383,7 +384,17 @@ public class LecteurDonnees {
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
-            
+            Robot robot;
+            switch (type) {
+            case "ROUES":
+            	break;
+            case "PATTES":
+            	break;
+            case "CHENILLES":
+            	break;
+            case "DRONE":
+            	break;
+            }
             if (s == null) {
                 System.out.print("valeur par defaut");
             } else {

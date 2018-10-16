@@ -23,34 +23,34 @@ import poog54.dataclasses.*;
  * @author POO_G54
  * 
  */
-public class Caterpillar extends Robot{
+public class TrackedRob extends Robot {
 
-	/** Constructor with default speed
-	 *  This constructor sets the specific speed and water capacity of a caterpillar.
-	 *  It also executes the generic constructor method
+	/**
+	 * Constructor with default speed This constructor sets the specific speed and
+	 * water capacity of a caterpillar. It also executes the generic constructor
+	 * method
 	 */
 
-	Caterpillar(Map map, Tile inital_location) {
+	TrackedRob(Map map, Tile inital_location) {
 		this(map, inital_location, 60);
 	}
-	
-	/** Constructor with custom speed
-	 *  This constructor sets the specific speed and water capacity of a drone.
-	 *  It also executes the generic constructor method
+
+	/**
+	 * Constructor with custom speed This constructor sets the specific speed and
+	 * water capacity of a drone. It also executes the generic constructor method
 	 */
 
-	Caterpillar(Map map, Tile inital_location, int custom_speed) {
+	TrackedRob(Map map, Tile inital_location, int custom_speed) {
 		super(map, inital_location, custom_speed);
-		
+
 		int speed;
 		if (custom_speed > 80) {
 			speed = 80;
-		}
-		else {
+		} else {
 			speed = custom_speed;
 		}
 		this.speed.empty_field = speed;
-		this.speed.forest = speed/2;
+		this.speed.forest = speed / 2;
 		this.speed.house = speed;
 		this.speed.rock = 0;
 		this.speed.water = 0;
@@ -60,36 +60,40 @@ public class Caterpillar extends Robot{
 
 	}
 
-	/** Path builder: provide the fastest path to the specified tile according to speeds & map 
+	/**
+	 * Path builder: provide the fastest path to the specified tile according to
+	 * speeds & map
 	 */
 	@Override
-	public Target buildTargetPath(Tile location){
+	public Target buildTargetPath(Tile location) {
 		Target target = new Target();
 		target.path = new Tile[2];
-		
-		//TODO compute the fastest (full) path
+
+		// TODO compute the fastest (full) path
 		target.location = location;
-		target.path[0]=this.location;
-		target.path[1]=location;
-		
+		target.path[0] = this.location;
+		target.path[1] = location;
+
 		return target;
 	}
 
-	/** Tank up: fill tank
+	/**
+	 * Tank up: fill tank
 	 */
 	@Override
-	public void tankUp(){
-		
-		//TODO
+	public void tankUp() {
+
+		// TODO
 
 	}
 
-	/** Pouring water: extinguish fire
+	/**
+	 * Pouring water: extinguish fire
 	 */
 	@Override
-	public void pourOut(int water_volume){
-		
-		//TODO
+	public void pourOut(int water_volume) {
+
+		// TODO
 
 	}
 }
