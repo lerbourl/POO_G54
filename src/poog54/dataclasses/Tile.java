@@ -1,5 +1,5 @@
 package poog54.dataclasses;
-import poog54.enums.TypeField;
+import poog54.enums.*;
 
 /**
  * Represents a tile of the theMap
@@ -17,16 +17,26 @@ public class Tile {
 	/** Type of the field  */
 	TypeField type;
 	
+	/** Tile constructor */
+
+	public Tile(int line, int column, TypeField type) {
+		this.line=line;
+		this.column=column;
+		this.type=type;
+	}
+	
 	/** Access to line*/
-	int getLine(){
+	public int getLine(){
 		return this.line;
 	}
 	/** Acces to column*/
-	int getColumn(){
+	
+	public int getColumn(){
 		return this.column;
 	}
 	/** Acces to Type Field*/
-	TypeField getTypeField(){
+	
+	public TypeField getTypeField(){
 		return this.type;
 	}
 }

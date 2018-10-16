@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.zip.DataFormatException;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
-
+import poog54.enums.*;
 
 /**
  * Lecteur de cartes au format spectifié dans le sujet.
@@ -387,7 +387,7 @@ public class LecteurDonnees {
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
-            Tile tile = new Tile();
+            Tile tile = new Tile(lig,col,TypeField.EMPTY);
             Robot robot;
             switch (type) {
             case "ROUES":
