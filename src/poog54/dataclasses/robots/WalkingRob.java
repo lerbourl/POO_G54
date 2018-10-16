@@ -23,37 +23,15 @@ import poog54.dataclasses.*;
  * 
  */
 public class WalkingRob extends Robot{
-	
-	/** Constructor with default speed
-	 *  This constructor sets the specific speed and water capacity of a drone.
+
+	/** Constructor
+	 *  This constructor sets the speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
 
 	WalkingRob(Map map, Tile inital_location) {
-		this(map, inital_location, 30);
-	}
-	
-	/** Constructor with custom speed
-	 *  This constructor sets the specific speed and water capacity of a drone.
-	 *  It also executes the generic constructor method
-	 */
-
-	WalkingRob(Map map, Tile inital_location, int custom_speed) {
-		super(map, inital_location, custom_speed);
-		
-		int speed;
-		if (custom_speed > 30) {
-			speed = 30;
-		}
-		else {
-			speed = custom_speed;
-		}
-		this.speed.empty_field = speed;
-		this.speed.forest = speed;
-		this.speed.house = speed;
-		this.speed.rock = speed/3;
-		this.speed.water = 0;
-
+		super(map, inital_location);
+		setSpeed();
 		this.water_capacity = Integer.MAX_VALUE;
 		this.water_level = Integer.MAX_VALUE;
 
@@ -92,4 +70,12 @@ public class WalkingRob extends Robot{
 		//Should not decrease water level
 
 	}
+
+	@Override
+	public void setSpeed() {
+		this.speed = new Speed(30, 30, 10, 0, 30);
+	}
+	@Override
+	public void setSpeed(int speed) {setSpeed();};
+	
 }

@@ -92,6 +92,12 @@ public abstract class Robot {
 		this(map, initial_location);
 	}
 	
+	/** Speed assignment
+	 *  Abstract cause it depends on the Robot Type
+	 */
+	public abstract void setSpeed(int speed);
+	public abstract void setSpeed();
+	
 	/** Target fire assignment*/
 	public void setTargetFire(Target fire){
 		this.fire = fire;

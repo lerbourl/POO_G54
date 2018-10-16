@@ -24,36 +24,14 @@ import poog54.dataclasses.*;
  */
 public class DroneRob extends Robot{
 	
-	/** Constructor with default speed
-	 *  This constructor sets the specific speed and water capacity of a drone.
-	 *  It also executes the generic constructor method
-	 */
-	
-	DroneRob(Map map, Tile inital_location) {
-		this(map, inital_location, 100);
-	}
-	
-	/** Constructor with custom speed
-	 *  This constructor sets the specific speed and water capacity of a drone.
+	/** Constructor
+	 *  This constructor sets the speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
 
 	DroneRob(Map map, Tile inital_location, int custom_speed) {
 		super(map, inital_location, custom_speed);
-		
-		int speed;
-		if (custom_speed > 150) {
-			speed = 150;
-		}
-		else {
-			speed = custom_speed;
-		}
-		this.speed.empty_field = speed;
-		this.speed.forest = speed;
-		this.speed.house = speed;
-		this.speed.rock = speed;
-		this.speed.water = speed;
-
+		setSpeed();
 		this.water_capacity = 10000;
 		this.water_level = 10000;
 
@@ -91,4 +69,14 @@ public class DroneRob extends Robot{
 		//TODO
 
 	}
+
+	@Override
+	public void setSpeed(int speed) {
+		/* no speed limitation here */
+		if (speed > 150) speed = 150;
+		this.speed = new Speed(speed, speed, speed, speed, speed);
+	}
+	@Override
+	public void setSpeed() {setSpeed(100);};
+	
 }
