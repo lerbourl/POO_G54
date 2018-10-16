@@ -1,7 +1,7 @@
 package poog54.dataclasses.robots;
 
 import gui.GUISimulator;
-import poog54.dataclasses.Tile;
+import poog54.dataclasses.*;
 
 /**
   * Represents a wheel firefighter.
@@ -29,7 +29,7 @@ public class Wheel extends Robot{
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
-	Wheel(Tile[][] map, Tile inital_location, int custom_speed, GUISimulator gui) {
+	Wheel(Map map, Tile inital_location, int custom_speed, GUISimulator gui) {
 		super(map, inital_location, custom_speed, gui);
 		
 		int speed;

@@ -1,5 +1,5 @@
 package poog54.dataclasses.robots;
-import poog54.dataclasses.Tile;
+import poog54.dataclasses.*;
 import poog54.enums.RobotState;
 import gui.GUISimulator;
 
@@ -32,8 +32,7 @@ public abstract class Robot {
 	protected RobotState state;
 
 	/** Map */
-	//TODO: REPLACE MAP[][] with correct class implementation louis : UTILE?
-	protected Tile map[][];
+	protected Map map;
 	
 	/** Current location:
 	 * position on the map, active cell or tile
@@ -77,7 +76,7 @@ public abstract class Robot {
 	 *  - state (IDLE)
 	 */
 	//TODO: REPLACE MAP[][] with correct class implementation
-	Robot(Tile map[][], Tile initial_location, GUISimulator gui){
+	Robot(Map map, Tile initial_location, GUISimulator gui){
 		//Speeds and water capacity must be set in the child constructors
 		this.gui = gui;
 		this.map = map;
@@ -92,8 +91,8 @@ public abstract class Robot {
 	 *  - initial location
 	 *  - state (IDLE)
 	 */
-	//TODO: REPLACE MAP[][] with correct class implementation
-	Robot(Tile map[][], Tile initial_location, int custom_speed, GUISimulator gui){
+	
+	Robot(Map map, Tile initial_location, int custom_speed, GUISimulator gui){
 		this(map, initial_location, gui);
 	}
 	
