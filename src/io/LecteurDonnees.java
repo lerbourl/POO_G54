@@ -368,7 +368,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme robot.
      * @param i
      */
-    private void getRobot(int i) throws DataFormatException {
+    private Robot getRobot(int i, TheMap map) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
         try {
@@ -384,27 +384,34 @@ public class LecteurDonnees {
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
+            Tile tile = new Tile();
             Robot robot;
             switch (type) {
             case "ROUES":
+            	robot = new WheelRob(map, tile);
             	break;
             case "PATTES":
+            	robot = new WalkingRob(map, tile);
             	break;
             case "CHENILLES":
+            	robot = new TrackedRob(map, tile);
             	break;
             case "DRONE":
+            	robot = new DroneRob(map, tile);
             	break;
+            default: // never happen
+            	robot = new WheelRob(map, tile);
             }
             if (s == null) {
                 System.out.print("valeur par defaut");
             } else {
                 int vitesse = Integer.parseInt(s);
                 System.out.print(vitesse);
+                robot.setSpeed(Integer.parseInt(s));
             }
             verifieLigneTerminee();
-
             System.out.println();
-
+            return robot;
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de robot invalide. "
                     + "Attendu: ligne colonne type [valeur_specifique]"); 

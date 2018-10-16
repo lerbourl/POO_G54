@@ -29,15 +29,15 @@ public class WalkingRob extends Robot{
 	 *  It also executes the generic constructor method
 	 */
 
-	WalkingRob(Map map, Tile inital_location) {
-		super(map, inital_location);
+	public WalkingRob(TheMap theMap, Tile inital_location) {
+		super(theMap, inital_location);
 		setSpeed();
 		this.water_capacity = Integer.MAX_VALUE;
 		this.water_level = Integer.MAX_VALUE;
 
 	}
 
-	/** Path builder: provide the fastest path to the specified tile according to speeds & map 
+	/** Path builder: provide the fastest path to the specified tile according to speeds & theMap 
 	 */
 	@Override
 	public Target buildTargetPath(Tile location){

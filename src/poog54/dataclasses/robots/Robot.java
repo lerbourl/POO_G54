@@ -9,7 +9,7 @@ import poog54.enums.*;
   * more specific robot classes can.
   *
   * A robot has access to the following external data:
-  * - the map (to locate fires, water points and compute trajectories)
+  * - the theMap (to locate fires, water points and compute trajectories)
   * - the graphic window (to be able to display its current position)
   *
   * A robot moves one cell / tile at a time, as mentioned in the specifications.
@@ -28,11 +28,11 @@ public abstract class Robot {
 	 */
 	protected RobotState state;
 
-	/** Map */
-	protected Map map;
+	/** TheMap */
+	protected TheMap theMap;
 	
 	/** Current location:
-	 * position on the map, active cell or tile
+	 * position on the theMap, active cell or tile
 	 */
 	protected Tile location;
 	
@@ -42,7 +42,7 @@ public abstract class Robot {
 	protected Speed speed;
 
 	/** Fire target location:
-	 *  position of the targeted fire on the map
+	 *  position of the targeted fire on the theMap
 	 *  Target fire path:
 	 *  path to the assigned fire.
 	 *  path[0] is always the current location.
@@ -50,7 +50,7 @@ public abstract class Robot {
 	protected Target fire;
 
 	/** Nearest water location:
-	 *  position of the water reserve on the map and path to it
+	 *  position of the water reserve on the theMap and path to it
 	 *  path[0] is always the current location.
 	 */
 	protected Target water;
@@ -68,28 +68,28 @@ public abstract class Robot {
 	/** Constructor with default speed
 	 *  Initialises the generic attributes of a firefighter:
 	 *  - gui
-	 *  - map
+	 *  - theMap
 	 *  - initial location
 	 *  - state (IDLE)
 	 */
 	//TODO: REPLACE MAP[][] with correct class implementation
 
-	Robot(Map map, Tile initial_location){
+	Robot(TheMap theMap, Tile initial_location){
 		//Speeds and water capacity must be set in the child constructors
-		this.map = map;
+		this.theMap = theMap;
 		this.location = initial_location;
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target 
 	}
 	
 	/** Constructor with custom speed
 	 *  Initialises the generic attributes of a firefighter:
-	 *  - map
+	 *  - theMap
 	 *  - initial location
 	 *  - state (IDLE)
 	 */
 
-	Robot(Map map, Tile initial_location, int custom_speed){
-		this(map, initial_location);
+	Robot(TheMap theMap, Tile initial_location, int custom_speed){
+		this(theMap, initial_location);
 	}
 	
 	/** Speed assignment
@@ -109,7 +109,7 @@ public abstract class Robot {
 	}
 
 	/** Target builder:
-	 *  - provides the fastest path to the specified tile according to speeds & map
+	 *  - provides the fastest path to the specified tile according to speeds & theMap
 	 *  - provides the time required to reach the target 
 	 */
 	public Target buildTargetPath(Tile location){
@@ -142,7 +142,7 @@ public abstract class Robot {
 
 	}
 
-	/** Draw: display robot on the map */
+	/** Draw: display robot on the theMap */
 	public void draw(){
 		
 		//TODO

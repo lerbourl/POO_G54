@@ -19,32 +19,31 @@ public class SimulationData {
 	 */
 	private List<Robot> robotList;
 	private List<WildFire> wfList;
-	private Map map;
+	private TheMap theMap;
 	
 	/** Constructor
 	 * 
 	 */
-	public SimulationData(List<Robot> robotList, List<WildFire> wfList, Map map) {
+	public SimulationData(List<Robot> robotList, List<WildFire> wfList, TheMap theMap) {
 		this.robotList = robotList;
 		this.wfList = wfList;
-		this.map = map;
+		this.theMap = theMap;
 	}
 	
-	public SimulationData() {
+	public SimulationData() {}
+
+	/**
+	 * @return the theMap
+	 */
+	public TheMap getMap() {
+		return theMap;
 	}
 
 	/**
-	 * @return the map
+	 * @param theMap the theMap to set
 	 */
-	public Map getMap() {
-		return map;
-	}
-
-	/**
-	 * @param map the map to set
-	 */
-	public void setMap(Map map) {
-		this.map = map;
+	public void setMap(TheMap theMap) {
+		this.theMap = theMap;
 	}
 
 	/**

@@ -29,14 +29,14 @@ public class WheelRob extends Robot{
 	 *  It also executes the generic constructor method
 	 */
 
-	WheelRob(Map map, Tile inital_location) {
-		super(map, inital_location);
+	public WheelRob(TheMap theMap, Tile inital_location) {
+		super(theMap, inital_location);
 		this.setSpeed(80);
 		this.water_capacity = 5000;
 		this.water_level = 5000;
 	}
 
-	/** Path builder: provide the fastest path to the specified tile according to speeds & map 
+	/** Path builder: provide the fastest path to the specified tile according to speeds & theMap 
 	 */
 	@Override
 	public Target buildTargetPath(Tile location){

@@ -2,7 +2,7 @@ package poog54.dataclasses;
 import poog54.enums.TypeField;
 
 /**
- * Represents a tile of the map
+ * Represents a tile of the theMap
  */
 
 /**
@@ -13,20 +13,20 @@ import poog54.enums.TypeField;
 
 public class Tile {
 	/** Coordinates */
-	int line, column;
+	private int line, column;
 	/** Type of the field  */
 	TypeField type;
 	
 	/** Access to line*/
-	private int getLine(){
+	int getLine(){
 		return this.line;
 	}
 	/** Acces to column*/
-	private int getColumn(){
+	int getColumn(){
 		return this.column;
 	}
 	/** Acces to Type Field*/
-	private TypeField getTypeField(){
+	TypeField getTypeField(){
 		return this.type;
 	}
 }

@@ -29,15 +29,15 @@ public class DroneRob extends Robot{
 	 *  It also executes the generic constructor method
 	 */
 
-	DroneRob(Map map, Tile inital_location, int custom_speed) {
-		super(map, inital_location, custom_speed);
+	public DroneRob(TheMap theMap, Tile inital_location) {
+		super(theMap, inital_location);
 		setSpeed();
 		this.water_capacity = 10000;
 		this.water_level = 10000;
 
 	}
 
-	/** Path builder: provide the fastest path to the specified tile according to speeds & map 
+	/** Path builder: provide the fastest path to the specified tile according to speeds & theMap 
 	 */
 	@Override
 	public Target buildTargetPath(Tile location){

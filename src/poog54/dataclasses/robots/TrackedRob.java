@@ -30,8 +30,8 @@ public class TrackedRob extends Robot {
 	 * It also executes the generic constructor method
 	 */
 
-	TrackedRob(Map map, Tile inital_location, int custom_speed) {
-		super(map, inital_location, custom_speed);
+	public TrackedRob(TheMap theMap, Tile inital_location) {
+		super(theMap, inital_location);
 		setSpeed();
 		this.water_capacity = 2000;
 		this.water_level = 2000;
@@ -40,7 +40,7 @@ public class TrackedRob extends Robot {
 
 	/**
 	 * Path builder: provide the fastest path to the specified tile according to
-	 * speeds & map
+	 * speeds & theMap
 	 */
 	@Override
 	public Target buildTargetPath(Tile location) {
