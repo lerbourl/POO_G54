@@ -56,7 +56,7 @@ public class LecteurDonnees {
             SimulationData data = new SimulationData();
             lecteur.lireCarte();
             lecteur.lireIncendies();
-            lecteur.lireRobots();
+            data.setRobotList(lecteur.getRobots());
             scanner.close();
             System.out.println("\n == Lecture terminee");
             return data;
@@ -66,6 +66,8 @@ public class LecteurDonnees {
     // Tout le reste de la classe est prive!
 
     private static Scanner scanner;
+    
+    private TheMap map;
 
     /**
      * Constructeur prive; impossible d'instancier la classe depuis l'exterieur
@@ -347,20 +349,21 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private void getRobots() throws DataFormatException {
+    private List<Robot> getRobots() throws DataFormatException {
         ignorerCommentaires();
+        List<Robot> robotList = new ArrayList<Robot>();
         try {
             int nbRobots = scanner.nextInt();
             System.out.println("Nb de robots = " + nbRobots);
             for (int i = 0; i < nbRobots; i++) {
-                lireRobot(i);
+                robotList.add(getRobot(i));
             }
 
         } catch (NoSuchElementException e) {
         	throw new DataFormatException("Format invalide. "
                     + "Attendu: nbRobots");
         }
-        Robot robot;
+        return robotList;
     }
 
 
@@ -368,7 +371,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme robot.
      * @param i
      */
-    private Robot getRobot(int i, TheMap map) throws DataFormatException {
+    private Robot getRobot(int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
         try {
@@ -401,6 +404,7 @@ public class LecteurDonnees {
             	break;
             default: // never happen
             	robot = new WheelRob(map, tile);
+            	break;
             }
             if (s == null) {
                 System.out.print("valeur par defaut");

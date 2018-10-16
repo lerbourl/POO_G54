@@ -31,7 +31,7 @@ public class TestInvader {
  */
 class Invader implements Simulable {
     /** L'interface graphique associée */
-    private GUISimulator gui;	
+    private GUISimulator gui;
 
     /** La couleur de dessin de l'invader */
     private Color invaderColor;	
