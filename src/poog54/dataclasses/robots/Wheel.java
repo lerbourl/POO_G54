@@ -1,6 +1,5 @@
 package poog54.dataclasses.robots;
 
-import gui.GUISimulator;
 import poog54.dataclasses.*;
 
 /**
@@ -29,8 +28,9 @@ public class Wheel extends Robot{
 	 *  This constructor sets the specific speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
-	Wheel(Map map, Tile inital_location, int custom_speed, GUISimulator gui) {
-		super(map, inital_location, custom_speed, gui);
+
+	Wheel(Map map, Tile inital_location, int custom_speed) {
+		super(map, inital_location, custom_speed);
 		
 		int speed;
 		if (custom_speed > 80) {
@@ -47,14 +47,6 @@ public class Wheel extends Robot{
 
 		this.water_capacity = 5000;
 		this.water_level = 5000;
-	}
-
-	/** Draw: display a drone on the map */
-	@Override
-	public void draw(){
-		
-		//TODO
-
 	}
 
 	/** Path builder: provide the fastest path to the specified tile according to speeds & map 
