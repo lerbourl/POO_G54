@@ -10,15 +10,15 @@ import poog54.enums.*;
 public class TheMap {
 	
 	private int tileSize;
-	private int nbLines,nbColumn;
-	private Tile tab[][];
+	private int nbLines,nbColums;
+	private Tile TileMatrix[][];
 	
 	
-	public TheMap(int tileSize,int nbLines, int nbColumn, Tile tab[][]) {
+	public TheMap(int tileSize,int nbLines, int nbColums, Tile TileMatrix[][]){
 		this.tileSize=tileSize;
 		this.nbLines=nbLines;
-		this.nbColumn=nbColumn;
-		this.tab=tab;
+		this.nbColums=nbColums;
+		this.TileMatrix=TileMatrix;
 	}
 
 	public int getTileSize() {
@@ -29,12 +29,12 @@ public class TheMap {
 		return this.nbLines;
 	}
 	
-	public int getNbColumn() {
-		return this.nbColumn;
+	public int getnbColums() {
+		return this.nbColums;
 	}
 	
 	public Tile getTile(int line, int column) {
-		return tab[line][column];
+		return TileMatrix[line][column];
 	}
 	
 	public boolean neighbourhood(Tile src, CardinalPoints dir) {
@@ -59,7 +59,7 @@ public class TheMap {
 				}
 		/** East */				
 			case EAST : 
-				if(src.getColumn()==nbColumn){
+				if(src.getColumn()==nbColums){
 					return false; 
 				}else {
 					return true;
@@ -89,29 +89,29 @@ public class TheMap {
 			
 			/** North */
 				case NORTH : 
-						return tab[src.getLine()+1][src.getColumn()];
+						return TileMatrix[src.getLine()+1][src.getColumn()];
 					
 			/** South */	
 				case SOUTH :
-						return tab[src.getLine()-1][src.getColumn()];					
+						return TileMatrix[src.getLine()-1][src.getColumn()];					
 					
 			/** East */				
 				case EAST : 
-						return tab[src.getLine()][src.getColumn()-1];
+						return TileMatrix[src.getLine()][src.getColumn()-1];
 					
 			/** West */
 					
 				case WEST :
-						return tab[src.getLine()][src.getColumn()+1];
+						return TileMatrix[src.getLine()][src.getColumn()+1];
 							
-				default : return tab[src.getLine()][src.getColumn()]; /** erreur !!!! */
+				default : return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
 			}
 			
 			
 			
 		}
 		
-		return tab[src.getLine()][src.getColumn()]; /** erreur !!!! */
+		return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
 	
  	}
 }

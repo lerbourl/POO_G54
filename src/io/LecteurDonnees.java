@@ -54,8 +54,9 @@ public class LecteurDonnees {
             System.out.println("\n == Lecture du fichier" + fichierDonnees);
             LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
             SimulationData data = new SimulationData();
-            lecteur.lireCarte();
-            lecteur.lireIncendies();
+            lecteur.map = lecteur.getCarte();
+            data.setMap(lecteur.map);
+            data.setWfList(lecteur.getIncendies());
             data.setRobotList(lecteur.getRobots());
             scanner.close();
             System.out.println("\n == Lecture terminee");
@@ -248,7 +249,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees de la carte.
      * @throws ExceptionFormatDonnees
      */
-    private void getCarte() throws DataFormatException {
+    private TheMap getCarte() throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbLignes = scanner.nextInt();
@@ -256,12 +257,13 @@ public class LecteurDonnees {
             int tailleCases = scanner.nextInt();	// en m
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
-
+            Tile tab2d[][] = new Tile[nbLignes][nbColonnes];
             for (int lig = 0; lig < nbLignes; lig++) {
                 for (int col = 0; col < nbColonnes; col++) {
-                    lireCase(lig, col);
+                    tab2d[lig][col] =  getCase(lig, col);
                 }
             }
+            return new TheMap(tailleCases, nbLignes, nbColonnes, tab2d);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("Format invalide. "
@@ -275,7 +277,7 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees d'une case.
      */
-    private void getCase(int lig, int col) throws DataFormatException {
+    private Tile getCase(int lig, int col) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Case (" + lig + "," + col + "): ");
         String chaineNature = new String();
@@ -288,29 +290,29 @@ public class LecteurDonnees {
             //			NatureTerrain nature = NatureTerrain.valueOf(chaineNature);
 
             verifieLigneTerminee();
-
             System.out.print("nature = " + chaineNature);
-
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de case invalide. "
                     + "Attendu: nature altitude [valeur_specifique]");
         }
-
         System.out.println();
+        return new Tile(lig, col, TypeField.valueOf(chaineNature));
     }
 
 
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private void getIncendies() throws DataFormatException {
+    private List<WildFire> getIncendies() throws DataFormatException {
         ignorerCommentaires();
+        List<WildFire> WFList = new ArrayList<WildFire>();
         try {
             int nbIncendies = scanner.nextInt();
             System.out.println("Nb d'incendies = " + nbIncendies);
             for (int i = 0; i < nbIncendies; i++) {
-                lireIncendie(i);
+                WFList.add(getIncendie(i));
             }
+            return WFList;
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("Format invalide. "
@@ -323,10 +325,9 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private void getIncendie(int i) throws DataFormatException {
+    private WildFire getIncendie(int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
-
         try {
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
@@ -339,6 +340,7 @@ public class LecteurDonnees {
 
             System.out.println("position = (" + lig + "," + col
                     + ");\t intensite = " + intensite);
+            return new WildFire(map.getTile(lig, col), intensite);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format d'incendie invalide. "
@@ -382,12 +384,11 @@ public class LecteurDonnees {
 
             System.out.print("\t type = " + type);
 
-
             // lecture eventuelle d'une vitesse du robot (entier)
             System.out.print("; \t vitesse = ");
             String s = scanner.findInLine("(\\d+)");	// 1 or more digit(s) ?
             // pour lire un flottant:    ("(\\d+(\\.\\d+)?)");
-            Tile tile = new Tile(lig,col,TypeField.EMPTY);
+            Tile tile = map.getTile(lig, col);
             Robot robot;
             switch (type) {
             case "ROUES":
@@ -403,8 +404,7 @@ public class LecteurDonnees {
             	robot = new DroneRob(map, tile);
             	break;
             default: // never happen
-            	robot = new WheelRob(map, tile);
-            	break;
+            	throw new DataFormatException("Type de robot non reconnnu");
             }
             if (s == null) {
                 System.out.print("valeur par defaut");

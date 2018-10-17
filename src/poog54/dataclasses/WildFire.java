@@ -10,10 +10,10 @@ import poog54.dataclasses.Tile;
 public class WildFire {
 
 	private Tile pos;
-	private int liter;
+	private int intensity;
 	
-	public WildFire(Tile pos, int liter) {
-		this.liter=liter;
+	public WildFire(Tile pos, int intensity) {
+		this.intensity=intensity;
 		this.pos=pos;
 	}
 	
@@ -21,8 +21,8 @@ public class WildFire {
 		return pos;
 	}
 	
-	public int getLiter() {
-		return liter;
+	public int getintensity() {
+		return intensity;
 	}
 	
 	

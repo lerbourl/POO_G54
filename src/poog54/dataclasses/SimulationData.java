@@ -14,9 +14,6 @@ import java.util.ListIterator;
  *
  */
 public class SimulationData {
-	/**
-	 *	TODO liste d'incendies et de robots, et carte
-	 */
 	private List<Robot> robotList;
 	private List<WildFire> wfList;
 	private TheMap theMap;
