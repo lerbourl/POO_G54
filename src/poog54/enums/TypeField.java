@@ -8,9 +8,9 @@ package poog54.enums;
  *
  */
 public enum TypeField {
-	EMPTY,
-	WATER, 
-	FOREST, 
-	ROCK,
-	HOUSE;
+	TERRAIN_LIBRE,
+	EAU, 
+	FORET, 
+	ROCHE,
+	HABITAT;
 }
