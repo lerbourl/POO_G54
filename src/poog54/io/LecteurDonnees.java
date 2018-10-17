@@ -246,7 +246,7 @@ public class LecteurDonnees {
      */
     
     /**
-     * Lit et affiche les donnees de la carte.
+     * Lit et retourne les donnees de la carte.
      * @throws ExceptionFormatDonnees
      */
     private TheMap getCarte() throws DataFormatException {
@@ -275,7 +275,7 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees d'une case.
+     * Lit et retourne les donnees d'une case.
      */
     private Tile getCase(int lig, int col) throws DataFormatException {
         ignorerCommentaires();
@@ -301,7 +301,7 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees des incendies.
+     * Lit et retourne les donnees des incendies.
      */
     private List<WildFire> getIncendies() throws DataFormatException {
         ignorerCommentaires();
@@ -322,7 +322,7 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees du i-eme incendie.
+     * Lit et retourne les donnees du i-eme incendie.
      * @param i
      */
     private WildFire getIncendie(int i) throws DataFormatException {
@@ -349,7 +349,7 @@ public class LecteurDonnees {
     }
 
     /**
-     * Lit et affiche les donnees des robots.
+     * Lit et retourne les donnees des robots.
      */
     private List<Robot> getRobots() throws DataFormatException {
         ignorerCommentaires();
@@ -370,7 +370,7 @@ public class LecteurDonnees {
 
 
     /**
-     * Lit et affiche les donnees du i-eme robot.
+     * Lit et retourne les donnees du i-eme robot.
      * @param i
      */
     private Robot getRobot(int i) throws DataFormatException {
