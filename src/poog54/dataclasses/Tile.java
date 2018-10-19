@@ -26,15 +26,15 @@ public class Tile extends Drawable{
 	private static String TileImageFilePath(TypeField type) {
 		switch (type) {
 		case EAU :
-			return "ressources/eau.png";
+			return "ressources/water.png";
 		case FORET :
-			return "ressources/foret.png";
+			return "ressources/forest.png";
 		case HABITAT :
 			return "ressources/village.png";
 		case ROCHE :
-			return "ressources/montagne.png";
+			return "ressources/mountain.png";
 		case TERRAIN_LIBRE :
-			return "ressources/vide.png";
+			return "ressources/empty.png";
 		default:
 			return "";
 			}
