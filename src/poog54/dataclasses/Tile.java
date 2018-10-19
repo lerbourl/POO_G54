@@ -1,4 +1,5 @@
 package poog54.dataclasses;
+
 import poog54.enums.*;
 import poog54.io.Drawable;
 
@@ -7,40 +8,42 @@ import poog54.io.Drawable;
  */
 
 /**
- * @author Rey-Ricord Yoann 
+ * @author Rey-Ricord Yoann
  * 
  */
 
-
-public class Tile extends Drawable{
-	/** Type of the field  */
+public class Tile extends Drawable {
+	/** Type of the field */
 	TypeField type;
 	/** Image ressource */
 	String filepath;
+
 	/** Tile constructor */
 
 	public Tile(int xCoord, int yCoord, TypeField type) {
 		super(TileImageFilePath(type), xCoord, yCoord);
-		this.type=type;
+		this.type = type;
 	}
+
 	private static String TileImageFilePath(TypeField type) {
 		switch (type) {
-		case EAU :
+		case EAU:
 			return "assets/water.png";
-		case FORET :
+		case FORET:
 			return "assets/forest.png";
-		case HABITAT :
+		case HABITAT:
 			return "assets/village.png";
-		case ROCHE :
+		case ROCHE:
 			return "assets/mountain.png";
-		case TERRAIN_LIBRE :
+		case TERRAIN_LIBRE:
 			return "assets/empty.png";
 		default:
 			return "";
-			}
+		}
 	}
-	/** Access to Type Field*/
-	public TypeField getTypeField(){
+
+	/** Access to Type Field */
+	public TypeField getTypeField() {
 		return this.type;
 	}
 }

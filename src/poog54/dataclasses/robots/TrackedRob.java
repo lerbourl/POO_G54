@@ -25,9 +25,9 @@ import poog54.dataclasses.*;
  */
 public class TrackedRob extends Robot {
 
-	/**Constructor
-	 * This constructor sets the speed and the water capacity of a drone.
-	 * It also executes the generic constructor method
+	/**
+	 * Constructor This constructor sets the speed and the water capacity of a
+	 * drone. It also executes the generic constructor method
 	 */
 
 	public TrackedRob(TheMap theMap, Tile inital_location) {
@@ -79,9 +79,13 @@ public class TrackedRob extends Robot {
 	@Override
 	public void setSpeed(int speed) {
 		/* no speed limitation here */
-		if (speed > 80) speed = 80;
-		this.speed = new Speed(speed, speed/2, 0, 0, speed);
+		if (speed > 80)
+			speed = 80;
+		this.speed = new Speed(speed, speed / 2, 0, 0, speed);
 	}
+
 	@Override
-	public void setSpeed() {setSpeed(60);};
+	public void setSpeed() {
+		setSpeed(60);
+	};
 }

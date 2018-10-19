@@ -3,8 +3,10 @@
  * 
  */
 package poog54.dataclasses;
+
 import poog54.dataclasses.robots.*;
 import java.util.List;
+
 /**
  * @author lerbourl
  *
@@ -13,8 +15,9 @@ public class SimulationData {
 	private List<Robot> robotList;
 	private List<WildFire> wfList;
 	private TheMap theMap;
-	
-	/** Constructor
+
+	/**
+	 * Constructor
 	 * 
 	 */
 	public SimulationData(List<Robot> robotList, List<WildFire> wfList, TheMap theMap) {
@@ -22,8 +25,9 @@ public class SimulationData {
 		this.wfList = wfList;
 		this.theMap = theMap;
 	}
-	
-	public SimulationData() {}
+
+	public SimulationData() {
+	}
 
 	/**
 	 * @return the theMap
@@ -66,5 +70,5 @@ public class SimulationData {
 	public List<WildFire> getWfList() {
 		return wfList;
 	}
-	
+
 }

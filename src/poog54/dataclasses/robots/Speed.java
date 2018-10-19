@@ -12,13 +12,13 @@ public class Speed {
 
 	/** Empty field speed */
 	public int empty_field;
-	
+
 	/** Forest speed */
 	public int forest;
 
 	/** Rock speed */
 	public int rock;
-	
+
 	/** Water speed */
 	public int water;
 

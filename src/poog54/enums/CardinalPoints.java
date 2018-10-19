@@ -8,8 +8,5 @@ package poog54.enums;
  *
  */
 public enum CardinalPoints {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST;
+	NORTH, SOUTH, EAST, WEST;
 }

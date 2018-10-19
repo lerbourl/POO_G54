@@ -22,11 +22,11 @@ import poog54.dataclasses.*;
  * @author POO_G54
  * 
  */
-public class WalkingRob extends Robot{
+public class WalkingRob extends Robot {
 
-	/** Constructor
-	 *  This constructor sets the speed and water capacity of a drone.
-	 *  It also executes the generic constructor method
+	/**
+	 * Constructor This constructor sets the speed and water capacity of a drone. It
+	 * also executes the generic constructor method
 	 */
 
 	public WalkingRob(TheMap theMap, Tile inital_location) {
@@ -38,37 +38,41 @@ public class WalkingRob extends Robot{
 
 	}
 
-	/** Path builder: provide the fastest path to the specified tile according to speeds & theMap 
+	/**
+	 * Path builder: provide the fastest path to the specified tile according to
+	 * speeds & theMap
 	 */
 	@Override
-	public Target buildTargetPath(Tile location){
+	public Target buildTargetPath(Tile location) {
 		Target target = new Target();
 		target.path = new Tile[2];
-		
-		//TODO compute the fastest (full) path
+
+		// TODO compute the fastest (full) path
 		target.location = location;
-		target.path[0]=this.location;
-		target.path[1]=location;
-		
+		target.path[0] = this.location;
+		target.path[1] = location;
+
 		return target;
 	}
 
-	/** Tank up: fill tank
+	/**
+	 * Tank up: fill tank
 	 */
 	@Override
-	public void tankUp(){
-		
-		//TODO
+	public void tankUp() {
+
+		// TODO
 
 	}
 
-	/** Pouring water: extinguish fire
+	/**
+	 * Pouring water: extinguish fire
 	 */
 	@Override
-	public void pourOut(int water_volume){
-		
-		//TODO
-		//Should not decrease water level
+	public void pourOut(int water_volume) {
+
+		// TODO
+		// Should not decrease water level
 
 	}
 
@@ -76,7 +80,10 @@ public class WalkingRob extends Robot{
 	public void setSpeed() {
 		this.speed = new Speed(30, 30, 10, 0, 30);
 	}
+
 	@Override
-	public void setSpeed(int speed) {setSpeed();};
-	
+	public void setSpeed(int speed) {
+		setSpeed();
+	};
+
 }
