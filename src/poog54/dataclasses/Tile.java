@@ -1,5 +1,6 @@
 package poog54.dataclasses;
 import poog54.enums.*;
+import poog54.io.Drawable;
 
 /**
  * Represents a tile of the theMap
@@ -11,31 +12,34 @@ import poog54.enums.*;
  */
 
 
-public class Tile {
-	/** Coordinates */
-	private int line, column;
+public class Tile extends Drawable{
 	/** Type of the field  */
 	TypeField type;
-	
+	/** Image ressource */
+	String filepath;
 	/** Tile constructor */
 
-	public Tile(int line, int column, TypeField type) {
-		this.line=line;
-		this.column=column;
+	public Tile(int xCoord, int yCoord, TypeField type) {
+		super(TileImageFilePath(type), xCoord, yCoord);
 		this.type=type;
 	}
-	
-	/** Access to line*/
-	public int getLine(){
-		return this.line;
+	private static String TileImageFilePath(TypeField type) {
+		switch (type) {
+		case EAU :
+			return "ressources/eau.png";
+		case FORET :
+			return "ressources/foret.png";
+		case HABITAT :
+			return "ressources/village.png";
+		case ROCHE :
+			return "ressources/montagne.png";
+		case TERRAIN_LIBRE :
+			return "ressources/vide.png";
+		default:
+			return "";
+			}
 	}
-	/** Acces to column*/
-	
-	public int getColumn(){
-		return this.column;
-	}
-	/** Acces to Type Field*/
-	
+	/** Access to Type Field*/
 	public TypeField getTypeField(){
 		return this.type;
 	}

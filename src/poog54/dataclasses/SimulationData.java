@@ -3,12 +3,8 @@
  * 
  */
 package poog54.dataclasses;
-import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 /**
  * @author lerbourl
  *

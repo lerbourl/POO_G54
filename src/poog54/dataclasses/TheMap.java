@@ -37,13 +37,13 @@ public class TheMap {
 		return TileMatrix[line][column];
 	}
 	
-	public boolean neighbourhood(Tile src, CardinalPoints dir) {
+	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
 		
 		switch(dir) {
 		
 		/** North */
 			case NORTH : 
-				if(src.getLine()==0) {
+				if(src.getxCoord() == 0) {
 					return false;
 				}
 				else {
@@ -52,21 +52,21 @@ public class TheMap {
 				
 		/** South */	
 			case SOUTH :
-				if(src.getLine()==nbLines) {
+				if(src.getyCoord() == nbLines - 1) {
 					return false;
 				}else {
 					return true;
 				}
 		/** East */				
 			case EAST : 
-				if(src.getColumn()==nbColums){
+				if(src.getxCoord() == nbColums - 1){
 					return false; 
 				}else {
 					return true;
 				}
 		/** West */
 			case WEST :
-				if (src.getColumn()==0) {
+				if (src.getyCoord() == 0) {
 					return false;
 				}else {
 					return true;
@@ -79,39 +79,36 @@ public class TheMap {
 
 
  public Tile getNeighbour(Tile src, CardinalPoints dir) {
-	 
-	
 		/** Is there any Neighbour ?? */	
-		
-		if (neighbourhood(src,dir)) {
+		if (hasNeighbour(src,dir)) {
 			
 			switch(dir) {
 			
 			/** North */
 				case NORTH : 
-						return TileMatrix[src.getLine()+1][src.getColumn()];
+						return TileMatrix[src.getxCoord()+1][src.getyCoord()];
 					
 			/** South */	
 				case SOUTH :
-						return TileMatrix[src.getLine()-1][src.getColumn()];					
+						return TileMatrix[src.getxCoord()-1][src.getyCoord()];					
 					
 			/** East */				
 				case EAST : 
-						return TileMatrix[src.getLine()][src.getColumn()-1];
+						return TileMatrix[src.getxCoord()][src.getyCoord()-1];
 					
 			/** West */
 					
 				case WEST :
-						return TileMatrix[src.getLine()][src.getColumn()+1];
+						return TileMatrix[src.getxCoord()][src.getyCoord()+1];
 							
-				default : return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
+				default : return TileMatrix[src.getxCoord()][src.getyCoord()]; /** erreur !!!! */
 			}
 			
 			
 			
 		}
 		
-		return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
+		return TileMatrix[src.getxCoord()][src.getyCoord()]; /** erreur !!!! */
 	
  	}
 }
