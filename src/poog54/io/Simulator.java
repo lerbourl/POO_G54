@@ -38,12 +38,11 @@ public class Simulator implements Simulable{
 				gui.addGraphicalElement(map.getTile(i, j).getImage(gui, map.getNbLines(), 1));
 			}
 		}
-		/*
 		ListIterator<WildFire> WFit = data.getWfList().listIterator();
 
 	      while(WFit.hasNext()){
-	         String str = WFit.next();
-	      }*/
+	    	  gui.addGraphicalElement(WFit.next().getImage(gui, map.getNbLines(), 1));
+	      }
 	}
 
 	@Override

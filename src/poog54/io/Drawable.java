@@ -13,40 +13,44 @@ import gui.ImageElement;
 public abstract class Drawable {
 	
 	private String imageFilePath;
-	private int xCoord, yCoord;
+	private int line, column; //x -> column , y -> line
 	
 	/**
-	 * @return the xCoord
+	 * @return the line
 	 */
-	public int getxCoord() {
-		return xCoord;
+	public int getLine() {
+		return line;
 	}
 	/**
-	 * @param xCoord the xCoord to set
+	 * @param line the line to set
 	 */
-	public void setxCoord(int xCoord) {
-		this.xCoord = xCoord;
+	public void setLine(int xCoord) {
+		this.line = xCoord;
 	}
 	/**
-	 * @return the yCoord
+	 * @return the column
 	 */
-	public int getyCoord() {
-		return yCoord;
+	public int getColumn() {
+		return column;
 	}
 	/**
-	 * @param yCoord the yCoord to set
+	 * @param column the column to set
 	 */
-	public void setyCoord(int yCoord) {
-		this.yCoord = yCoord;
+	public void setColumn(int yCoord) {
+		this.column = yCoord;
 	}
 	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
 		this.imageFilePath = ImageFilePath;
-		this. xCoord = xCoord;
-		this.yCoord = yCoord;
+		this. line = xCoord;
+		this.column = yCoord;
 	}
 	public ImageElement getImage(GUISimulator gui, int rowsNumber, int factor) {
 		int size = gui.getPanelHeight()/rowsNumber/factor;
-		return new ImageElement(xCoord * size, yCoord * size, imageFilePath, size, size, gui);
+		return new ImageElement(column * size, line * size, imageFilePath, size, size, gui);
+		/* have to swap column and line because this constructor works with : 
+		 * column numbers as x-axis
+		 * line numbers as y-axis										
+		 */
 	}
 	
 }

@@ -43,7 +43,7 @@ public class TheMap {
 		
 		/** North */
 			case NORTH : 
-				if(src.getxCoord() == 0) {
+				if(src.getLine() == 0) {
 					return false;
 				}
 				else {
@@ -52,21 +52,21 @@ public class TheMap {
 				
 		/** South */	
 			case SOUTH :
-				if(src.getyCoord() == nbLines - 1) {
+				if(src.getColumn() == nbLines - 1) {
 					return false;
 				}else {
 					return true;
 				}
 		/** East */				
 			case EAST : 
-				if(src.getxCoord() == nbColums - 1){
+				if(src.getLine() == nbColums - 1){
 					return false; 
 				}else {
 					return true;
 				}
 		/** West */
 			case WEST :
-				if (src.getyCoord() == 0) {
+				if (src.getColumn() == 0) {
 					return false;
 				}else {
 					return true;
@@ -86,29 +86,29 @@ public class TheMap {
 			
 			/** North */
 				case NORTH : 
-						return TileMatrix[src.getxCoord()+1][src.getyCoord()];
+						return TileMatrix[src.getLine()+1][src.getColumn()];
 					
 			/** South */	
 				case SOUTH :
-						return TileMatrix[src.getxCoord()-1][src.getyCoord()];					
+						return TileMatrix[src.getLine()-1][src.getColumn()];					
 					
 			/** East */				
 				case EAST : 
-						return TileMatrix[src.getxCoord()][src.getyCoord()-1];
+						return TileMatrix[src.getLine()][src.getColumn()-1];
 					
 			/** West */
 					
 				case WEST :
-						return TileMatrix[src.getxCoord()][src.getyCoord()+1];
+						return TileMatrix[src.getLine()][src.getColumn()+1];
 							
-				default : return TileMatrix[src.getxCoord()][src.getyCoord()]; /** erreur !!!! */
+				default : return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
 			}
 			
 			
 			
 		}
 		
-		return TileMatrix[src.getxCoord()][src.getyCoord()]; /** erreur !!!! */
+		return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
 	
  	}
 }

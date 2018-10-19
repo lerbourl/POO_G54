@@ -1,20 +1,22 @@
 package poog54.dataclasses;
 
 import poog54.dataclasses.Tile;
+import poog54.io.Drawable;
 
 /**
  * @author Rey-Ricord Yoann 
  * 
  */
 
-public class WildFire {
+public class WildFire extends Drawable{
 
 	private Tile pos;
 	private int intensity;
 	
 	public WildFire(Tile pos, int intensity) {
-		this.intensity=intensity;
-		this.pos=pos;
+		super("ressources/fire.png", pos.getLine(), pos.getColumn());
+		this.intensity = intensity;
+		this.pos = pos;
 	}
 	
 	public Tile getPos() {

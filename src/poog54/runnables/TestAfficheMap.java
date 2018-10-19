@@ -14,7 +14,6 @@ public class TestAfficheMap {
             System.out.println("Syntaxe: java TestLecteurDonnees <nomDeFichier>");
             System.exit(1);
         }
-
         try {
             SimulationData data = LecteurDonnees.DataFromFile(args[0]);
             GUISimulator gui = new GUISimulator(1024, 1024, Color.BLACK);
