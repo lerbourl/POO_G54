@@ -1,5 +1,5 @@
 /**
- * Méthode commune aux objets dessinables !
+ * Drawable objects that return their drawable Image !
  */
 package poog54.io;
 
@@ -47,7 +47,7 @@ public abstract class Drawable {
 	public ImageElement getImage(GUISimulator gui, int rowsNumber, int factor) {
 		int size = gui.getPanelHeight()/rowsNumber/factor;
 		return new ImageElement(column * size, line * size, imageFilePath, size, size, gui);
-		/* have to swap column and line because this constructor works with : 
+		/* We have to swap column and line because this constructor works with : 
 		 * column numbers as x-axis
 		 * line numbers as y-axis										
 		 */

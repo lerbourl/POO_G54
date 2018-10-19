@@ -7,7 +7,7 @@ import gui.GUISimulator;
 import poog54.dataclasses.*;
 import poog54.io.*;
 
-public class TestAfficheMap {
+public class PrintMapTest {
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
