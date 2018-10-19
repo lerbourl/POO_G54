@@ -31,6 +31,7 @@ public class WalkingRob extends Robot{
 
 	public WalkingRob(TheMap theMap, Tile inital_location) {
 		super(theMap, inital_location);
+		this.setImageFilePath("assets/walking-robot.png");
 		setSpeed();
 		this.water_capacity = Integer.MAX_VALUE;
 		this.water_level = Integer.MAX_VALUE;

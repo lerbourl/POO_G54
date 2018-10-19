@@ -392,7 +392,7 @@ public class LecteurDonnees {
             Robot robot;
             switch (type) {
             case "ROUES":
-            	robot = new WheelRob(map, tile);
+            	robot = new WheeledRob(map, tile);
             	break;
             case "PATTES":
             	robot = new WalkingRob(map, tile);

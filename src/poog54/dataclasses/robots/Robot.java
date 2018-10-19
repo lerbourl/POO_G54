@@ -2,6 +2,7 @@ package poog54.dataclasses.robots;
 
 import poog54.dataclasses.*;
 import poog54.enums.*;
+import poog54.io.Drawable;
 
 /**
   * Represents a basic firefighter robot.
@@ -21,7 +22,7 @@ import poog54.enums.*;
  * 
  */
 
-public abstract class Robot {
+public abstract class Robot extends Drawable{
 	
 	/** Current state:
 	 * Idle, Moving to fire, moving to water reserve, pouring, tanking up
@@ -75,6 +76,7 @@ public abstract class Robot {
 	//TODO: REPLACE MAP[][] with correct class implementation
 
 	Robot(TheMap theMap, Tile initial_location){
+		super(initial_location.getLine(), initial_location.getColumn());
 		//Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
 		this.location = initial_location;

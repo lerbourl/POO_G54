@@ -15,6 +15,21 @@ public abstract class Drawable {
 	private String imageFilePath;
 	private int line, column; //x -> column , y -> line
 	
+	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
+		this.imageFilePath = ImageFilePath;
+		this. line = xCoord;
+		this.column = yCoord;
+	}
+	protected Drawable(int xCoord, int yCoord) {
+		this. line = xCoord;
+		this.column = yCoord;
+	}
+	/**
+	 * @param imageFilePath the imageFilePath to set
+	 */
+	protected void setImageFilePath(String imageFilePath) {
+		this.imageFilePath = imageFilePath;
+	}
 	/**
 	 * @return the line
 	 */
@@ -24,7 +39,7 @@ public abstract class Drawable {
 	/**
 	 * @param line the line to set
 	 */
-	public void setLine(int xCoord) {
+	protected void setLine(int xCoord) {
 		this.line = xCoord;
 	}
 	/**
@@ -36,12 +51,7 @@ public abstract class Drawable {
 	/**
 	 * @param column the column to set
 	 */
-	public void setColumn(int yCoord) {
-		this.column = yCoord;
-	}
-	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
-		this.imageFilePath = ImageFilePath;
-		this. line = xCoord;
+	protected void setColumn(int yCoord) {
 		this.column = yCoord;
 	}
 	public ImageElement getImage(GUISimulator gui, int rowsNumber, int factor) {

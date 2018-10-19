@@ -32,6 +32,7 @@ public class TrackedRob extends Robot {
 
 	public TrackedRob(TheMap theMap, Tile inital_location) {
 		super(theMap, inital_location);
+		this.setImageFilePath("assets/tracked-robot.png");
 		setSpeed();
 		this.water_capacity = 2000;
 		this.water_level = 2000;

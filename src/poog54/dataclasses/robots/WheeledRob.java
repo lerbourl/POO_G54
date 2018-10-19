@@ -22,15 +22,16 @@ import poog54.dataclasses.*;
  * @author POO_G54
  * 
  */
-public class WheelRob extends Robot{
+public class WheeledRob extends Robot{
 
 	/** Constructor
 	 *  This constructor sets the speed and water capacity of a drone.
 	 *  It also executes the generic constructor method
 	 */
 
-	public WheelRob(TheMap theMap, Tile inital_location) {
+	public WheeledRob(TheMap theMap, Tile inital_location) {
 		super(theMap, inital_location);
+		this.setImageFilePath("assets/wheeled-robot.png");
 		this.setSpeed(80);
 		this.water_capacity = 5000;
 		this.water_level = 5000;

@@ -31,10 +31,10 @@ public class DroneRob extends Robot{
 
 	public DroneRob(TheMap theMap, Tile inital_location) {
 		super(theMap, inital_location);
+		this.setImageFilePath("assets/drone-robot.png");
 		setSpeed();
 		this.water_capacity = 10000;
 		this.water_level = 10000;
-
 	}
 
 	/** Path builder: provide the fastest path to the specified tile according to speeds & theMap 

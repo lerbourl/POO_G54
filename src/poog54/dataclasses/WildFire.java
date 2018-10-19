@@ -14,7 +14,7 @@ public class WildFire extends Drawable{
 	private int intensity;
 	
 	public WildFire(Tile pos, int intensity) {
-		super("ressources/fire.png", pos.getLine(), pos.getColumn());
+		super("assets/fire.png", pos.getLine(), pos.getColumn());
 		this.intensity = intensity;
 		this.pos = pos;
 	}
