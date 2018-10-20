@@ -20,6 +20,9 @@ public class Simulator implements Simulable {
 
 	/** Les données de simulation associées */
 	private SimulationData data;
+	
+	/** Les données de simulation associées */
+	private SimulationData initialData;
 
 	/**
 	 * @param gui
@@ -27,6 +30,7 @@ public class Simulator implements Simulable {
 	public Simulator(GUISimulator gui, SimulationData data) {
 		this.gui = gui;
 		this.data = data;
+		this.initialData = data;
 		gui.setSimulable(this); // association a la gui!
 		drawTheMapOnFire();
 	}
@@ -57,8 +61,8 @@ public class Simulator implements Simulable {
 
 	@Override
 	public void restart() {
-		// TODO Auto-generated method stub
-
+		this.data = this.initialData;
+		drawTheMapOnFire();
 	}
 
 }
