@@ -7,4 +7,3 @@
 - ajouter objet point ! --> retirer les tiles... (redondance d'information)
 - TOUT METTRE EN ANGLAIS
 - RENDRE LE CODE PROPRE
-- Faire notre lecteur de donnée (classe séparée)
