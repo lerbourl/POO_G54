@@ -7,15 +7,15 @@ import gui.GUISimulator;
 import poog54.dataclasses.*;
 import poog54.io.*;
 
-public class PrintMapTest {
+public class MapDrawTest {
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
-			System.out.println("Syntaxe: java TestLecteurDonnees <nomDeFichier>");
+			System.out.println("Syntaxe: java TestOurDataReader <nomDeFichier>");
 			System.exit(1);
 		}
 		try {
-			SimulationData data = LecteurDonnees.DataFromFile(args[0]);
+			SimulationData data = OurDataReader.DataFromFile(args[0]);
 			GUISimulator gui = new GUISimulator(1024, 1024, Color.BLACK);
 			@SuppressWarnings("unused")
 			Simulator sim = new Simulator(gui, data);
