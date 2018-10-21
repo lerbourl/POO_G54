@@ -39,6 +39,76 @@ public abstract class Robot extends Drawable {
 	protected Tile location;
 
 	/**
+	 * @return the state
+	 */
+	public RobotState getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(RobotState state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public Tile getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Tile location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return the fire
+	 */
+	public Target getFire() {
+		return fire;
+	}
+
+	/**
+	 * @param fire the fire to set
+	 */
+	public void setFire(Target fire) {
+		this.fire = fire;
+	}
+
+	/**
+	 * @return the water_capacity
+	 */
+	public int getWater_capacity() {
+		return water_capacity;
+	}
+
+	/**
+	 * @param water_capacity the water_capacity to set
+	 */
+	public void setWater_capacity(int water_capacity) {
+		this.water_capacity = water_capacity;
+	}
+
+	/**
+	 * @return the water_level
+	 */
+	public int getWater_level() {
+		return water_level;
+	}
+
+	/**
+	 * @param water_level the water_level to set
+	 */
+	public void setWater_level(int water_level) {
+		this.water_level = water_level;
+	}
+
+	/**
 	 * Speeds: depends on the type of field
 	 */
 	protected Speed speed;
@@ -69,7 +139,6 @@ public abstract class Robot extends Drawable {
 	 * Constructor with default speed Initialises the generic attributes of a
 	 * firefighter: - gui - theMap - initial location - state (IDLE)
 	 */
-	// TODO: REPLACE MAP[][] with correct class implementation
 
 	Robot(TheMap theMap, Tile initial_location) {
 		super(initial_location.getLine(), initial_location.getColumn());
