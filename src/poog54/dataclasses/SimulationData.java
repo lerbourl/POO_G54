@@ -5,7 +5,9 @@
 package poog54.dataclasses;
 
 import poog54.dataclasses.robots.*;
-import java.util.List;
+import poog54.io.Drawable;
+
+import java.util.*;
 
 /**
  * @author lerbourl
@@ -28,7 +30,17 @@ public class SimulationData {
 
 	public SimulationData() {
 	}
-
+	/*
+	 * Return an iterator on all the Drawable objects
+	 */
+	public ListIterator<Drawable> getDrawablesIt(){
+		List<Drawable> AllDrawables = new ArrayList<Drawable>();
+		AllDrawables.addAll(this.theMap.getDrawableList());
+		AllDrawables.addAll(this.robotList);
+		AllDrawables.addAll(this.wfList);
+		return AllDrawables.listIterator();
+	}
+	
 	/**
 	 * @return the theMap
 	 */

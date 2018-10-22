@@ -29,6 +29,7 @@ public abstract class Robot extends Drawable {
 	 * Current state: Idle, Moving to fire, moving to water reserve, pouring,
 	 * tanking up
 	 */
+	
 	protected RobotState state;
 
 	/** TheMap */

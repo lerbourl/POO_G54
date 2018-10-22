@@ -1,9 +1,11 @@
 package poog54.dataclasses;
 
 import java.awt.Point;
-import java.util.Map;
+import java.util.*;
+import java.util.Map.Entry;
 
 import poog54.enums.*;
+import poog54.io.Drawable;
 
 /**
  * @author Rey-Ricord Yoann
@@ -21,6 +23,16 @@ public class TheMap {
 		this.nbLines = nbLines;
 		this.nbColums = nbColums;
 		this.TileMatrix = TileMatrix;
+	}
+	
+	public List<Drawable> getDrawableList(){
+		Set<Entry<Point, Tile>> tmpSet = this.TileMatrix.entrySet();
+		List<Drawable> l = new ArrayList<Drawable>();
+		Iterator<Entry<Point, Tile>> it = tmpSet.iterator();
+		while(it.hasNext()) {
+			l.add((Drawable) it.next().getValue());
+		}
+		return l;
 	}
 
 	public int getTileSize() {

@@ -8,7 +8,6 @@ import java.util.ListIterator;
 import gui.*;
 import gui.Simulable;
 import poog54.dataclasses.*;
-import poog54.dataclasses.robots.Robot;
 
 /**
  * @author louis
@@ -37,20 +36,9 @@ public class Simulator implements Simulable {
 	}
 
 	private void drawTheMapOnFire() {
-		int i, j;
-		TheMap map = this.data.getMap();
-		for (i = 0; i < map.getNbLines(); i++) {
-			for (j = 0; j < map.getnbColums(); j++) {
-				gui.addGraphicalElement(map.getTile(i, j).getImage(gui, map.getNbLines(), 1));
-			}
-		}
-		ListIterator<WildFire> WFit = data.getWfList().listIterator();
-		while (WFit.hasNext()) {
-			gui.addGraphicalElement(WFit.next().getImage(gui, map.getNbLines(), 1));
-		}
-		ListIterator<Robot> Rit = data.getRobotList().listIterator();
-		while (Rit.hasNext()) {
-			gui.addGraphicalElement(Rit.next().getImage(gui, map.getNbLines(), 1));
+		ListIterator<Drawable> drawit = data.getDrawablesIt();
+		while (drawit.hasNext()) {
+			gui.addGraphicalElement(drawit.next().getImage(gui, data.getMap().getNbLines(), 1));
 		}
 	}
 
