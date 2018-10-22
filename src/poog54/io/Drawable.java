@@ -47,6 +47,16 @@ public abstract class Drawable {
 	public Point getCoord() {
 		return this.coord;
 	}
+	
+	public void setCoord(int xCoord, int yCoord) {
+		this.coord.x = xCoord;
+		this.coord.y = yCoord;
+	}
+	
+	public void setCoord(Drawable object) {
+		this.coord = object.getCoord();
+	}
+	
 	public int getx() {
 		return this.coord.x;
 	}

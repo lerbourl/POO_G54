@@ -26,16 +26,35 @@ import poog54.io.Drawable;
 public abstract class Robot extends Drawable {
 
 	/**
+	 * Constructor with default speed Initialises the generic attributes of a
+	 * firefighter:- theMap - initial location - state (IDLE)
+	 */
+
+	Robot(TheMap theMap, int xCoord, int yCoord) {
+		super(xCoord, yCoord);
+		// Speeds and water capacity must be set in the child constructors
+		this.theMap = theMap;
+		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
+	}
+
+	/**
 	 * Current state: Idle, Moving to fire, moving to water reserve, pouring,
 	 * tanking up
 	 */
-	
+
 	protected RobotState state;
 
 	/** TheMap */
 	protected TheMap theMap;
 
 	/**
+	 * @return the state
+	 */
+	public RobotState getState() {
+		return state;
+	}
+
+	/*
 	 * Speeds: depends on the type of field
 	 */
 	protected Speed speed;
@@ -63,25 +82,63 @@ public abstract class Robot extends Drawable {
 	protected int water_level;
 
 	/**
-	 * Constructor with default speed Initialises the generic attributes of a
-	 * firefighter:- theMap - initial location - state (IDLE)
+	 * @param state the state to set
 	 */
+	public void setState(RobotState state) {
+		this.state = state;
+	}
 
-	Robot(TheMap theMap, int xCoord, int yCoord) {
-		super(xCoord, yCoord);
-		// Speeds and water capacity must be set in the child constructors
-		this.theMap = theMap;
-		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
+	/**
+	 * @return the fire
+	 */
+	public Target getFire() {
+		return fire;
+	}
+
+	/**
+	 * @param fire the fire to set
+	 */
+	public void setFire(Target fire) {
+		this.fire = fire;
+	}
+
+	/**
+	 * @return the water_capacity
+	 */
+	public int getWater_capacity() {
+		return water_capacity;
+	}
+
+	/**
+	 * @param water_capacity the water_capacity to set
+	 */
+	public void setWater_capacity(int water_capacity) {
+		this.water_capacity = water_capacity;
+	}
+
+	/**
+	 * @return the water_level
+	 */
+	public int getWater_level() {
+		return water_level;
+	}
+
+	/**
+	 * @param water_level the water_level to set
+	 */
+	public void setWater_level(int water_level) {
+		this.water_level = water_level;
 	}
 
 	/**
 	 * Speed assignment Abstract cause it depends on the Robot Type
 	 */
 	public abstract void setSpeed(int speed);
+
 	public abstract void setSpeed();
 
 	// UTILES !?
-	
+
 	/** Target fire assignment */
 	public void setTargetFire(Target fire) {
 		this.fire = fire;
@@ -98,27 +155,26 @@ public abstract class Robot extends Drawable {
 	 */
 	// TODO
 	/*
-	public Target buildTargetPath(Point location) {
-		Target target = new Target();
-		target.path = new Tile[2];
+	 * public Target buildTargetPath(Point location) { Target target = new Target();
+	 * target.path = new Tile[2];
+	 * 
+	 * // TODO compute the fastest (full) path
+	 * 
+	 * target.location = location; target.path[0] = this.location; target.path[1] =
+	 * location;
+	 * 
+	 * return target; }
+	 */
 
-		// TODO compute the fastest (full) path
-		
-		target.location = location;
-		target.path[0] = this.location;
-		target.path[1] = location;
-
-		return target;
-	}
-	*/
-		
 	public Tile getTile() {
 		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
 	}
-	
+
 	protected void move(CardinalPoints dir) throws DataFormatException {
-		if (theMap.hasNeighbour(this.getTile(), dir)) this.translate(dir);
-		else throw new DataFormatException("Move robot on non allowed tile");
+		if (theMap.hasNeighbour(this.getTile(), dir))
+			this.translate(dir);
+		else
+			throw new DataFormatException("Move robot on non allowed tile");
 	}
 
 	/**
