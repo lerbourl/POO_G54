@@ -47,6 +47,12 @@ public abstract class Drawable {
 	public Point getCoord() {
 		return this.coord;
 	}
+	public int getx() {
+		return this.coord.x;
+	}
+	public int gety() {
+		return this.coord.y;
+	}
 
 	protected void translate(CardinalPoints dir) {
 		switch (dir) {

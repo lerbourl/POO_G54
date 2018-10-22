@@ -28,9 +28,9 @@ public class WildFire extends Drawable {
 
 	@Override
 	public String toString() {
-		return "WildFire\nfilepath : " + this.getImageFilePath() +
-				"\nline : " + this.getCoord().y +
-				"\nColumn : "+ this.getCoord().x + "\n";
+		return "\nWildFire || filepath: \"" + this.getImageFilePath() +
+				"\" | lin: " + this.gety() +
+				" | col: "+ this.getx() + " ||\n";
 	}
 	
 }

@@ -1,5 +1,8 @@
 package poog54.dataclasses;
 
+import java.awt.Point;
+import java.util.Map;
+
 import poog54.enums.*;
 
 /**
@@ -11,9 +14,9 @@ public class TheMap {
 
 	private int tileSize;
 	private int nbLines, nbColums;
-	private Tile TileMatrix[][];
+	private Map<Point, Tile> TileMatrix;
 
-	public TheMap(int tileSize, int nbLines, int nbColums, Tile TileMatrix[][]) {
+	public TheMap(int tileSize, int nbLines, int nbColums, Map<Point, Tile> TileMatrix) {
 		this.tileSize = tileSize;
 		this.nbLines = nbLines;
 		this.nbColums = nbColums;
@@ -32,8 +35,8 @@ public class TheMap {
 		return this.nbColums;
 	}
 
-	public Tile getTile(int line, int column) {
-		return TileMatrix[line][column];
+	public Tile getTile(int xCoord, int yCoord) {
+		return TileMatrix.get(new Point(xCoord, yCoord));
 	}
 
 	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
@@ -78,33 +81,23 @@ public class TheMap {
 	public Tile getNeighbour(Tile src, CardinalPoints dir) {
 		/** Is there any Neighbour ?? */
 		if (hasNeighbour(src, dir)) {
-
+			Point p = new Point();
 			switch (dir) {
-
 			/** North */
 			case NORTH:
-				return TileMatrix[src.getCoord().y + 1][src.getCoord().x];
-
-			/** South */
+				p = new Point(src.gety() + 1, src.getx());
+				/** South */
 			case SOUTH:
-				return TileMatrix[src.getCoord().y - 1][src.getCoord().x];
-
-			/** East */
+				p = new Point(src.gety() - 1, src.getx());
+				/** East */
 			case EAST:
-				return TileMatrix[src.getCoord().y][src.getCoord().x - 1];
-
-			/** West */
-
+				p = new Point(src.gety(), src.getx() + 1);
+				/** West */
 			case WEST:
-				return TileMatrix[src.getCoord().y][src.getCoord().x + 1];
-
-			default:
-				return TileMatrix[src.getCoord().y][src.getCoord().x]; /** erreur !!!! */
+				p = new Point(src.gety(), src.getx() - 1);
 			}
-
+			return TileMatrix.get(p);
 		}
-
-		return TileMatrix[src.getCoord().y][src.getCoord().x]; /** erreur !!!! */
-
+		return null; //error
 	}
 }

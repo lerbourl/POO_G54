@@ -3,6 +3,7 @@
  */
 package poog54.io;
 
+import java.awt.Point;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
@@ -54,13 +55,13 @@ public class OurDataReader {
 			int nbColonnes = scanner.nextInt();
 			int tailleCases = scanner.nextInt();
 			System.out.println("Carte " + nbLignes + "x" + nbColonnes + "; taille des cases = " + tailleCases);
-			Tile tab2d[][] = new Tile[nbLignes][nbColonnes];
+			Map<Point, Tile> TileMatrix = new LinkedHashMap<Point, Tile>();
 			for (int lig = 0; lig < nbLignes; lig++) {
 				for (int col = 0; col < nbColonnes; col++) {
-					tab2d[col][lig] = getCase(lig, col);
+					TileMatrix.put(new Point(col, lig), getCase(lig, col));
 				}
 			}
-			return new TheMap(tailleCases, nbLignes, nbColonnes, tab2d);
+			return new TheMap(tailleCases, nbLignes, nbColonnes, TileMatrix);
 
 		} catch (NoSuchElementException e) {
 			throw new DataFormatException("Format invalide. " + "Attendu: nbLignes nbColonnes tailleCases");

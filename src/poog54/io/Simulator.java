@@ -32,6 +32,7 @@ public class Simulator implements Simulable {
 		this.data = data;
 		this.initialData = data;
 		gui.setSimulable(this); // association a la gui!
+		System.out.println(data.getWfList().toString());
 		drawTheMapOnFire();
 	}
 
