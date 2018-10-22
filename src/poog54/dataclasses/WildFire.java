@@ -1,6 +1,10 @@
-package poog54.dataclasses;
+/*
+ * Represents a WildFire.
+ * WildFire has no need to know the tile on which he is.
+ * Extends Drawable : it has coordinates.
+ */
 
-import poog54.dataclasses.Tile;
+package poog54.dataclasses;
 import poog54.io.Drawable;
 
 /**
@@ -10,21 +14,23 @@ import poog54.io.Drawable;
 
 public class WildFire extends Drawable {
 
-	private Tile pos;
 	private int intensity;
 
-	public WildFire(Tile pos, int intensity) {
-		super("assets/fire.png", pos.getLine(), pos.getColumn());
+	public WildFire(int xCoord, int yCoord, int intensity) {
+		super("assets/fire.png", xCoord, yCoord);
 		this.intensity = intensity;
-		this.pos = pos;
 	}
 
-	public Tile getPos() {
-		return pos;
-	}
-
-	public int getintensity() {
+	public int getIntensity() {
 		return intensity;
 	}
 
+
+	@Override
+	public String toString() {
+		return "WildFire\nfilepath : " + this.getImageFilePath() +
+				"\nline : " + this.getCoord().y +
+				"\nColumn : "+ this.getCoord().x + "\n";
+	}
+	
 }

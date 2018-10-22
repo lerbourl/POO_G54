@@ -7,3 +7,4 @@
 - ajouter objet point ! --> retirer les tiles... (redondance d'information)
 - TOUT METTRE EN ANGLAIS
 - RENDRE LE CODE PROPRE
+- Déplacer les robots (avec superposition en  plus)

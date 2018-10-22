@@ -37,12 +37,11 @@ public class TheMap {
 	}
 
 	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
-
 		switch (dir) {
 
 		/** North */
 		case NORTH:
-			if (src.getLine() == 0) {
+			if (src.getCoord().y == 0) {
 				return false;
 			} else {
 				return true;
@@ -50,21 +49,21 @@ public class TheMap {
 
 			/** South */
 		case SOUTH:
-			if (src.getColumn() == nbLines - 1) {
+			if (src.getCoord().y == nbLines - 1) {
 				return false;
 			} else {
 				return true;
 			}
 			/** East */
 		case EAST:
-			if (src.getLine() == nbColums - 1) {
+			if (src.getCoord().x == nbColums - 1) {
 				return false;
 			} else {
 				return true;
 			}
 			/** West */
 		case WEST:
-			if (src.getColumn() == 0) {
+			if (src.getCoord().x == 0) {
 				return false;
 			} else {
 				return true;
@@ -84,28 +83,28 @@ public class TheMap {
 
 			/** North */
 			case NORTH:
-				return TileMatrix[src.getLine() + 1][src.getColumn()];
+				return TileMatrix[src.getCoord().y + 1][src.getCoord().x];
 
 			/** South */
 			case SOUTH:
-				return TileMatrix[src.getLine() - 1][src.getColumn()];
+				return TileMatrix[src.getCoord().y - 1][src.getCoord().x];
 
 			/** East */
 			case EAST:
-				return TileMatrix[src.getLine()][src.getColumn() - 1];
+				return TileMatrix[src.getCoord().y][src.getCoord().x - 1];
 
 			/** West */
 
 			case WEST:
-				return TileMatrix[src.getLine()][src.getColumn() + 1];
+				return TileMatrix[src.getCoord().y][src.getCoord().x + 1];
 
 			default:
-				return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
+				return TileMatrix[src.getCoord().y][src.getCoord().x]; /** erreur !!!! */
 			}
 
 		}
 
-		return TileMatrix[src.getLine()][src.getColumn()]; /** erreur !!!! */
+		return TileMatrix[src.getCoord().y][src.getCoord().x]; /** erreur !!!! */
 
 	}
 }

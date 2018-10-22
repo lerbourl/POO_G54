@@ -1,5 +1,7 @@
 package poog54.dataclasses.robots;
 
+import java.util.zip.DataFormatException;
+
 import poog54.dataclasses.*;
 import poog54.enums.*;
 import poog54.io.Drawable;
@@ -11,10 +13,9 @@ import poog54.io.Drawable;
   *
   * A robot has access to the following external data:
   * - the theMap (to locate fires, water points and compute trajectories)
-  * - the graphic window (to be able to display its current position)
   *
   * A robot moves one cell / tile at a time, as mentioned in the specifications.
-  * A robot refreshes its position and state at every simulation 'step' or 'cycle'.
+  * A robot has no need to know the tile on which he is, he can have it thanks to the map !
  */
 
 /**
@@ -32,11 +33,6 @@ public abstract class Robot extends Drawable {
 
 	/** TheMap */
 	protected TheMap theMap;
-
-	/**
-	 * Current location: position on the theMap, active cell or tile
-	 */
-	protected Tile location;
 
 	/**
 	 * Speeds: depends on the type of field
@@ -67,34 +63,24 @@ public abstract class Robot extends Drawable {
 
 	/**
 	 * Constructor with default speed Initialises the generic attributes of a
-	 * firefighter: - gui - theMap - initial location - state (IDLE)
+	 * firefighter:- theMap - initial location - state (IDLE)
 	 */
-	// TODO: REPLACE MAP[][] with correct class implementation
 
-	Robot(TheMap theMap, Tile initial_location) {
-		super(initial_location.getLine(), initial_location.getColumn());
+	Robot(TheMap theMap, int xCoord, int yCoord) {
+		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		this.location = initial_location;
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
-	}
-
-	/**
-	 * Constructor with custom speed Initialises the generic attributes of a
-	 * firefighter: - theMap - initial location - state (IDLE)
-	 */
-
-	Robot(TheMap theMap, Tile initial_location, int custom_speed) {
-		this(theMap, initial_location);
 	}
 
 	/**
 	 * Speed assignment Abstract cause it depends on the Robot Type
 	 */
 	public abstract void setSpeed(int speed);
-
 	public abstract void setSpeed();
 
+	// UTILES !?
+	
 	/** Target fire assignment */
 	public void setTargetFire(Target fire) {
 		this.fire = fire;
@@ -109,16 +95,29 @@ public abstract class Robot extends Drawable {
 	 * Target builder: - provides the fastest path to the specified tile according
 	 * to speeds & theMap - provides the time required to reach the target
 	 */
-	public Target buildTargetPath(Tile location) {
+	// TODO
+	/*
+	public Target buildTargetPath(Point location) {
 		Target target = new Target();
 		target.path = new Tile[2];
 
 		// TODO compute the fastest (full) path
+		
 		target.location = location;
 		target.path[0] = this.location;
 		target.path[1] = location;
 
 		return target;
+	}
+	*/
+		
+	public Tile getTile() {
+		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
+	}
+	
+	protected void move(CardinalPoints dir) throws DataFormatException {
+		if (theMap.hasNeighbour(this.getTile(), dir)) this.translate(dir);
+		else throw new DataFormatException("Move robot on non allowed tile");
 	}
 
 	/**

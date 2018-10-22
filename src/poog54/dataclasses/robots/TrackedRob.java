@@ -30,8 +30,8 @@ public class TrackedRob extends Robot {
 	 * drone. It also executes the generic constructor method
 	 */
 
-	public TrackedRob(TheMap theMap, Tile inital_location) {
-		super(theMap, inital_location);
+	public TrackedRob(TheMap theMap, int xCoord, int yCoord) {
+		super(theMap,  xCoord, yCoord);
 		this.setImageFilePath("assets/tracked-robot.png");
 		setSpeed();
 		this.water_capacity = 2000;
@@ -43,6 +43,7 @@ public class TrackedRob extends Robot {
 	 * Path builder: provide the fastest path to the specified tile according to
 	 * speeds & theMap
 	 */
+	/*
 	@Override
 	public Target buildTargetPath(Tile location) {
 		Target target = new Target();
@@ -55,7 +56,7 @@ public class TrackedRob extends Robot {
 
 		return target;
 	}
-
+	*/
 	/**
 	 * Tank up: fill tank
 	 */

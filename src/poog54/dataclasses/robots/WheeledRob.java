@@ -29,8 +29,8 @@ public class WheeledRob extends Robot {
 	 * also executes the generic constructor method
 	 */
 
-	public WheeledRob(TheMap theMap, Tile inital_location) {
-		super(theMap, inital_location);
+	public WheeledRob(TheMap theMap, int xCoord, int yCoord) {
+		super(theMap,  xCoord, yCoord);
 		this.setImageFilePath("assets/wheeled-robot.png");
 		this.setSpeed(80);
 		this.water_capacity = 5000;
@@ -41,6 +41,7 @@ public class WheeledRob extends Robot {
 	 * Path builder: provide the fastest path to the specified tile according to
 	 * speeds & theMap
 	 */
+	/*
 	@Override
 	public Target buildTargetPath(Tile location) {
 		Target target = new Target();
@@ -53,7 +54,7 @@ public class WheeledRob extends Robot {
 
 		return target;
 	}
-
+	*/
 	/**
 	 * Tank up: fill tank
 	 */

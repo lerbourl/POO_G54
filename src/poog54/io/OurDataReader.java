@@ -52,12 +52,12 @@ public class OurDataReader {
 		try {
 			int nbLignes = scanner.nextInt();
 			int nbColonnes = scanner.nextInt();
-			int tailleCases = scanner.nextInt(); // en m
+			int tailleCases = scanner.nextInt();
 			System.out.println("Carte " + nbLignes + "x" + nbColonnes + "; taille des cases = " + tailleCases);
 			Tile tab2d[][] = new Tile[nbLignes][nbColonnes];
 			for (int lig = 0; lig < nbLignes; lig++) {
 				for (int col = 0; col < nbColonnes; col++) {
-					tab2d[lig][col] = getCase(lig, col);
+					tab2d[col][lig] = getCase(lig, col);
 				}
 			}
 			return new TheMap(tailleCases, nbLignes, nbColonnes, tab2d);
@@ -88,7 +88,10 @@ public class OurDataReader {
 			throw new DataFormatException("format de case invalide. " + "Attendu: nature altitude [valeur_specifique]");
 		}
 		System.out.println();
-		return new Tile(lig, col, TypeField.valueOf(chaineNature));
+		/*
+		 * Note : for the gui, x = col and y = lig !
+		 */
+		return new Tile(col, lig, TypeField.valueOf(chaineNature));
 	}
 
 	/**
@@ -128,7 +131,10 @@ public class OurDataReader {
 			verifieLigneTerminee();
 
 			System.out.println("position = (" + lig + "," + col + ");\t intensite = " + intensite);
-			return new WildFire(map.getTile(lig, col), intensite);
+			/*
+			 * Note : for the gui, x = col and y = lig !
+			 */
+			return new WildFire(col, lig, intensite);
 
 		} catch (NoSuchElementException e) {
 			throw new DataFormatException("format d'incendie invalide. " + "Attendu: ligne colonne intensite");
@@ -174,20 +180,22 @@ public class OurDataReader {
 			System.out.print("; \t vitesse = ");
 			String s = scanner.findInLine("(\\d+)"); // 1 or more digit(s) ?
 			// pour lire un flottant: ("(\\d+(\\.\\d+)?)");
-			Tile tile = map.getTile(lig, col);
 			Robot robot;
 			switch (type) {
+			/*
+			 * Note : for the gui, x = col and y = lig !
+			 */
 			case "ROUES":
-				robot = new WheeledRob(map, tile);
+				robot = new WheeledRob(map, col, lig);
 				break;
 			case "PATTES":
-				robot = new WalkingRob(map, tile);
+				robot = new WalkingRob(map, col, lig);
 				break;
 			case "CHENILLES":
-				robot = new TrackedRob(map, tile);
+				robot = new TrackedRob(map, col, lig);
 				break;
 			case "DRONE":
-				robot = new DroneRob(map, tile);
+				robot = new DroneRob(map, col, lig);
 				break;
 			default: // never happen
 				throw new DataFormatException("Type de robot non reconnnu");

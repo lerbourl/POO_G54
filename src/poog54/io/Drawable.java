@@ -1,10 +1,14 @@
 /**
  * Drawable objects that return their drawable Image !
+ * Note : for the gui, x = col and y = lig !
  */
 package poog54.io;
 
+
+import java.awt.Point;
 import gui.GUISimulator;
 import gui.ImageElement;
+import poog54.enums.CardinalPoints;
 
 /**
  * @author louis
@@ -13,19 +17,23 @@ import gui.ImageElement;
 public abstract class Drawable {
 
 	private String imageFilePath;
-	private int line, column; // x -> column , y -> line
-
-	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
-		this.imageFilePath = ImageFilePath;
-		this.line = xCoord;
-		this.column = yCoord;
-	}
+	private Point coord;
 
 	protected Drawable(int xCoord, int yCoord) {
-		this.line = xCoord;
-		this.column = yCoord;
+		this.coord = new Point(xCoord, yCoord);
 	}
+	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
+		this(xCoord, yCoord);
+		this.imageFilePath = ImageFilePath;
+	}
+	
 
+	/**
+	 * @return the imageFilePath
+	 */
+	public String getImageFilePath() {
+		return imageFilePath;
+	}
 	/**
 	 * @param imageFilePath the imageFilePath to set
 	 */
@@ -34,40 +42,36 @@ public abstract class Drawable {
 	}
 
 	/**
-	 * @return the line
+	 * @return the point
 	 */
-	public int getLine() {
-		return line;
+	public Point getCoord() {
+		return this.coord;
 	}
 
-	/**
-	 * @param line the line to set
-	 */
-	protected void setLine(int xCoord) {
-		this.line = xCoord;
-	}
+	protected void translate(CardinalPoints dir) {
+		switch (dir) {
 
-	/**
-	 * @return the column
-	 */
-	public int getColumn() {
-		return column;
-	}
+		/** North */
+		case NORTH:
+			this.coord.translate(0, -1);
 
-	/**
-	 * @param column the column to set
-	 */
-	protected void setColumn(int yCoord) {
-		this.column = yCoord;
+			/** South */
+		case SOUTH:
+			this.coord.translate(0, 1);
+			
+			/** East */
+		case EAST:
+			this.coord.translate(1, 0);
+			
+			/** West */
+		case WEST:
+			this.coord.translate(-1, 0);
+		}
 	}
 
 	public ImageElement getImage(GUISimulator gui, int rowsNumber, int factor) {
 		int size = gui.getPanelHeight() / rowsNumber / factor;
-		return new ImageElement(column * size, line * size, imageFilePath, size, size, gui);
-		/*
-		 * We have to swap column and line because this constructor works with : column
-		 * numbers as x-axis line numbers as y-axis
-		 */
+		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);
 	}
 
 }
