@@ -24,13 +24,5 @@ public class WildFire extends Drawable {
 	public int getIntensity() {
 		return intensity;
 	}
-
-
-	@Override
-	public String toString() {
-		return "\nWildFire || filepath: \"" + this.getImageFilePath() +
-				"\" | lin: " + this.gety() +
-				" | col: "+ this.getx() + " ||\n";
-	}
 	
 }

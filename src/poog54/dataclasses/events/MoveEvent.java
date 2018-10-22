@@ -59,7 +59,7 @@ public class MoveEvent extends Event {
 		this.robot.setState(RobotState.MOVING_TO_TARGET_FIRE);
 		this.robot.setCoord(this.destination);
 		// @TODO this.source.draw();
-		this.robot.draw();
+		// this.robot.draw();
 	}
 
 	/*

@@ -17,7 +17,7 @@ import poog54.enums.CardinalPoints;
 public abstract class Drawable {
 
 	private String imageFilePath;
-	private Point coord;
+	protected Point coord;
 
 	protected Drawable(int xCoord, int yCoord) {
 		this.coord = new Point(xCoord, yCoord);
@@ -53,6 +53,10 @@ public abstract class Drawable {
 		this.coord.y = yCoord;
 	}
 	
+	public void setCoord(Point p) {
+		this.coord = p;
+	}
+	
 	public void setCoord(Drawable object) {
 		this.coord = object.getCoord();
 	}
@@ -63,14 +67,12 @@ public abstract class Drawable {
 	public int gety() {
 		return this.coord.y;
 	}
-
+	
 	protected void translate(CardinalPoints dir) {
 		switch (dir) {
-
 		/** North */
 		case NORTH:
 			this.coord.translate(0, -1);
-
 			/** South */
 		case SOUTH:
 			this.coord.translate(0, 1);
@@ -89,5 +91,10 @@ public abstract class Drawable {
 		int size = gui.getPanelHeight() / rowsNumber / factor;
 		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);
 	}
-
+	@Override
+	public String toString() {
+		return "\nWildFire || filepath: \"" + this.getImageFilePath() +
+				"\" | lin: " + this.gety() +
+				" | col: "+ this.getx() + " ||";
+	}
 }

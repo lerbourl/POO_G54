@@ -1,7 +1,5 @@
 package poog54.dataclasses.robots;
 
-import java.util.zip.DataFormatException;
-
 import poog54.dataclasses.*;
 import poog54.enums.*;
 import poog54.io.Drawable;
@@ -170,11 +168,14 @@ public abstract class Robot extends Drawable {
 		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
 	}
 
-	protected void move(CardinalPoints dir) throws DataFormatException {
-		if (theMap.hasNeighbour(this.getTile(), dir))
+	
+	public void move(CardinalPoints dir) {
+		if (theMap.hasNeighbour(this.getTile(), dir)) {
+			System.out.println(this.getCoord().toString());
 			this.translate(dir);
-		else
-			throw new DataFormatException("Move robot on non allowed tile");
+			System.out.println(this.getCoord().toString());
+		}
+		else System.out.println("Move robot on non allowed tile");
 	}
 
 	/**
@@ -190,13 +191,6 @@ public abstract class Robot extends Drawable {
 	 * Pouring water: extinguish fire
 	 */
 	public void pourOut(int water_volume) {
-
-		// TODO
-
-	}
-
-	/** Draw: display robot on the theMap */
-	public void draw() {
 
 		// TODO
 
