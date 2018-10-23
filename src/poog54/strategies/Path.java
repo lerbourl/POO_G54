@@ -30,7 +30,7 @@ public class Path {
 		return traveltime;
 	}
 	
-	public void setTraveltime(double traveltime) {
+	public void incTravelTime(double traveltime) {
 		this.traveltime += traveltime;
 	}
 	
@@ -38,4 +38,8 @@ public class Path {
 		this.thepath.add(e);
 	}
 	
+	@Override 
+	public String toString() {
+		return "Time travel =" + this.traveltime +"list = " + thepath.toString();
+	}
 }

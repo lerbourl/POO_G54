@@ -1,12 +1,15 @@
 package poog54.runnables;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 import gui.GUISimulator;
+import poog54.dataclasses.SimulationData;
 import poog54.io.*;
+import poog54.strategies.Path;
 
-public class MapDrawTest {
+public class AStarTest {
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
@@ -14,9 +17,11 @@ public class MapDrawTest {
 			System.exit(1);
 		}
 		try {
-			GUISimulator gui = new GUISimulator(920, 920, Color.BLACK);
-			@SuppressWarnings("unused")
-			Simulator sim = new Simulator(gui, args[0]);
+			SimulationData data = OurDataReader.DataFromFile(args[0]);
+			
+			Path p = data.getRobotList().get(0).getPathToPoint(new Point(48,7));
+			System.out.println(p.toString());
+		
 		} catch (FileNotFoundException e) {
 			System.out.println("fichier " + args[0] + " inconnu ou illisible");
 		} catch (DataFormatException e) {

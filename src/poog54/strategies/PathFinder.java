@@ -60,8 +60,8 @@ public class PathFinder {
 		AlgoTile current = null;
 		boolean exit_while=false;
 		
-		while(exit_while) {
-			
+		while(exit_while!=true) {
+			System.out.println("test");
 			current = openlist.poll();
 			if(current == null)break;
 			closedtab[current.getCoord().x][current.getCoord().y]=true;
@@ -73,34 +73,29 @@ public class PathFinder {
 			AlgoTile t;
 			
 			if(current.getCoord().x-1>=0) {
-				t = grid[current.getCoord().x-1][current.getCoord().y];
-				
-				//grande incertitude sur ce que je fais ici (getCostTime(t))^^je cherche le coût en temps de la case supérieure
-				
+				t = grid[current.getCoord().x-1][current.getCoord().y];				
 				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
 				}
 			
-			if(current.getCoord().x+1>=0) {
+			if(current.getCoord().x+1 < grid.length) {
 				t = grid[current.getCoord().x+1][current.getCoord().y];
 				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
 				}
 			
 			if(current.getCoord().y-1>=0) {
-				t = grid[current.getCoord().x-1][current.getCoord().y-1];
+				t = grid[current.getCoord().x][current.getCoord().y-1];
 				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
 				}
 			
-			if(current.getCoord().y+1>=0) {
+			if(current.getCoord().y+1<grid[0].length) {
 				t = grid[current.getCoord().x][current.getCoord().y+1];
 				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
 				}
-	
 		}
-		
-		 while(current.getParent() != null){
-			 
-             path.add(current.getCoord());
-             path.setTraveltime(current.getTime_cost());
+			
+		 while(!current.equals(grid[start.x][start.y])){
+	         path.add(current.getCoord());
+             path.incTravelTime(current.getTime_cost());
              current = current.getParent();
          } 
 		
