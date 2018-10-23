@@ -36,8 +36,11 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		this.pathFinder = new PathFinder(getAlgoMap(),theMap.getNbLines(), theMap.getNbColums());
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
+	}
+	
+	protected void setPathFinder() {
+		this.pathFinder = new PathFinder(getAlgoMap(),theMap.getNbLines(), theMap.getNbColums());
 	}
 
 	/**
@@ -170,15 +173,20 @@ public abstract class Robot extends Drawable {
 		double speed=0.000001;
 		
 		switch (type) {
-		case EAU : speed += this.getSpeed().getSpeedWater(); 
+		case EAU :
+			speed += this.getSpeed().getSpeedWater(); 
 			break;
-		case FORET: speed += this.getSpeed().getSpeedForest();
+		case FORET:
+			speed += this.getSpeed().getSpeedForest();
 			break;
-		case ROCHE: speed += this.getSpeed().getSpeedRock();
+		case ROCHE:
+			speed += this.getSpeed().getSpeedRock();
 			break;
-		case HABITAT: speed += this.getSpeed().getSpeedHouse();
+		case HABITAT:
+			speed += this.getSpeed().getSpeedHouse();
 			break;
-		case TERRAIN_LIBRE: speed += this.getSpeed().getSpeedEmptyField();
+		case TERRAIN_LIBRE:
+			speed += this.getSpeed().getSpeedEmptyField();
 			break;
 		default :
 			break;

@@ -33,6 +33,7 @@ public class WheeledRob extends Robot {
 		super(theMap,  xCoord, yCoord);
 		this.setImageFilePath("assets/wheeled-robot.png");
 		this.setSpeed(80);
+		super.setPathFinder();
 		this.water_capacity = 5000;
 		this.water_level = 5000;
 	}
