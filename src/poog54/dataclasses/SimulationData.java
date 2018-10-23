@@ -27,9 +27,9 @@ public class SimulationData {
 		this.wfList = wfList;
 		this.theMap = theMap;
 	}
-
 	public SimulationData() {
 	}
+	
 	/*
 	 * Return an iterator on all the Drawable objects
 	 */

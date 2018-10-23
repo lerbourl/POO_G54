@@ -4,37 +4,42 @@
 package poog54.io;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.ListIterator;
+import java.util.zip.DataFormatException;
 
 import gui.*;
 import gui.Simulable;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.Robot;
-import poog54.enums.CardinalPoints;
 
 /**
  * @author louis
  *
  */
 public class Simulator implements Simulable {
+	private String filepath;
 	/** L'interface graphique associée */
 	private GUISimulator gui;
 
 	/** Les données de simulation associées */
 	private SimulationData data;
 
-	/** Les données de simulation associées */
-	private SimulationData initialData;
-
 	/**
 	 * @param gui
+	 * @throws DataFormatException 
+	 * @throws FileNotFoundException 
 	 */
-	public Simulator(GUISimulator gui, SimulationData data) {
+	public Simulator(GUISimulator gui, String filepath) throws FileNotFoundException, DataFormatException {
 		this.gui = gui;
-		this.data = data;
-		this.initialData = data;
+		this.filepath = filepath;
+		loadData();
 		gui.setSimulable(this); // association a la gui!
 		drawTheMapOnFire();
+	}
+	
+	private void loadData() throws FileNotFoundException, DataFormatException {
+		this.data = OurDataReader.DataFromFile(this.filepath);
 	}
 
 	private void drawTheMapOnFire() {
@@ -58,7 +63,13 @@ public class Simulator implements Simulable {
 
 	@Override
 	public void restart() {
-		this.data = this.initialData;
+		try {
+			loadData();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
 		drawTheMapOnFire();
 	}
 
