@@ -7,9 +7,7 @@ import java.util.*;
 public class PathFinder {
 
 	private AlgoTile[][] grid;
-	
 	private PriorityQueue<AlgoTile> openlist;
-	
 	private boolean[][] closedtab;
 	
 
