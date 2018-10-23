@@ -7,6 +7,8 @@ package poog54.dataclasses.events;
 
 import java.util.zip.DataFormatException;
 
+import poog54.io.Simulator;
+
 /**
  * @author POO_G54
  * 
@@ -40,5 +42,5 @@ public abstract class DiscreteEvent {
 	/**
 	 * Execute actions associated to an event
 	 */
-	abstract public void execute();
+	abstract public void execute(Simulator sim);
 }

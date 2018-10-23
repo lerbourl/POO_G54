@@ -7,6 +7,8 @@ package poog54.dataclasses.events;
 
 import java.util.zip.DataFormatException;
 
+import poog54.io.Simulator;
+
 /**
  * @author POO_G54
  *
@@ -26,7 +28,7 @@ public class CarryOutStrategy extends DiscreteEvent {
 	 * @see poog54.dataclasses.events.Event#execute()
 	 */
 	@Override
-	public void execute() {
+	public void execute(Simulator sim) {
 		// @TODO
 	}
 

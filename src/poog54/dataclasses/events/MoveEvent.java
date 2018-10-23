@@ -5,6 +5,7 @@
 package poog54.dataclasses.events;
 
 import poog54.enums.*;
+import poog54.io.Simulator;
 
 import java.util.zip.DataFormatException;
 
@@ -36,7 +37,7 @@ public class MoveEvent extends DiscreteEvent {
 	}
 
 	@Override
-	public void execute() {
+	public void execute(Simulator sim) {
 		this.robot.setState(RobotState.MOVING);
 		this.robot.move(this.direction);
 	}

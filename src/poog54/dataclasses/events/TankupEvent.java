@@ -6,6 +6,7 @@ package poog54.dataclasses.events;
 import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.robots.Robot;
+import poog54.io.Simulator;
 
 /**
  * @author POO_G54
@@ -39,7 +40,7 @@ public class TankupEvent extends DiscreteEvent {
 	 * @see poog54.dataclasses.events.Event#execute()
 	 */
 	@Override
-	public void execute() {
+	public void execute(Simulator sim) {
 		this.robot.setWater_level(this.robot.getWater_level() + this.amountOfWater);
 	}
 

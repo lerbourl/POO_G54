@@ -9,6 +9,7 @@ import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.robots.*;
 import poog54.enums.RobotState;
+import poog54.io.Simulator;
 
 /**
  * @author POO_G54
@@ -36,9 +37,10 @@ public class DestinationReachedEvent extends DiscreteEvent {
 	 * @param date
 	 * @param destination
 	 */
-	public DestinationReachedEvent(int date, Point destination) throws DataFormatException {
+	public DestinationReachedEvent(int date, Robot robot ,Point destination) throws DataFormatException {
 		super(date);
 		this.destination = destination;
+		this.robot = robot;
 	}
 
 	/*
@@ -47,8 +49,8 @@ public class DestinationReachedEvent extends DiscreteEvent {
 	 * @see poog54.dataclasses.events.Event#execute()
 	 */
 	@Override
-	public void execute() {
-		this.robot.setState(RobotState.IDLE);
+	public void execute(Simulator sim) {
+		sim.moveRobot(robot, destination);
 	}
 
 	/*

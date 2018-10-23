@@ -43,7 +43,12 @@ public class Simulator implements Simulable {
 		this.filepath = filepath;
 		gui.setSimulable(this); // association a la gui!
 		restart();
-		this.eventList.add(new CarryOutStrategy(0));
+		this.eventList = new LinkedList<DiscreteEvent>();
+		this.eventList.add(new FireExtinguishedEvent(1, this.data.getWfList().get(0)));
+		this.eventList.add(new FireExtinguishedEvent(1, this.data.getWfList().get(1)));
+		this.eventList.add(new DestinationReachedEvent(1, this.data.getRobotList().get(0),new Point(1,1)));
+		this.eventList.add(new DestinationReachedEvent(2, this.data.getRobotList().get(0),new Point(1,2)));
+		this.eventList.add(new DestinationReachedEvent(3, this.data.getRobotList().get(0),new Point(1,3)));
 	}
 	
 	private void loadData() throws FileNotFoundException, DataFormatException {
@@ -56,14 +61,14 @@ public class Simulator implements Simulable {
 			gui.addGraphicalElement(drawit.next().getImage(gui, data.getMap().getNbLines(), 1));
 		}
 	}
-	private void moveRobot(Robot rob, Point p) {
+	public void moveRobot(Robot rob, Point p) {
 		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
 		rob.move(p);
 		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
 		gui.addGraphicalElement(rob.getImage(gui, data.getMap().getNbLines(), 1));
 	}
-	private void removeFire(WildFire wf) {
-		if(data.getWfList().contains(wf)) {
+	public void removeFire(WildFire wf) {
+		if(!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
 			Tile t = data.getMap().getTile(wf.getCoord());
 			data.getWfList().remove(wf);
 			gui.addGraphicalElement(t.getImage(gui, data.getMap().getNbLines(), 1));
@@ -110,28 +115,18 @@ public class Simulator implements Simulable {
 	 * runs all events in a chronological order until the current date 
 	 */
 	public void processEvents() {
-		int eventIndex;
 		DiscreteEvent event;
-		Boolean eventsProcessed;
 		ListIterator<DiscreteEvent> eventIterator;
-		
-		eventsProcessed=false;
 		eventIterator = this.eventList.listIterator();
 		
 		//browses events and executes those < current date
 		//the event list is sorted in a chronological order
-		while(!eventsProcessed) {
-			eventIndex = eventIterator.nextIndex();
+		while(eventIterator.hasNext()) {
 			event = eventIterator.next();
 			if (event.getDate()<=this.date){
 				//this event must be processed and removed from the list
-				event.execute();
-				this.eventList.remove(eventIndex);
-				eventsProcessed = !eventIterator.hasNext();
-			}
-			else {
-				//remaining events are for future use
-				eventsProcessed = true;
+				event.execute(this);
+				this.eventList.remove(event);
 			}	
 		}
 	}
@@ -142,14 +137,7 @@ public class Simulator implements Simulable {
 			this.date++;
 			processEvents();
 		}
-		/*
-		 * TEST without event management
-		 * 
-		 * Robot rob = data.getRobotList().get(0);
-		 * WildFire wf = data.getWfList().get(0);
-		 * moveRobot(rob, new Point(0,0));
-		 * removeFire(wf)
-		*/
+		else System.out.println("\nFin des évenements !");
 	}
 
 	@Override
