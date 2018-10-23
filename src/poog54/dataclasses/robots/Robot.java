@@ -36,7 +36,7 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		this.pathFinder = new PathFinder(getAlgoMap());
+		this.pathFinder = new PathFinder(getAlgoMap(),theMap.getNbLines(), theMap.getNbColums());
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
 	}
 
