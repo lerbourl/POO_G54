@@ -33,9 +33,8 @@ public class Simulator implements Simulable {
 	public Simulator(GUISimulator gui, String filepath) throws FileNotFoundException, DataFormatException {
 		this.gui = gui;
 		this.filepath = filepath;
-		loadData();
 		gui.setSimulable(this); // association a la gui!
-		drawTheMapOnFire();
+		restart();
 	}
 	
 	private void loadData() throws FileNotFoundException, DataFormatException {
