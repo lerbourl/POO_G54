@@ -17,7 +17,6 @@ import poog54.dataclasses.robots.*;
 public class MoveEvent extends DiscreteEvent {
 	protected Robot robot;
 	protected CardinalPoints direction;
-
 	/**
 	 * @return the robot
 	 */
