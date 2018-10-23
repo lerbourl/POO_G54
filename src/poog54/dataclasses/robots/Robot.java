@@ -6,6 +6,7 @@ import poog54.dataclasses.*;
 import poog54.enums.*;
 import poog54.io.Drawable;
 import poog54.strategies.AlgoTile;
+import poog54.strategies.Path;
 import poog54.strategies.PathFinder;
 
 /**
@@ -41,6 +42,10 @@ public abstract class Robot extends Drawable {
 	
 	protected void setPathFinder() {
 		this.pathFinder = new PathFinder(getAlgoMap(),theMap.getNbLines(), theMap.getNbColums());
+	}
+	
+	public Path getPathToPoint(Point p) {
+		return pathFinder.Astar(this.getCoord(), p);
 	}
 
 	/**
