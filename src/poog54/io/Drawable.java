@@ -87,6 +87,7 @@ public abstract class Drawable {
 		}
 	}
 
+	
 	public ImageElement getImage(GUISimulator gui, int rowsNumber, int factor) {
 		int size = gui.getPanelHeight() / rowsNumber / factor;
 		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);
