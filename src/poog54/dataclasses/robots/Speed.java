@@ -11,19 +11,19 @@ package poog54.dataclasses.robots;
 public class Speed {
 
 	/** Empty field speed */
-	public int empty_field;
+	private int empty_field;
 
 	/** Forest speed */
-	public int forest;
+	private int forest;
 
 	/** Rock speed */
-	public int rock;
+	private int rock;
 
 	/** Water speed */
-	public int water;
+	private int water;
 
 	/** Urban speed */
-	public int house;
+	private int house;
 
 	/** Constructor */
 	Speed(int empty_field, int forest, int rock, int water, int house) {
@@ -33,4 +33,23 @@ public class Speed {
 		this.water = water;
 		this.house = house;
 	}
+	
+	public int getSpeedWater() {
+		return water;
+	}
+	public int getSpeedForest() {
+		return forest;
+	}
+	public int getSpeedRock	() {
+		return rock;
+	}
+	public int getSpeedHouse() {
+		return house;
+	}
+	public int getSpeedEmptyField() {
+		return empty_field;
+	}
+	
+	
+	
 }
