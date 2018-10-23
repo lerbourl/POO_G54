@@ -8,9 +8,10 @@ package poog54.dataclasses.events;
 import java.util.zip.DataFormatException;
 
 /**
- * @author POO_G54 *
+ * @author POO_G54
+ * 
  */
-public abstract class Event {
+public abstract class DiscreteEvent {
 
 	/**
 	 * Event timestamp (iteration / simulation step / cycle number)
@@ -22,7 +23,7 @@ public abstract class Event {
 	 * 
 	 * @param date
 	 */
-	public Event(int date) throws DataFormatException {
+	public DiscreteEvent(int date) throws DataFormatException {
 		if (date < 0) {
 			throw new DataFormatException("Bad event timestamp...");
 		}
@@ -39,7 +40,5 @@ public abstract class Event {
 	/**
 	 * Execute actions associated to an event
 	 */
-	public void execute() {
-
-	}
+	abstract public void execute();
 }

@@ -8,17 +8,15 @@ import poog54.enums.*;
 
 import java.util.zip.DataFormatException;
 
-import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
 
 /**
- * @author POO54
+ * @author POO_G54
  *
  */
-public class MoveEvent extends Event {
+public class MoveEvent extends DiscreteEvent {
 	protected Robot robot;
-	protected Tile source;
-	protected Tile destination;
+	protected CardinalPoints direction;
 
 	/**
 	 * @return the robot
@@ -28,38 +26,20 @@ public class MoveEvent extends Event {
 	}
 
 	/**
-	 * @return the source
-	 */
-	public Tile getSource() {
-		return source;
-	}
-
-	/**
-	 * @return the destination
-	 */
-	public Tile getDestination() {
-		return destination;
-	}
-
-	/**
 	 * @param date
 	 * @param robot
-	 * @param source
-	 * @param destination
+	 * @param direction
 	 */
-	public MoveEvent(int date, Robot robot, Tile source, Tile destination) throws DataFormatException {
+	public MoveEvent(int date, Robot robot, CardinalPoints direction) throws DataFormatException {
 		super(date);
 		this.robot = robot;
-		this.source = source;
-		this.destination = destination;
+		this.direction=direction;
 	}
 
 	@Override
 	public void execute() {
-		this.robot.setState(RobotState.MOVING_TO_TARGET_FIRE);
-		this.robot.setCoord(this.destination);
-		// @TODO this.source.draw();
-		// this.robot.draw();
+		this.robot.setState(RobotState.MOVING);
+		this.robot.move(this.direction);
 	}
 
 	/*
@@ -67,7 +47,7 @@ public class MoveEvent extends Event {
 	 */
 	@Override
 	public String toString() {
-		return "Move " + this.robot + " from " + this.source + " to " + this.destination;
+		return "Move " + this.robot + " to " + this.direction;
 	}
 
 }

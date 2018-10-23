@@ -8,10 +8,10 @@ import java.util.zip.DataFormatException;
 import poog54.dataclasses.robots.Robot;
 
 /**
- * @author POO54
+ * @author POO_G54
  *
  */
-public class TankupEvent extends Event {
+public class TankupEvent extends DiscreteEvent {
 	private int amountOfWater;
 	private Robot robot;
 

@@ -8,10 +8,10 @@ package poog54.dataclasses.events;
 import java.util.zip.DataFormatException;
 
 /**
- * @author POO_54
+ * @author POO_G54
  *
  */
-public class CarryOutStrategy extends Event {
+public class CarryOutStrategy extends DiscreteEvent {
 
 	/**
 	 * @param date
