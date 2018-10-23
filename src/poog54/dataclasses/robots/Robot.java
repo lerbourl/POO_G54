@@ -190,27 +190,13 @@ public abstract class Robot extends Drawable {
 		this.water = water;
 	}
 
-	/**
-	 * Target builder: - provides the fastest path to the specified tile according
-	 * to speeds & theMap - provides the time required to reach the target
-	 */
-	// TODO
-	/*
-	 * public Target buildTargetPath(Point location) { Target target = new Target();
-	 * target.path = new Tile[2];
-	 * 
-	 * // TODO compute the fastest (full) path
-	 * 
-	 * target.location = location; target.path[0] = this.location; target.path[1] =
-	 * location;
-	 * 
-	 * return target; }
-	 */
-
 	public Tile getTile() {
 		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
 	}
 
+	public TheMap getMap() {
+		return this.theMap;
+	}
 	
 	public void move(CardinalPoints dir) {
 		if (theMap.hasNeighbour(this.getTile(), dir)) {

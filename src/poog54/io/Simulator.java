@@ -32,7 +32,8 @@ public class Simulator implements Simulable {
 
 	/** Discrete event management */
 	private int date; // current simulation date
-	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a chronological way
+	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a
+														// chronological way
 
 	/**
 	 * @param gui
@@ -41,19 +42,15 @@ public class Simulator implements Simulable {
 	 */
 	public Simulator(GUISimulator gui, String filepath) throws FileNotFoundException, DataFormatException {
 		this.gui = gui;
-		this.date = 0;
 		this.filepath = filepath;
 		this.gui.setSimulable(this); // association a la gui!
 		this.eventQueue = new PriorityQueue<DiscreteEvent>(11, (e1, e2) -> {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
-		firemanmaster = new FiremanMaster(this);
+		this.firemanmaster = new FiremanMaster(this);
 		restart();
 	}
-	
-public void eventAdd(DiscreteEvent e) {
-	this.eventQueue.add(e);
-}
+
 	private void loadData() throws FileNotFoundException, DataFormatException {
 		this.data = OurDataReader.DataFromFile(this.filepath);
 	}
@@ -88,11 +85,21 @@ public void eventAdd(DiscreteEvent e) {
 	}
 
 	/**
+	 * add an event into the priority queue
+	 */
+	public void addEvent(DiscreteEvent e) {
+		this.eventQueue.add(e);
+	}
+
+	/**
 	 * runs all events in a chronological order until the current date
 	 */
 	public void processEvents() {
+		DiscreteEvent event;
 		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
-			this.eventQueue.poll().execute(this);
+			event = this.eventQueue.poll();
+			event.execute(this);
+			System.out.println(event);
 		}
 	}
 
@@ -100,7 +107,7 @@ public void eventAdd(DiscreteEvent e) {
 	public void next() {
 		if (!endOfSimulation()) {
 			this.date++;
-			System.out.println(this.date);
+			System.out.println("t=" + this.date);
 			processEvents();
 		} else
 			System.out.println("\nFin des évenements !");
@@ -118,7 +125,12 @@ public void eventAdd(DiscreteEvent e) {
 		drawTheMapOnFire();
 		this.eventQueue.clear();
 		this.date = 0;
-		firemanmaster.setData(this.data);
-		firemanmaster.initStrategy();
+		this.firemanmaster.setData(this.data);
+		try {
+			addEvent(new CarryOutStrategy(0, this.firemanmaster));
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
+		processEvents();
 	}
 }

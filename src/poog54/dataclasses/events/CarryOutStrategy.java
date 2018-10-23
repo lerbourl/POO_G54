@@ -7,7 +7,8 @@ package poog54.dataclasses.events;
 
 import java.util.zip.DataFormatException;
 
-import poog54.io.Simulator;
+import poog54.io.*;
+import poog54.strategies.*;
 
 /**
  * @author POO_G54
@@ -15,11 +16,13 @@ import poog54.io.Simulator;
  */
 public class CarryOutStrategy extends DiscreteEvent {
 
+	protected FiremanMaster master;
 	/**
 	 * @param date
 	 */
-	public CarryOutStrategy(int date) throws DataFormatException {
+	public CarryOutStrategy(int date, FiremanMaster master) throws DataFormatException {
 		super(date);
+		this.master = master;
 	}
 
 	/*
@@ -29,7 +32,7 @@ public class CarryOutStrategy extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		// @TODO
+		this.master.initStrategy();
 	}
 
 	/*

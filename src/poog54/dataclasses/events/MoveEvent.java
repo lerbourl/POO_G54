@@ -4,12 +4,12 @@
  */
 package poog54.dataclasses.events;
 
+import poog54.io.*;
 import poog54.enums.*;
-import poog54.io.Simulator;
+import poog54.dataclasses.robots.*;
 
 import java.util.zip.DataFormatException;
 
-import poog54.dataclasses.robots.*;
 
 /**
  * @author POO_G54
@@ -38,6 +38,7 @@ public class MoveEvent extends DiscreteEvent {
 
 	@Override
 	public void execute(Simulator sim) {
+		sim.moveRobot(this.robot, this.robot.getMap().getNeighbour(this.robot.getTile(), this.direction).getCoord());
 	}
 
 	/*

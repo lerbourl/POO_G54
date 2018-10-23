@@ -53,8 +53,7 @@ public class PouringEvent extends DiscreteEvent {
 	@Override
 	public void execute(Simulator sim) {
 		this.robot.setWater_level(this.robot.getWater_level() - this.amountOfWater);
-		// @TODO
-		// this.fire.setNeededWater(this.fire.getNeededWater()-this.amountOfWater)
+		this.fire.setIntensity(this.fire.getIntensity()-this.amountOfWater);
 	}
 
 	/*

@@ -24,12 +24,12 @@ public class TheMap {
 		this.nbColums = nbColums;
 		this.TileMatrix = TileMatrix;
 	}
-	
-	public List<Drawable> getDrawableList(){
+
+	public List<Drawable> getDrawableList() {
 		Set<Entry<Point, Tile>> tmpSet = this.TileMatrix.entrySet();
 		List<Drawable> l = new ArrayList<Drawable>();
 		Iterator<Entry<Point, Tile>> it = tmpSet.iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			l.add((Drawable) it.next().getValue());
 		}
 		return l;
@@ -54,13 +54,15 @@ public class TheMap {
 	public Tile getTile(int xCoord, int yCoord) {
 		return this.TileMatrix.get(new Point(xCoord, yCoord));
 	}
+
 	public Tile getTile(Point p) {
 		return this.TileMatrix.get(p);
 	}
+
 	public Boolean tileIsIn(Point p) {
 		return this.TileMatrix.containsKey(p);
 	}
-	
+
 	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
 		switch (dir) {
 
@@ -103,23 +105,30 @@ public class TheMap {
 	public Tile getNeighbour(Tile src, CardinalPoints dir) {
 		/** Is there any Neighbour ?? */
 		if (hasNeighbour(src, dir)) {
-			Point p = new Point();
+			Point p;
 			switch (dir) {
 			/** North */
 			case NORTH:
-				p = new Point(src.gety() + 1, src.getx());
-				/** South */
+				p = new Point(src.getx(), src.gety() - 1);
+				break;
+			/** South */
 			case SOUTH:
-				p = new Point(src.gety() - 1, src.getx());
-				/** East */
+				p = new Point(src.getx(), src.gety() + 1);
+				break;
+			/** East */
 			case EAST:
-				p = new Point(src.gety(), src.getx() + 1);
-				/** West */
+				p = new Point(src.getx() + 1, src.gety());
+				break;
+			/** West */
 			case WEST:
-				p = new Point(src.gety(), src.getx() - 1);
+				p = new Point(src.getx() - 1, src.gety());
+				break;
+			/** Unknown direction... don't move! */
+			default:
+				p = new Point(src.getx(), src.gety());
 			}
 			return TileMatrix.get(p);
 		}
-		return null; //error
+		return null; // error
 	}
 }
