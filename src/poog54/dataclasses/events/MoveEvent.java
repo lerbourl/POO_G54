@@ -38,8 +38,6 @@ public class MoveEvent extends DiscreteEvent {
 
 	@Override
 	public void execute(Simulator sim) {
-		this.robot.setState(RobotState.MOVING);
-		this.robot.move(this.direction);
 	}
 
 	/*

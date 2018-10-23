@@ -1,18 +1,21 @@
 package poog54.strategies;
 
+import java.awt.Point;
+
 public class AlgoTile {
 	
 	private double heuristic_cost;
 	private double time_cost;
 	private double final_cost;
 	private AlgoTile parent;
+	private Point coord;
 	
-	
-	public AlgoTile(double time_cost) {
+	public AlgoTile(double time_cost, Point p) {
 		this.heuristic_cost = 0;
 		this.time_cost = time_cost;
 		this.final_cost = 0;
 		this.parent = null;
+		this.coord = p ;
 	}
 	
 	public double getHeuristic_cost() {
@@ -38,6 +41,10 @@ public class AlgoTile {
 	}
 	public void setParent(AlgoTile parent) {
 		this.parent = parent;
+	}
+
+	public Point getCoord() {
+		return coord;
 	}
 	
 	

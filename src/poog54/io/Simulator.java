@@ -15,22 +15,23 @@ import poog54.dataclasses.robots.*;
 import poog54.dataclasses.events.*;
 
 /**
- * @author louisPOO_G54
+ * @author POO_G54
  *
  */
 public class Simulator implements Simulable {
 	
 	private String filepath;
 	
-	/** L'interface graphique associée */
+	/** L'interface graphique associ�e */
 	private GUISimulator gui;
 
-	/** Les données de simulation associées */
+	/** Les donn�es de simulation associ�es */
 	private SimulationData data;
 	
 	/** Discrete event management */
 	private int date;						//current simulation date
 	private PriorityQueue<DiscreteEvent> eventQueue;	//events are ordered in a chronological way
+
 
 	/**
 	 * @param gui
@@ -41,7 +42,7 @@ public class Simulator implements Simulable {
 		this.gui = gui;
 		this.date = 0;
 		this.filepath = filepath;
-		gui.setSimulable(this); // association a la gui!
+		this.gui.setSimulable(this); // association a la gui!
 		restart();
 		this.eventQueue = new PriorityQueue<DiscreteEvent>(11, (e1, e2) -> {
 			return e1.getDate()<e2.getDate()?-1:e1.getDate()>e2.getDate()?1:0;
@@ -86,6 +87,7 @@ public class Simulator implements Simulable {
 	public boolean endOfSimulation() {
 		return this.eventQueue.isEmpty();
 	}
+	
 	/**
 	 * runs all events in a chronological order until the current date 
 	 */

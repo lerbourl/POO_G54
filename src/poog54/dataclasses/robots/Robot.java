@@ -37,7 +37,6 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
 	}
 	
 	protected void setPathFinder() {
@@ -48,24 +47,10 @@ public abstract class Robot extends Drawable {
 		return pathFinder.Astar(this.getCoord(), p);
 	}
 
-	/**
-	 * Current state: Idle, Moving to fire, moving to water reserve, pouring,
-	 * tanking up
-	 */
-
-	protected RobotState state;
-
 	/** TheMap */
 	protected TheMap theMap;
 
 	/**
-	 * @return the state
-	 */
-	public RobotState getState() {
-		return state;
-	}
-
-	/*
 	 * Speeds: depends on the type of field
 	 */
 	protected Speed speed;
@@ -102,20 +87,13 @@ public abstract class Robot extends Drawable {
 		
 		for (int i = 0 ; i < this.theMap.getNbLines() ; i++) {
 			for (int j = 0 ; j < this.theMap.getNbColums() ; j++) {
-				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)));
+				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)),new Point(i,j));
 			}
 		}
 		return algomap;
 		
 	}
 	
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(RobotState state) {
-		this.state = state;
-	}
-
 	/**
 	 * @return the fire
 	 */

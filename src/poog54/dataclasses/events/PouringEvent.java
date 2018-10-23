@@ -7,7 +7,6 @@ import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.WildFire;
 import poog54.dataclasses.robots.*;
-import poog54.enums.RobotState;
 import poog54.io.Simulator;
 
 /**
@@ -53,7 +52,6 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		this.robot.setState(RobotState.POURING_WATER);
 		this.robot.setWater_level(this.robot.getWater_level() - this.amountOfWater);
 		// @TODO
 		// this.fire.setNeededWater(this.fire.getNeededWater()-this.amountOfWater)
