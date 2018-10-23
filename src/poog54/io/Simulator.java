@@ -117,6 +117,7 @@ public void eventAdd(DiscreteEvent e) {
 		}
 		drawTheMapOnFire();
 		this.eventQueue.clear();
+		this.date = 0;
 		firemanmaster.setData(this.data);
 		firemanmaster.initStrategy();
 	}
