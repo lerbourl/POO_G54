@@ -5,7 +5,6 @@ package poog54.dataclasses.events;
 
 import java.util.zip.DataFormatException;
 import poog54.dataclasses.robots.*;
-import poog54.enums.RobotState;
 
 /**
  * @author POO_G54
@@ -37,7 +36,7 @@ public class TankFilledEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute() {
-		this.robot.setState(RobotState.IDLE);
+		
 	}
 
 	/*

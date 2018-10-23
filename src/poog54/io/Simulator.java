@@ -12,24 +12,25 @@ import java.util.zip.DataFormatException;
 import gui.*;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
+import poog54.enums.CardinalPoints;
 import poog54.dataclasses.events.*;
 
 /**
- * @author louisPOO_G54
+ * @author POO_G54
  *
  */
 public class Simulator implements Simulable {
 	
 	private String filepath;
 	
-	/** L'interface graphique associÃ©e */
+	/** L'interface graphique associée */
 	private GUISimulator gui;
 
-	/** Les donnÃ©es de simulation associÃ©es */
+	/** Les données de simulation associées */
 	private SimulationData data;
 	
 	/** Discrete event management */
-	private int date;						//current simulation date
+	private int date;								//current simulation date
 	private LinkedList<DiscreteEvent> eventList;	//events are ordered in a chronological way
 
 	/**
@@ -41,9 +42,16 @@ public class Simulator implements Simulable {
 		this.gui = gui;
 		this.date = -1;
 		this.filepath = filepath;
-		gui.setSimulable(this); // association a la gui!
+		this.eventList = new LinkedList<DiscreteEvent>();
+		this.gui.setSimulable(this); // association a la gui!
 		restart();
 		this.eventList.add(new CarryOutStrategy(0));
+		
+		//for test purpose
+		addEvent(new MoveEvent(1,data.getRobotList().get(0),CardinalPoints.NORTH));
+		addEvent(new MoveEvent(2,data.getRobotList().get(0),CardinalPoints.EAST) );
+		addEvent(new PouringEvent(3,data.getRobotList().get(0),10,data.getWfList().get(0)));
+		addEvent(new FireExtinguishedEvent(4,data.getWfList().get(0)));
 	}
 	
 	private void loadData() throws FileNotFoundException, DataFormatException {
@@ -99,7 +107,7 @@ public class Simulator implements Simulable {
 				}
 			}
 			else {
-				//insert in the appropriate location
+				//insert at the appropriate location
 				indexFound=true;
 				this.eventList.add(eventIndex, event);
 			}

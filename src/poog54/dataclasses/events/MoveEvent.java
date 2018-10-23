@@ -37,7 +37,6 @@ public class MoveEvent extends DiscreteEvent {
 
 	@Override
 	public void execute() {
-		this.robot.setState(RobotState.MOVING);
 		this.robot.move(this.direction);
 	}
 
