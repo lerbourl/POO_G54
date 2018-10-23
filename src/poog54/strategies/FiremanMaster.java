@@ -7,6 +7,6 @@ package poog54.strategies;
  * @author louis
  *
  */
-public class FireManMaster {
+public class FiremanMaster {
 	
 }
