@@ -4,9 +4,9 @@
  */
 package poog54.dataclasses.events;
 
+import java.awt.Point;
 import java.util.zip.DataFormatException;
 
-import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
 import poog54.enums.RobotState;
 
@@ -14,9 +14,9 @@ import poog54.enums.RobotState;
  * @author POO_G54
  *
  */
-public class DestinationReachedEvent extends Event {
+public class DestinationReachedEvent extends DiscreteEvent {
 	protected Robot robot;
-	protected Tile destination;
+	protected Point destination;
 
 	/**
 	 * @return the robot
@@ -28,7 +28,7 @@ public class DestinationReachedEvent extends Event {
 	/**
 	 * @return the destination
 	 */
-	public Tile getDestination() {
+	public Point getDestination() {
 		return destination;
 	}
 
@@ -36,7 +36,7 @@ public class DestinationReachedEvent extends Event {
 	 * @param date
 	 * @param destination
 	 */
-	public DestinationReachedEvent(int date, Tile destination) throws DataFormatException {
+	public DestinationReachedEvent(int date, Point destination) throws DataFormatException {
 		super(date);
 		this.destination = destination;
 	}

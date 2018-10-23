@@ -8,10 +8,10 @@ import poog54.dataclasses.robots.*;
 import poog54.enums.RobotState;
 
 /**
- * @author POO_54
+ * @author POO_G54
  *
  */
-public class TankFilledEvent extends Event {
+public class TankFilledEvent extends DiscreteEvent {
 	private Robot robot;
 
 	/**

@@ -10,10 +10,10 @@ import poog54.dataclasses.robots.*;
 import poog54.enums.RobotState;
 
 /**
- * @author POO54
+ * @author POO_G54
  *
  */
-public class PouringEvent extends Event {
+public class PouringEvent extends DiscreteEvent {
 	private int amountOfWater;
 	private Robot robot;
 	private WildFire fire;

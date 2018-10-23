@@ -7,10 +7,10 @@ import java.util.zip.DataFormatException;
 import poog54.dataclasses.*;
 
 /**
- * @author POO_54
+ * @author POO_G54
  *
  */
-public class FireExtinguishedEvent extends Event {
+public class FireExtinguishedEvent extends DiscreteEvent {
 	private WildFire fire;
 
 	/**
@@ -37,7 +37,7 @@ public class FireExtinguishedEvent extends Event {
 	 */
 	@Override
 	public void execute() {
-		// @TODO this.fire.getTile().draw();
+		// @TODO this.fire.kill();
 	}
 
 	/*
