@@ -54,11 +54,20 @@ public class Simulator implements Simulable {
 		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
 		gui.addGraphicalElement(rob.getImage(gui, data.getMap().getNbLines(), 1));
 	}
-
+	private void removeFire(WildFire wf) {
+		if(data.getWfList().contains(wf)) {
+			Tile t = data.getMap().getTile(wf.getCoord());
+			data.getWfList().remove(wf);
+			gui.addGraphicalElement(t.getImage(gui, data.getMap().getNbLines(), 1));
+		}
+	}
+	
 	@Override
 	public void next() {
 		Robot rob = data.getRobotList().get(0);
+		WildFire wf = data.getWfList().get(0);
 		moveRobot(rob, new Point(0,0));
+		removeFire(wf);
 	}
 
 	@Override
