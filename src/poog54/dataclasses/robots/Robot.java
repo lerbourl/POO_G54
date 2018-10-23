@@ -5,6 +5,8 @@ import java.awt.Point;
 import poog54.dataclasses.*;
 import poog54.enums.*;
 import poog54.io.Drawable;
+import poog54.strategies.AlgoTile;
+import poog54.strategies.PathFinder;
 
 /**
   * Represents a basic firefighter robot.
@@ -34,6 +36,7 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
+		this.pathFinder = new PathFinder(getAlgoMap());
 		this.state = RobotState.IDLE; // changes when the firefighter chief set a fire target
 	}
 
@@ -81,6 +84,23 @@ public abstract class Robot extends Drawable {
 	 */
 	protected int water_level;
 
+	
+	
+	protected PathFinder pathFinder;
+	
+	protected AlgoTile[][] getAlgoMap(){
+		
+		AlgoTile[][] algomap = new  AlgoTile[this.theMap.getNbLines()][this.theMap.getNbColums()];
+		
+		for (int i = 0 ; i < this.theMap.getNbLines() ; i++) {
+			for (int j = 0 ; j < this.theMap.getNbColums() ; j++) {
+				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)));
+			}
+		}
+		return algomap;
+		
+	}
+	
 	/**
 	 * @param state the state to set
 	 */
@@ -138,6 +158,36 @@ public abstract class Robot extends Drawable {
 	public abstract void setSpeed();
 
 	// UTILES !?
+	
+	public Speed getSpeed() {
+		return speed;
+	}
+
+	
+	public double getTimeType(Point p) {
+		TypeField type = this.theMap.getTile(p).getTypeField() ;
+		
+		double speed=0.000001;
+		
+		switch (type) {
+		case EAU : speed += this.getSpeed().getSpeedWater(); 
+			break;
+		case FORET: speed += this.getSpeed().getSpeedForest();
+			break;
+		case ROCHE: speed += this.getSpeed().getSpeedRock();
+			break;
+		case HABITAT: speed += this.getSpeed().getSpeedHouse();
+			break;
+		case TERRAIN_LIBRE: speed += this.getSpeed().getSpeedEmptyField();
+			break;
+		default :
+			break;
+		}
+		return this.theMap.getTileSize()/(speed);
+	}
+	
+	
+	
 
 	/** Target fire assignment */
 	public void setTargetFire(Target fire) {
@@ -177,6 +227,9 @@ public abstract class Robot extends Drawable {
 		}
 		else System.out.println("Move robot on non allowed tile");
 	}
+	
+	
+	
 	public void move(Point p) {
 		if (this.theMap.tileIsIn(p)) {
 			this.setCoord(p);
@@ -192,6 +245,8 @@ public abstract class Robot extends Drawable {
 		// TODO
 
 	}
+	
+	
 
 	/**
 	 * Pouring water: extinguish fire
@@ -201,4 +256,5 @@ public abstract class Robot extends Drawable {
 		// TODO
 
 	}
+	
 }

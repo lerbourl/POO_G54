@@ -43,7 +43,11 @@ public class TheMap {
 		return this.nbLines;
 	}
 
-	public int getnbColums() {
+	public Map<Point, Tile> getTileMatrix() {
+		return TileMatrix;
+	}
+
+	public int getNbColums() {
 		return this.nbColums;
 	}
 
