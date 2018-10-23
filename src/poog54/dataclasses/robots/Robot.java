@@ -97,7 +97,7 @@ public abstract class Robot extends Drawable {
 		
 		for (int i = 0 ; i < this.theMap.getNbLines() ; i++) {
 			for (int j = 0 ; j < this.theMap.getNbColums() ; j++) {
-				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)));
+				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)),new Point(i,j));
 			}
 		}
 		return algomap;

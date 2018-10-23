@@ -14,6 +14,8 @@ import java.util.Queue;
 public class Path {
 	private Queue<Point> thepath;
 	private double traveltime;
+
+	
 	public Path() {
 		this.thepath = new LinkedList<Point>();
 		this.traveltime = 0;
@@ -29,7 +31,7 @@ public class Path {
 	}
 	
 	public void setTraveltime(double traveltime) {
-		this.traveltime = traveltime;
+		this.traveltime += traveltime;
 	}
 	
 	public void add(Point e) {
