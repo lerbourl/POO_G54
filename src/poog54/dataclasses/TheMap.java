@@ -48,9 +48,15 @@ public class TheMap {
 	}
 
 	public Tile getTile(int xCoord, int yCoord) {
-		return TileMatrix.get(new Point(xCoord, yCoord));
+		return this.TileMatrix.get(new Point(xCoord, yCoord));
 	}
-
+	public Tile getTile(Point p) {
+		return this.TileMatrix.get(p);
+	}
+	public Boolean tileIsIn(Point p) {
+		return this.TileMatrix.containsKey(p);
+	}
+	
 	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
 		switch (dir) {
 

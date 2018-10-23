@@ -1,5 +1,7 @@
 package poog54.dataclasses.robots;
 
+import java.awt.Point;
+
 import poog54.dataclasses.*;
 import poog54.enums.*;
 import poog54.io.Drawable;
@@ -171,9 +173,13 @@ public abstract class Robot extends Drawable {
 	
 	public void move(CardinalPoints dir) {
 		if (theMap.hasNeighbour(this.getTile(), dir)) {
-			System.out.println(this.getCoord().toString());
 			this.translate(dir);
-			System.out.println(this.getCoord().toString());
+		}
+		else System.out.println("Move robot on non allowed tile");
+	}
+	public void move(Point p) {
+		if (this.theMap.tileIsIn(p)) {
+			this.setCoord(p);
 		}
 		else System.out.println("Move robot on non allowed tile");
 	}

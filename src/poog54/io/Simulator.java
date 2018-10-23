@@ -3,6 +3,7 @@
  */
 package poog54.io;
 
+import java.awt.Point;
 import java.util.ListIterator;
 
 import gui.*;
@@ -42,17 +43,17 @@ public class Simulator implements Simulable {
 			gui.addGraphicalElement(drawit.next().getImage(gui, data.getMap().getNbLines(), 1));
 		}
 	}
+	private void moveRobot(Robot rob, Point p) {
+		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
+		rob.move(p);
+		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
+		gui.addGraphicalElement(rob.getImage(gui, data.getMap().getNbLines(), 1));
+	}
 
 	@Override
 	public void next() {
 		Robot rob = data.getRobotList().get(0);
-		System.out.println(rob.toString());
-		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
-		rob.move(CardinalPoints.NORTH);
-		System.out.println(rob.toString());
-		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
-		gui.addGraphicalElement(rob.getImage(gui, data.getMap().getNbLines(), 1));
-
+		moveRobot(rob, new Point(0,0));
 	}
 
 	@Override

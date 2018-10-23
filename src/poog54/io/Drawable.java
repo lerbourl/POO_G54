@@ -17,8 +17,8 @@ import poog54.enums.CardinalPoints;
 public abstract class Drawable {
 
 	private String imageFilePath;
-	protected Point coord;
-
+	private Point coord;
+	
 	protected Drawable(int xCoord, int yCoord) {
 		this.coord = new Point(xCoord, yCoord);
 	}
@@ -73,17 +73,19 @@ public abstract class Drawable {
 		/** North */
 		case NORTH:
 			this.coord.translate(0, -1);
+			break;
 			/** South */
 		case SOUTH:
 			this.coord.translate(0, 1);
-			
+			break;
 			/** East */
 		case EAST:
 			this.coord.translate(1, 0);
-			
+			break;
 			/** West */
 		case WEST:
 			this.coord.translate(-1, 0);
+			break;
 		}
 	}
 
