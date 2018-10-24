@@ -37,6 +37,7 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
+		next_free_time = 0;
 	}
 	
 	protected void setPathFinder() {
@@ -45,6 +46,23 @@ public abstract class Robot extends Drawable {
 	
 	public Path getPathToPoint(Point p) {
 		return pathFinder.Astar(this.getCoord(), p);
+	}
+
+	/** The time the robot will be free to be involved into a new event an action */
+	private int next_free_time;
+	
+	/**
+	 * @return the next_free_time
+	 */
+	public int getNext_free_time() {
+		return next_free_time;
+	}
+
+	/**
+	 * @param next_free_time the next_free_time to set
+	 */
+	public void setNext_free_time(int next_free_time) {
+		this.next_free_time = next_free_time;
 	}
 
 	/** TheMap */

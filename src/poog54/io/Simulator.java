@@ -24,10 +24,10 @@ public class Simulator implements Simulable {
 	private String filepath;
 	private FiremanMaster firemanmaster;
 
-	/** L'interface graphique associ�e */
+	/** L'interface graphique e */
 	private GUISimulator gui;
 
-	/** Les donn�es de simulation associ�es */
+	/** Les donnees de simulation associees */
 	private SimulationData data;
 
 	/** Discrete event management */
@@ -54,7 +54,7 @@ public class Simulator implements Simulable {
 	public FiremanMaster getFiremanMaster() {
 		return this.firemanmaster;
 	}
-	
+
 	private void loadData() throws FileNotFoundException, DataFormatException {
 		this.data = OurDataReader.DataFromFile(this.filepath);
 	}
