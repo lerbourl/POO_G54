@@ -5,7 +5,10 @@ package poog54.io;
 
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;
 
@@ -34,6 +37,7 @@ public class Simulator implements Simulable {
 	private int date; // current simulation date
 	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a
 														// chronological way
+	private Map<Point, PriorityQueue<Drawable>> DrawableMap; // Drawables on a map, Queued by graphic_priority
 
 	/**
 	 * @param gui
@@ -44,13 +48,40 @@ public class Simulator implements Simulable {
 		this.gui = gui;
 		this.filepath = filepath;
 		this.gui.setSimulable(this); // association a la gui!
+		/* first of the queue will be the lowest date event */
 		this.eventQueue = new PriorityQueue<DiscreteEvent>(11, (e1, e2) -> {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
+		this.DrawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
 		this.firemanmaster = new FiremanMaster(this);
 		restart();
 	}
-
+	
+	private Iterator<Drawable> drawableMapFill(Drawable val) {
+		Point key = val.getCoord();
+		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		if (queue == null) {
+			/* first of the queue will be the lowest graphic priority */
+			queue = new PriorityQueue<Drawable>(11, (e1, e2) -> {
+				return e1.getGraphic_priority() < e2.getGraphic_priority() ? -1 :
+						e1.getGraphic_priority() > e2.getGraphic_priority() ? 1 :
+						0;
+			});
+			this.DrawableMap.put(key, queue);
+		}
+		queue.add(val);
+		return queue.iterator();
+	}
+	private Iterator<Drawable> drawableMapRemove(Drawable val) {
+		Point key = val.getCoord();
+		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		if (queue == null) {
+			System.out.println("error ! Drawable not in a the drawable map!\n");
+		}
+		queue.remove(val);
+		return queue.iterator();
+	}
+	
 	public FiremanMaster getFiremanMaster() {
 		return this.firemanmaster;
 	}
@@ -59,25 +90,37 @@ public class Simulator implements Simulable {
 		this.data = OurDataReader.DataFromFile(this.filepath);
 	}
 
-	private void drawTheMapOnFire() {
+	private void initTheMapOnFire() {
 		ListIterator<Drawable> drawit = data.getDrawablesIt();
 		while (drawit.hasNext()) {
-			gui.addGraphicalElement(drawit.next().getImage(gui, data.getMap().getNbLines(), 1));
+			this.draw(drawit.next());
+		}
+		System.out.println(this.DrawableMap);
+	}
+	
+	private void draw(Drawable d) {
+		Iterator<Drawable> it = drawableMapFill(d);
+		while(it.hasNext()) {
+			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
 		}
 	}
-
+	private void undraw(Drawable d) {
+		Iterator<Drawable> it = drawableMapRemove(d);
+		while(it.hasNext()) {
+			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
+		}
+	}
 	public void moveRobot(Robot rob, Point p) {
-		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
+		undraw(rob);
 		rob.move(p);
-		gui.addGraphicalElement(rob.getTile().getImage(gui, data.getMap().getNbLines(), 1));
-		gui.addGraphicalElement(rob.getImage(gui, data.getMap().getNbLines(), 1));
+		draw(rob);
 	}
 
 	public void removeFire(WildFire wf) {
 		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
 			Tile t = data.getMap().getTile(wf.getCoord());
 			data.getWfList().remove(wf);
-			gui.addGraphicalElement(t.getImage(gui, data.getMap().getNbLines(), 1));
+			gui.addGraphicalElement(t.getImage(gui, data.getMap().getNbLines()));
 		}
 	}
 
@@ -126,7 +169,8 @@ public class Simulator implements Simulable {
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
-		drawTheMapOnFire();
+		this.DrawableMap.clear();
+		initTheMapOnFire();
 		this.eventQueue.clear();
 		this.date = -1;
 		this.firemanmaster.setData(this.data);
