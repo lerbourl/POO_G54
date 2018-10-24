@@ -51,6 +51,10 @@ public class Simulator implements Simulable {
 		restart();
 	}
 
+	public FiremanMaster getFiremanMaster() {
+		return this.firemanmaster;
+	}
+	
 	private void loadData() throws FileNotFoundException, DataFormatException {
 		this.data = OurDataReader.DataFromFile(this.filepath);
 	}
@@ -124,13 +128,12 @@ public class Simulator implements Simulable {
 		}
 		drawTheMapOnFire();
 		this.eventQueue.clear();
-		this.date = 0;
+		this.date = -1;
 		this.firemanmaster.setData(this.data);
 		try {
 			addEvent(new CarryOutStrategy(0, this.firemanmaster));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
-		processEvents();
 	}
 }

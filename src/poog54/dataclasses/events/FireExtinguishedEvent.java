@@ -38,7 +38,14 @@ public class FireExtinguishedEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
+		//removes the fire from the list and from the screen
 		sim.removeFire(fire);
+		//re-affects robots to remaining fires
+		try {
+			sim.addEvent(new CarryOutStrategy(0, sim.getFiremanMaster()) );
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
