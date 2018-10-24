@@ -4,24 +4,24 @@
 package poog54.strategies;
 
 import java.awt.Point;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * @author ensimag
  *
  */
 public class Path {
-	private Queue<Point> thepath;
+	private Deque<Point> thepath;
 	private double traveltime;
 
 	
 	public Path() {
-		this.thepath = new LinkedList<Point>();
+		this.thepath = new ArrayDeque<Point>();
 		this.traveltime = 0;
 	}
 	
-	public Queue<Point> getThepath() {
+	public Deque<Point> getThepath() {
 		return thepath;
 	}
 
@@ -34,8 +34,8 @@ public class Path {
 		this.traveltime += traveltime;
 	}
 	
-	public void add(Point e) {
-		this.thepath.add(e);
+	public void addFirst(Point e) {
+		this.thepath.addFirst(e);
 	}
 	
 	@Override 

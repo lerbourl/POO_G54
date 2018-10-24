@@ -37,7 +37,7 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		next_free_time = 0;
+		next_free_time = 1; // after init startegy
 	}
 	
 	protected void setPathFinder() {
@@ -169,6 +169,7 @@ public abstract class Robot extends Drawable {
 
 	
 	public double getTimeType(Point p) {
+		double speed_factor = 10; //to speed up the simulation !
 		TypeField type = this.theMap.getTile(p).getTypeField() ;
 		
 		double speed=0.000001;
@@ -192,7 +193,7 @@ public abstract class Robot extends Drawable {
 		default :
 			break;
 		}
-		return this.theMap.getTileSize()/(speed);
+		return this.theMap.getTileSize()/speed/speed_factor;
 	}
 	
 	

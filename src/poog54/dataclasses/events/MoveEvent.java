@@ -5,9 +5,9 @@
 package poog54.dataclasses.events;
 
 import poog54.io.*;
-import poog54.enums.*;
 import poog54.dataclasses.robots.*;
 
+import java.awt.Point;
 import java.util.zip.DataFormatException;
 
 
@@ -17,7 +17,7 @@ import java.util.zip.DataFormatException;
  */
 public class MoveEvent extends DiscreteEvent {
 	protected Robot robot;
-	protected CardinalPoints direction;
+	protected Point p;
 	/**
 	 * @return the robot
 	 */
@@ -30,15 +30,15 @@ public class MoveEvent extends DiscreteEvent {
 	 * @param robot
 	 * @param direction
 	 */
-	public MoveEvent(int date, Robot robot, CardinalPoints direction) throws DataFormatException {
+	public MoveEvent(int date, Robot robot, Point p) throws DataFormatException {
 		super(date);
 		this.robot = robot;
-		this.direction=direction;
+		this.p = p;
 	}
 
 	@Override
 	public void execute(Simulator sim) {
-		sim.moveRobot(this.robot, this.robot.getMap().getNeighbour(this.robot.getTile(), this.direction).getCoord());
+		//sim.moveRobot(this.robot, this.robot.getMap().getNeighbour(this.robot.getTile(), this.direction).getCoord());
 	}
 
 	/*
@@ -46,7 +46,7 @@ public class MoveEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return "Move " + this.robot + " to " + this.direction;
+		return "Move " + this.robot + " to " + this.p;
 	}
 
 }

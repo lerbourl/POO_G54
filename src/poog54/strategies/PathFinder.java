@@ -92,11 +92,10 @@ public class PathFinder {
 		}
 			
 		 while(!current.equals(grid[start.x][start.y])){
-	         path.add(current.getCoord());
+	         path.addFirst(current.getCoord());
              path.incTravelTime(current.getTime_cost());
              current = current.getParent();
-         } 
-		
+         }
 		return path;
 	}
 
