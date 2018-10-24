@@ -224,8 +224,6 @@ public abstract class Robot extends Drawable {
 		else System.out.println("Move robot on non allowed tile");
 	}
 	
-	
-	
 	public void move(Point p) {
 		if (this.theMap.tileIsIn(p)) {
 			this.setCoord(p);
