@@ -4,5 +4,6 @@
 - Tostring() override pour les dataclasses ! utile pour le debug !
 - TOUT METTRE EN ANGLAIS
 - RENDRE LE CODE PROPRE
-- Superposition de robots !
-- Robots sur feux à afficher !
+- virer tout ce qui est points cardinaux ? on s'en fout ?
+- Implementer les évènements (move ok !)
+- Chef robot !

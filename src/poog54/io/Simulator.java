@@ -118,9 +118,8 @@ public class Simulator implements Simulable {
 
 	public void removeFire(WildFire wf) {
 		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
-			Tile t = data.getMap().getTile(wf.getCoord());
+			this.undraw(wf);
 			data.getWfList().remove(wf);
-			gui.addGraphicalElement(t.getImage(gui, data.getMap().getNbLines()));
 		}
 	}
 

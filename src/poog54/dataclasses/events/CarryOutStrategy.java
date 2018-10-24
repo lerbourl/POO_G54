@@ -32,7 +32,10 @@ public class CarryOutStrategy extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		this.master.initStrategy();
+		if (this.master.getData().getWfList().isEmpty()) {
+			System.out.println("Tous les feux sont éteints. Beau travail les gars !\nFin de la simulation.");
+		}
+		else this.master.initStrategy();
 	}
 
 	/*

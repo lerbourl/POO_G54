@@ -42,6 +42,12 @@ public class FiremanMaster {
 		System.out.println("arrive at " + (rob.getNext_free_time() + travel_time));
 		rob.setNext_free_time(rob.getNext_free_time() + travel_time + 1);
 	}
+	/**
+	 * @return the data
+	 */
+	public SimulationData getData() {
+		return data;
+	}
 	public void initStrategy() {
 		Robot rob1 = data.getRobotList().get(1);
 		Robot rob2 = data.getRobotList().get(2);
