@@ -32,6 +32,7 @@ public class WheeledRob extends Robot {
 	public WheeledRob(TheMap theMap, int xCoord, int yCoord) {
 		super(theMap,  xCoord, yCoord);
 		this.setImageFilePath("assets/wheeled-robot.png");
+		this.setGraphic_priority(2);
 		this.setSpeed(80);
 		super.setPathFinder();
 		this.water_capacity = 5000;

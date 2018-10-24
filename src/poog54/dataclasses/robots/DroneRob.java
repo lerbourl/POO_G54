@@ -32,6 +32,7 @@ public class DroneRob extends Robot {
 	public DroneRob(TheMap theMap, int xCoord, int yCoord) {
 		super(theMap,  xCoord, yCoord);
 		this.setImageFilePath("assets/drone-robot.png");
+		this.setGraphic_priority(2);
 		setSpeed();
 		super.setPathFinder();
 		this.water_capacity = 10000;

@@ -17,7 +17,7 @@ public class WildFire extends Drawable {
 	private int intensity;
 
 	public WildFire(int xCoord, int yCoord, int intensity) {
-		super("assets/fire.png", xCoord, yCoord);
+		super("assets/fire.png", 1,xCoord, yCoord);
 		this.intensity = intensity;
 	}
 

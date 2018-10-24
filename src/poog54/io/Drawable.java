@@ -18,16 +18,29 @@ public abstract class Drawable {
 
 	private String imageFilePath;
 	private Point coord;
+	private int graphic_priority;
 	
 	protected Drawable(int xCoord, int yCoord) {
 		this.coord = new Point(xCoord, yCoord);
 	}
-	protected Drawable(String ImageFilePath, int xCoord, int yCoord) {
+	protected Drawable(String ImageFilePath, int graphic_priority, int xCoord, int yCoord) {
 		this(xCoord, yCoord);
+		this.graphic_priority = graphic_priority;
 		this.imageFilePath = ImageFilePath;
 	}
 	
-
+	/**
+	 * @return the graphic_priority
+	 */
+	public int getGraphic_priority() {
+		return graphic_priority;
+	}
+	/**
+	 * @param graphic_priority the graphic_priority to set
+	 */
+	public void setGraphic_priority(int graphic_priority) {
+		this.graphic_priority = graphic_priority;
+	}
 	/**
 	 * @return the imageFilePath
 	 */

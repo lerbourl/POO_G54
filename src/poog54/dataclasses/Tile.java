@@ -21,7 +21,7 @@ public class Tile extends Drawable {
 	/** Tile constructor */
 
 	public Tile(int xCoord, int yCoord, TypeField type) {
-		super(TileImageFilePath(type), xCoord, yCoord);
+		super(TileImageFilePath(type), 0,xCoord, yCoord);
 		this.type = type;
 	}
 
