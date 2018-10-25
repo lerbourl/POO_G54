@@ -37,7 +37,12 @@ public class TankFilledEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		
+		//re-affects a robot to a remaining fire
+		try {
+			sim.addEvent(new CarryOutStrategy(0, sim.getFiremanMaster()) );
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*

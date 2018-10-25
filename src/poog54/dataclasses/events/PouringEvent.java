@@ -38,7 +38,7 @@ public class PouringEvent extends DiscreteEvent {
 	 * @param amountOfWater
 	 * @param fire
 	 */
-	public PouringEvent(int date, Robot robot, int amountOfWater, WildFire fire) throws DataFormatException {
+	public PouringEvent(int date, Robot robot, WildFire fire) throws DataFormatException {
 		super(date);
 		this.robot = robot;
 		this.amountOfWater = amountOfWater;
