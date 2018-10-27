@@ -4,9 +4,7 @@
  */
 package poog54.dataclasses.events;
 
-import poog54.io.*;
 import poog54.dataclasses.robots.*;
-
 import java.awt.Point;
 import java.util.zip.DataFormatException;
 
@@ -15,7 +13,7 @@ import java.util.zip.DataFormatException;
  * @author POO_G54
  *
  */
-public class MoveEvent extends DiscreteEvent {
+public abstract class MoveEvent extends DiscreteEvent {
 	protected Robot robot;
 	protected Point p;
 	/**
@@ -34,11 +32,6 @@ public class MoveEvent extends DiscreteEvent {
 		super(date);
 		this.robot = robot;
 		this.p = p;
-	}
-
-	@Override
-	public void execute(Simulator sim) {
-		//sim.moveRobot(this.robot, this.robot.getMap().getNeighbour(this.robot.getTile(), this.direction).getCoord());
 	}
 
 	/*

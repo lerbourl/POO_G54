@@ -8,7 +8,6 @@ package poog54.dataclasses.events;
 import java.util.zip.DataFormatException;
 
 import poog54.io.*;
-import poog54.strategies.*;
 
 /**
  * @author POO_G54
@@ -16,13 +15,11 @@ import poog54.strategies.*;
  */
 public class CarryOutStrategy extends DiscreteEvent {
 
-	protected FiremanMaster master;
 	/**
 	 * @param date
 	 */
-	public CarryOutStrategy(int date, FiremanMaster master) throws DataFormatException {
+	public CarryOutStrategy(int date) throws DataFormatException {
 		super(date);
-		this.master = master;
 	}
 
 	/*
@@ -32,15 +29,12 @@ public class CarryOutStrategy extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		if (this.master.getData().getWfList().isEmpty()) {
+		if (sim.getFiremanMaster().getData().getWfList().isEmpty()) {
 			System.out.println("Tous les feux sont éteints. Beau travail les gars !\nFin de la simulation.");
 		}
-		else this.master.initStrategy();
+		else sim.getFiremanMaster().performStrategy();
 	}
 
-	/*
-	 *
-	 */
 	@Override
 	public String toString() {
 		return "Carry out strategy";

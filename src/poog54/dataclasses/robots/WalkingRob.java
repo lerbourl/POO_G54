@@ -3,15 +3,15 @@ package poog54.dataclasses.robots;
 import poog54.dataclasses.*;
 
 /**
-  * Represents a paw firefighter.
+  * Represents a walking firefighter.
   * This class inherits from the generic Robot class
   *
-  * The paw firefighter speed cannot exceed 30.
+  * The walking firefighter speed cannot exceed 30.
   * The speed is divided by 3 on rocks.
-  * The paw firefighter cannot go on water tiles.
+  * The walking firefighter cannot go on water tiles.
   * 
   * 
-  * The paw firefighter never tanks up
+  * The walking firefighter never tanks up
   * The tank capacity is supposed infinite
   * The pour out capacity is 10 liters
   * The pour out delay is 1 second
@@ -37,45 +37,17 @@ public class WalkingRob extends Robot {
 		super.setPathFinder();
 		this.water_capacity = Integer.MAX_VALUE;
 		this.water_level = Integer.MAX_VALUE;
-
-	}
-
-	/**
-	 * Path builder: provide the fastest path to the specified tile according to
-	 * speeds & theMap
-	 */
-	/*
-	@Override
-	public Target buildTargetPath(Tile location) {
-		Target target = new Target();
-		target.path = new Tile[2];
-
-		// TODO compute the fastest (full) path
-		target.location = location;
-		target.path[0] = this.location;
-		target.path[1] = location;
-
-		return target;
-	}
-	*/
-	/**
-	 * Tank up: fill tank
-	 */
-	@Override
-	public void tankUp() {
-
-		// TODO
-
+		this.water_amount = 10;
+		this.pourTime = 1;
 	}
 
 	/**
 	 * Pouring water: extinguish fire
 	 */
 	@Override
-	public void pourOut(int water_volume) {
+	public void pourOut() {
 
-		// TODO
-		// Should not decrease water level
+		// water level is never decreased
 
 	}
 
@@ -88,5 +60,13 @@ public class WalkingRob extends Robot {
 	public void setSpeed(int speed) {
 		setSpeed();
 	};
+	
+	@Override
+	public String toString() {
+		return "Walking robot [" 
+	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
+				+ this.state + ") <"
+				+ this.water_level + ">";
+	}
 
 }

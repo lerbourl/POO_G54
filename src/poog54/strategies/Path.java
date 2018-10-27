@@ -8,7 +8,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * @author ensimag
+ * @author POO_G54
  *
  */
 public class Path {
@@ -24,7 +24,6 @@ public class Path {
 	public Deque<Point> getThepath() {
 		return thepath;
 	}
-
 	
 	public double getTraveltime() {
 		return traveltime;
@@ -36,6 +35,14 @@ public class Path {
 	
 	public void addFirst(Point e) {
 		this.thepath.addFirst(e);
+	}
+
+	public Point dequeueFirst() {
+		return this.thepath.pollFirst();
+	}
+
+	public Point removeLast() {
+		return this.thepath.pollLast();
 	}
 	
 	@Override 

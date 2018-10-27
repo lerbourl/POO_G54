@@ -1,6 +1,9 @@
 package poog54.dataclasses.robots;
 
-import poog54.dataclasses.Tile;
+import java.awt.Point;
+
+import poog54.dataclasses.*;
+import poog54.strategies.Path;
 
 /**
  * Represents a target:
@@ -14,18 +17,26 @@ import poog54.dataclasses.Tile;
 public class Target {
 
 	/** Target location */
-	public Tile location;
+	public Point location;
 
 	/**
 	 * Path to the target: sequence of tile starting from the current location
 	 */
-	public Tile path[];
-
-	/** Time: remaining time needed to reach the target location */
-	public int time;
-
+	public Path path;
+	
+	/**
+	 * Fire data
+	 */
+	public WildFire fire;
+	
 	/** Constructor */
-	Target() {
-
+	Target(Point location, Path path) {
+		this.location = location;
+		this.path = path;
+	}
+	
+	Target(WildFire fire, Path path) {
+		this(fire.getCoord(), path);
+		this.fire = fire;
 	}
 }

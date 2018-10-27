@@ -3,8 +3,11 @@
  */
 package poog54.dataclasses.events;
 
+import java.util.ListIterator;
 import java.util.zip.DataFormatException;
 import poog54.dataclasses.*;
+import poog54.dataclasses.robots.Robot;
+import poog54.enums.RobotState;
 import poog54.io.Simulator;
 
 /**
@@ -13,6 +16,7 @@ import poog54.io.Simulator;
  */
 public class FireExtinguishedEvent extends DiscreteEvent {
 	private WildFire fire;
+	private Simulator sim;
 
 	/**
 	 * @return the fire
@@ -26,9 +30,10 @@ public class FireExtinguishedEvent extends DiscreteEvent {
 	 * @param fire
 	 * @throws DataFormatException
 	 */
-	public FireExtinguishedEvent(int date, WildFire fire) throws DataFormatException {
+	public FireExtinguishedEvent(int date, WildFire fire, Simulator sim) throws DataFormatException {
 		super(date);
 		this.fire = fire;
+		this.sim = sim;
 	}
 
 	/*
@@ -38,14 +43,30 @@ public class FireExtinguishedEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		//removes the fire from the list and from the screen
-		sim.removeFire(fire);
-		//re-affects robots to remaining fires
+		Robot robot;
+		ListIterator<Robot> robotListIt;
+
+		// stop any robot that is still assigned to this fire
+		robotListIt = this.sim.getData().getRobotList().listIterator();
+		while (robotListIt.hasNext()) {
+			robot = robotListIt.next();
+			if (      (robot.getState() == RobotState.POURING
+					|| robot.getState() == RobotState.MOVING_TO_FIRE)
+					&& robot.getTargetFire().fire == this.fire) {
+				robot.setState(RobotState.IDLE);
+				robot.setTargetFire(null);
+			}
+		}
+		
+		// re-affects robots to remaining fires
 		try {
-			sim.addEvent(new CarryOutStrategy(0, sim.getFiremanMaster()) );
+			sim.addEvent(new CarryOutStrategy(this.date+1));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
+		
+		// removes the fire from the list and from the screen
+		sim.removeFire(fire);
 	}
 
 	/*
@@ -55,7 +76,7 @@ public class FireExtinguishedEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return fire + " has been extinguished";
+		return "fire " + fire + " has been extinguished";
 	}
 
 }

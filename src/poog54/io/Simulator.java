@@ -13,9 +13,9 @@ import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;
 
 import gui.*;
+import poog54.strategies.*;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
-import poog54.strategies.FiremanMaster;
 import poog54.dataclasses.events.*;
 
 /**
@@ -24,110 +24,49 @@ import poog54.dataclasses.events.*;
  */
 public class Simulator implements Simulable {
 
-	private String filepath;
-	private FiremanMaster firemanmaster;
-
-	/** L'interface graphique e */
-	private GUISimulator gui;
-
-	/** Les donnees de simulation associees */
+	/** All data associated with the simulator */
 	private SimulationData data;
 
 	/** Discrete event management */
 	private int date; // current simulation date
-	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a
-														// chronological way
+	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a chronological way
+
+	/** Firefighters' strategy management */
+	private FiremanMaster firemanmaster;
+	
+	/** Graphical interface management */
+	private GUISimulator gui;
 	private Map<Point, PriorityQueue<Drawable>> DrawableMap; // Drawables on a map, Queued by graphic_priority
+	private String filepath; // path to the map file
 
 	/**
 	 * @param gui
+	 * @param file path
+	 * @param strategy
 	 * @throws DataFormatException
 	 * @throws FileNotFoundException
+	 * @throws ClassNotFoundException
 	 */
-	public Simulator(GUISimulator gui, String filepath) throws FileNotFoundException, DataFormatException {
+	public Simulator(GUISimulator gui, String filepath, String strategy)
+			throws FileNotFoundException, DataFormatException, ClassNotFoundException {
 		this.gui = gui;
 		this.filepath = filepath;
-		this.gui.setSimulable(this); // association a la gui!
+		this.gui.setSimulable(this);
 		/* first of the queue will be the lowest date event */
 		this.eventQueue = new PriorityQueue<DiscreteEvent>(11, (e1, e2) -> {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
 		this.DrawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
-		this.firemanmaster = new FiremanMaster(this);
+		switch (strategy) {
+		case "first_class":
+			this.firemanmaster = new FiremanMasterFirstClass(this);
+			break;
+			default:
+				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
+						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
+		}
+		
 		restart();
-	}
-	
-	private Iterator<Drawable> drawableMapFill(Drawable val) {
-		Point key = val.getCoord();
-		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
-		if (queue == null) {
-			/* first of the queue will be the lowest graphic priority */
-			queue = new PriorityQueue<Drawable>(11, (e1, e2) -> {
-				return e1.getGraphic_priority() < e2.getGraphic_priority() ? -1 :
-						e1.getGraphic_priority() > e2.getGraphic_priority() ? 1 :
-						0;
-			});
-			this.DrawableMap.put(key, queue);
-		}
-		queue.add(val);
-		return queue.iterator();
-	}
-	private Iterator<Drawable> drawableMapRemove(Drawable val) {
-		Point key = val.getCoord();
-		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
-		if (queue == null) {
-			System.out.println("error ! Drawable not in a the drawable map!\n");
-		}
-		queue.remove(val);
-		return queue.iterator();
-	}
-	
-	public FiremanMaster getFiremanMaster() {
-		return this.firemanmaster;
-	}
-
-	private void loadData() throws FileNotFoundException, DataFormatException {
-		this.data = OurDataReader.DataFromFile(this.filepath);
-	}
-
-	private void initTheMapOnFire() {
-		ListIterator<Drawable> drawit = data.getDrawablesIt();
-		while (drawit.hasNext()) {
-			this.draw(drawit.next());
-		}
-		System.out.println(this.DrawableMap);
-	}
-	
-	private void draw(Drawable d) {
-		Iterator<Drawable> it = drawableMapFill(d);
-		while(it.hasNext()) {
-			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
-		}
-	}
-	private void undraw(Drawable d) {
-		Iterator<Drawable> it = drawableMapRemove(d);
-		while(it.hasNext()) {
-			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
-		}
-	}
-	public void moveRobot(Robot rob, Point p) {
-		undraw(rob);
-		rob.move(p);
-		draw(rob);
-	}
-
-	public void removeFire(WildFire wf) {
-		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
-			this.undraw(wf);
-			data.getWfList().remove(wf);
-		}
-	}
-
-	/**
-	 * @return true if there is no more event to process
-	 */
-	public boolean endOfSimulation() {
-		return this.eventQueue.isEmpty();
 	}
 
 	/**
@@ -137,16 +76,76 @@ public class Simulator implements Simulable {
 		this.eventQueue.add(e);
 	}
 
-	/**
-	 * runs all events in a chronological order until the current date
-	 */
-	public void processEvents() {
-		DiscreteEvent event;
-		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
-			event = this.eventQueue.poll();
-			event.execute(this);
-			System.out.println(event);
+	private void draw(Drawable d) {
+		Iterator<Drawable> it = drawableMapFill(d);
+		while (it.hasNext()) {
+			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
 		}
+	}
+
+	private void undraw(Drawable d) {
+		Iterator<Drawable> it = drawableMapRemove(d);
+		while (it.hasNext()) {
+			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
+		}
+	}
+	
+	private Iterator<Drawable> drawableMapFill(Drawable val) {
+		Point key = val.getCoord();
+		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		if (queue == null) {
+			/* first of the queue will be the lowest graphic priority */
+			queue = new PriorityQueue<Drawable>(11, (e1, e2) -> {
+				return e1.getGraphic_priority() < e2.getGraphic_priority() ? -1
+						: e1.getGraphic_priority() > e2.getGraphic_priority() ? 1 : 0;
+			});
+			this.DrawableMap.put(key, queue);
+		}
+		queue.add(val);
+		return queue.iterator();
+	}
+
+	private Iterator<Drawable> drawableMapRemove(Drawable val) {
+		Point key = val.getCoord();
+		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		if (queue == null) {
+			System.out.println("error ! Drawable not in a the drawable map!\n");
+		}
+		queue.remove(val);
+		return queue.iterator();
+	}
+
+	/**
+	 * @return true if there is no more event to process
+	 */
+	public boolean endOfSimulation() {
+		return this.eventQueue.isEmpty();
+	}
+
+	public FiremanMaster getFiremanMaster() {
+		return this.firemanmaster;
+	}
+
+	public SimulationData getData() {
+		return this.data;
+	}
+	
+	private void initTheMapOnFire() {
+		ListIterator<Drawable> drawit = data.getDrawablesIt();
+		while (drawit.hasNext()) {
+			this.draw(drawit.next());
+		}
+		System.out.println(this.DrawableMap);
+	}
+
+	private void loadData() throws FileNotFoundException, DataFormatException {
+		this.data = OurDataReader.DataFromFile(this.filepath);
+	}
+
+	public void moveRobot(Robot rob, Point p) {
+		undraw(rob);
+		rob.move(p);
+		draw(rob);
 	}
 
 	@Override
@@ -156,7 +155,26 @@ public class Simulator implements Simulable {
 			System.out.println("t=" + this.date);
 			processEvents();
 		} else
-			System.out.println("\nFin des évenements !");
+			System.out.println("end of simulation");
+	}
+
+	/**
+	 * runs all events in a chronological order until the current date
+	 */
+	public void processEvents() {
+		DiscreteEvent event;
+		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
+			event = this.eventQueue.poll();
+			System.out.println(event);
+			event.execute(this);
+		}
+	}
+
+	public void removeFire(WildFire wf) {
+		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
+			this.undraw(wf);
+			data.getWfList().remove(wf);
+		}
 	}
 
 	@Override
@@ -168,13 +186,13 @@ public class Simulator implements Simulable {
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
+		initTheMapOnFire();	
 		this.DrawableMap.clear();
-		initTheMapOnFire();
 		this.eventQueue.clear();
 		this.date = -1;
-		this.firemanmaster.setData(this.data);
+		this.firemanmaster.setData(this.data);	
 		try {
-			addEvent(new CarryOutStrategy(0, this.firemanmaster));
+			addEvent(new CarryOutStrategy(0));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}

@@ -29,41 +29,19 @@ import poog54.strategies.PathFinder;
 public abstract class Robot extends Drawable {
 
 	/**
-	 * Constructor with default speed Initialises the generic attributes of a
-	 * firefighter:- theMap - initial location - state (IDLE)
+	 * The time the robot will be free to be involved into a new event an action
 	 */
-
-	Robot(TheMap theMap, int xCoord, int yCoord) {
-		super(xCoord, yCoord);
-		// Speeds and water capacity must be set in the child constructors
-		this.theMap = theMap;
-		next_free_time = 1; // after init startegy
-	}
-	
-	protected void setPathFinder() {
-		this.pathFinder = new PathFinder(getAlgoMap(),theMap.getNbLines(), theMap.getNbColums());
-	}
-	
-	public Path getPathToPoint(Point p) {
-		return pathFinder.Astar(this.getCoord(), p);
-	}
-
-	/** The time the robot will be free to be involved into a new event an action */
 	private int next_free_time;
-	
-	/**
-	 * @return the next_free_time
-	 */
-	public int getNext_free_time() {
-		return next_free_time;
-	}
 
 	/**
-	 * @param next_free_time the next_free_time to set
+	 * time needed to pour an amount of water
 	 */
-	public void setNext_free_time(int next_free_time) {
-		this.next_free_time = next_free_time;
-	}
+	protected int pourTime;
+
+	/**
+	 * time needed to fill the water tank
+	 */
+	protected int tankUpTime;
 
 	/** TheMap */
 	protected TheMap theMap;
@@ -74,16 +52,24 @@ public abstract class Robot extends Drawable {
 	protected Speed speed;
 
 	/**
-	 * Fire target location: position of the targeted fire on the theMap Target fire
-	 * path: path to the assigned fire. path[0] is always the current location.
+	 * Fire target location: position of the targeted fire on the theMap Target
+	 * fire path: path to the assigned fire. path[0] is always the current
+	 * location.
 	 */
-	protected Target fire;
+	protected RobotState state;
 
 	/**
-	 * Nearest water location: position of the water reserve on the theMap and path
-	 * to it path[0] is always the current location.
+	 * Fire target location: position of the targeted fire on the theMap Target
+	 * fire path: path to the assigned fire. path[0] is always the current
+	 * location.
 	 */
-	protected Target water;
+	protected Target targetFire;
+
+	/**
+	 * Nearest water location: position of the water reserve on the theMap and
+	 * path to it path[0] is always the current location.
+	 */
+	protected Target targetWater;
 
 	/**
 	 * Water capacity: tank size
@@ -95,88 +81,115 @@ public abstract class Robot extends Drawable {
 	 */
 	protected int water_level;
 
-	
-	
+	/**
+	 * Water amount: amount of water that a robot can pour at a time
+	 */
+	protected int water_amount;
+
 	protected PathFinder pathFinder;
-	
-	protected AlgoTile[][] getAlgoMap(){
-		
-		AlgoTile[][] algomap = new  AlgoTile[this.theMap.getNbLines()][this.theMap.getNbColums()];
-		
-		for (int i = 0 ; i < this.theMap.getNbLines() ; i++) {
-			for (int j = 0 ; j < this.theMap.getNbColums() ; j++) {
-				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i,j)),new Point(i,j));
+
+	/**
+	 * Constructor with default speed Initialises the generic attributes of a
+	 * firefighter:- theMap - initial location - state (IDLE)
+	 */
+
+	Robot(TheMap theMap, int xCoord, int yCoord) {
+		super(xCoord, yCoord);
+		// Speeds and water capacity must be set in the child constructors
+		this.theMap = theMap;
+		this.state = RobotState.IDLE;
+		next_free_time = 1; // after init strategy
+	}
+
+	protected AlgoTile[][] getAlgoMap() {
+
+		AlgoTile[][] algomap = new AlgoTile[this.theMap.getNbLines()][this.theMap.getNbColums()];
+
+		for (int i = 0; i < this.theMap.getNbLines(); i++) {
+			for (int j = 0; j < this.theMap.getNbColums(); j++) {
+				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i, j)), new Point(i, j));
 			}
 		}
 		return algomap;
-		
+
 	}
-	
+
 	/**
 	 * @return the fire
 	 */
-	public Target getFire() {
-		return fire;
+	public Target getTargetFire() {
+		return targetFire;
 	}
-
-	/**
-	 * @param fire the fire to set
-	 */
-	public void setFire(Target fire) {
-		this.fire = fire;
-	}
-
-	/**
-	 * @return the water_capacity
-	 */
-	public int getWater_capacity() {
-		return water_capacity;
-	}
-
-	/**
-	 * @param water_capacity the water_capacity to set
-	 */
-	public void setWater_capacity(int water_capacity) {
-		this.water_capacity = water_capacity;
-	}
-
-	/**
-	 * @return the water_level
-	 */
-	public int getWater_level() {
-		return water_level;
-	}
-
-	/**
-	 * @param water_level the water_level to set
-	 */
-	public void setWater_level(int water_level) {
-		this.water_level = water_level;
-	}
-
-	/**
-	 * Speed assignment Abstract cause it depends on the Robot Type
-	 */
-	public abstract void setSpeed(int speed);
-
-	public abstract void setSpeed();
-
-	// UTILES !?
 	
+	/**
+	 * @return the water target
+	 */
+	public Target getTargetWater() {
+		return this.targetWater;
+	}
+
+	public TheMap getMap() {
+		return this.theMap;
+	}
+	
+	/**
+	 * search the closest water tile from the actual position
+	 */
+	public void locateClosestWaterTile() {
+		//@ TODO
+		Point p = new Point(2,2);
+		this.targetWater = new Target(p, getPathToPoint(p));
+	}
+	
+	/**
+	 * @return the next_free_time
+	 */
+	public int getNext_free_time() {
+		return next_free_time;
+	}
+
+	public Path getPathToPoint(Point p) {
+		return pathFinder.Astar(this.getCoord(), p);
+	}
+
+	/**
+	 * @return the time needed to pour an amount of water (in s)
+	 */
+	public int getPourTime() {
+		return pourTime;
+	}
+
+	/**
+	 * @return the time needed to fill the water tank (in s)
+	 */
+	public int getTankUpTime() {
+		return tankUpTime;
+	}
+
 	public Speed getSpeed() {
 		return speed;
 	}
 
-	
+	/**
+	 * @return the robot state
+	 */
+	public RobotState getState() {
+		return this.state;
+	}
+
+	public Tile getTile() {
+		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
+	}
+
 	public double getTimeType(Point p) {
-		double speed_factor = 10; //to speed up the simulation !
-		TypeField type = this.theMap.getTile(p).getTypeField() ;
-		
-		double speed=0.000001;
-		
+		double speed_factor = 10; // to speed up the simulation !
+		TypeField type = this.theMap.getTile(p).getTypeField();
+
+		double speed = 0.000001;
+
 		switch (type) {
-		case EAU :
-			speed += this.getSpeed().getSpeedWater(); 
+		case EAU:
+			speed += this.getSpeed().getSpeedWater();
 			break;
 		case FORET:
 			speed += this.getSpeed().getSpeedForest();
@@ -190,45 +203,115 @@ public abstract class Robot extends Drawable {
 		case TERRAIN_LIBRE:
 			speed += this.getSpeed().getSpeedEmptyField();
 			break;
-		default :
+		default:
 			break;
 		}
-		return this.theMap.getTileSize()/speed/speed_factor;
-	}
-	
-	
-	
-
-	/** Target fire assignment */
-	public void setTargetFire(Target fire) {
-		this.fire = fire;
+		return this.theMap.getTileSize() / speed / speed_factor;
 	}
 
-	/** Target water assignment */
-	public void setTargetWater(Target water) {
-		this.water = water;
+	/**
+	 * @return the amount of water that a robot can pour out
+	 */
+	public int getWater_amount() {
+		return water_capacity;
 	}
 
-	public Tile getTile() {
-		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
+	/**
+	 * @return the water_capacity
+	 */
+	public int getWater_capacity() {
+		return water_capacity;
 	}
 
-	public TheMap getMap() {
-		return this.theMap;
+	/**
+	 * @return the water_level
+	 */
+	public int getWater_level() {
+		return water_level;
 	}
-	
+
 	public void move(CardinalPoints dir) {
 		if (theMap.hasNeighbour(this.getTile(), dir)) {
 			this.translate(dir);
-		}
-		else System.out.println("Move robot on non allowed tile");
+		} else
+			System.out.println("Move robot on non allowed tile");
 	}
-	
+
 	public void move(Point p) {
 		if (this.theMap.tileIsIn(p)) {
 			this.setCoord(p);
-		}
-		else System.out.println("Move robot on non allowed tile");
+		} else
+			System.out.println("Move robot on non allowed tile");
+	}
+
+	/**
+	 * Pouring water: extinguish fire
+	 */
+	public void pourOut() {
+		this.water_level -= water_amount;
+		this.targetFire.fire.setIntensity(this.targetFire.fire.getIntensity() - this.water_amount);
+	}
+
+	/**
+	 * @param next_free_time
+	 *            the next_free_time to set
+	 */
+	public void setNext_free_time(int next_free_time) {
+		this.next_free_time = next_free_time;
+	}
+
+	protected void setPathFinder() {
+		this.pathFinder = new PathFinder(getAlgoMap(), theMap.getNbLines(), theMap.getNbColums());
+	}
+
+	public abstract void setSpeed();
+
+	/**
+	 * Speed assignment Abstract cause it depends on the Robot Type
+	 */
+	public abstract void setSpeed(int speed);
+
+	/**
+	 * @param the
+	 *            new execution state of a robot
+	 */
+	public void setState(RobotState state) {
+		this.state = state;
+	}
+
+	/** Target fire assignment */
+	public void setTargetFire(WildFire fire) {
+		this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
+	}
+
+	/** Target water assignment */
+	public void setTargetWater(Point water) {
+		this.targetWater = new Target(water, getPathToPoint(water));
+	}
+
+	/**
+	 * set the amount of water that a robot can pour
+	 * 
+	 * @param water_amount
+	 */
+	public void setWater_amount(int water_amount) {
+		this.water_capacity = water_amount;
+	}
+
+	/**
+	 * @param water_capacity
+	 *            the water_capacity to set
+	 */
+	public void setWater_capacity(int water_capacity) {
+		this.water_capacity = water_capacity;
+	}
+
+	/**
+	 * @param water_level
+	 *            the water_level to set
+	 */
+	public void setWater_level(int water_level) {
+		this.water_level = water_level;
 	}
 
 	/**
@@ -236,19 +319,8 @@ public abstract class Robot extends Drawable {
 	 */
 	public void tankUp() {
 
-		// TODO
+		water_level = water_capacity;
 
 	}
-	
-	
 
-	/**
-	 * Pouring water: extinguish fire
-	 */
-	public void pourOut(int water_volume) {
-
-		// TODO
-
-	}
-	
 }

@@ -37,45 +37,9 @@ public class DroneRob extends Robot {
 		super.setPathFinder();
 		this.water_capacity = 10000;
 		this.water_level = 10000;
-	}
-
-	/**
-	 * Path builder: provide the fastest path to the specified tile according to
-	 * speeds & theMap
-	 */
-	/*
-	@Override
-	public Target buildTargetPath(Tile location) {
-		Target target = new Target();
-		target.path = new Tile[2];
-
-		// TODO compute the fastest (full) path
-		target.location = location;
-		target.path[0] = this.location;
-		target.path[1] = location;
-
-		return target;
-	}
-	*/
-
-	/**
-	 * Tank up: fill tank
-	 */
-	@Override
-	public void tankUp() {
-
-		// TODO
-
-	}
-
-	/**
-	 * Pouring water: extinguish fire
-	 */
-	@Override
-	public void pourOut(int water_volume) {
-
-		// TODO
-
+		this.water_amount = 10000;
+		this.pourTime = 30;
+		this.tankUpTime = 1800; // 30min
 	}
 
 	@Override
@@ -90,5 +54,13 @@ public class DroneRob extends Robot {
 	public void setSpeed() {
 		setSpeed(100);
 	};
+
+	@Override
+	public String toString() {
+		return "Drone robot [" 
+	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
+				+ this.state + ") <"
+				+ this.water_level + ">";
+	}
 
 }

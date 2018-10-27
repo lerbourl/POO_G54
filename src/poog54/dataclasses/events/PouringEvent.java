@@ -3,10 +3,12 @@
  */
 package poog54.dataclasses.events;
 
+import java.awt.Point;
 import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.WildFire;
 import poog54.dataclasses.robots.*;
+import poog54.enums.RobotState;
 import poog54.io.Simulator;
 
 /**
@@ -14,7 +16,6 @@ import poog54.io.Simulator;
  *
  */
 public class PouringEvent extends DiscreteEvent {
-	private int amountOfWater;
 	private Robot robot;
 	private WildFire fire;
 
@@ -41,7 +42,6 @@ public class PouringEvent extends DiscreteEvent {
 	public PouringEvent(int date, Robot robot, WildFire fire) throws DataFormatException {
 		super(date);
 		this.robot = robot;
-		this.amountOfWater = amountOfWater;
 		this.fire = fire;
 	}
 
@@ -52,8 +52,40 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		this.robot.setWater_level(this.robot.getWater_level() - this.amountOfWater);
-		this.fire.setIntensity(this.fire.getIntensity()-this.amountOfWater);
+		if (robot.getTargetFire() != null) {
+			Point nextPosition;
+			int travel_time;
+			
+			// the fire assignment has not been cancelled
+			this.robot.pourOut();
+			this.fire.setIntensity(this.fire.getIntensity() - this.robot.getWater_amount());
+			try {
+				if (robot.getWater_level() <= 0) {
+					// the tank is empty
+					robot.setState(RobotState.MOVING_TO_WATER);
+					robot.locateClosestWaterTile();
+					nextPosition = robot.getTargetWater().path.dequeueFirst();
+					travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
+					try {
+						sim.addEvent(new MoveToWaterEvent(date + travel_time, robot, nextPosition));
+						robot.setNext_free_time(date + travel_time + 1);
+					} catch (DataFormatException e) {
+						e.printStackTrace();
+					}
+				} else {
+					// pour another time
+					// this order will be cancelled if the fire is extinguished
+					sim.addEvent(new PouringEvent(date + robot.getPourTime(), robot, this.fire));
+					robot.setNext_free_time(date + robot.getPourTime() + 1);
+				}
+				if (this.fire.getIntensity() <= 0) {
+					// this fire is now extinguished
+					sim.addEvent(new FireExtinguishedEvent(this.date, this.fire, sim));
+				}
+			} catch (DataFormatException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/*
@@ -63,6 +95,6 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return this.robot + " pours " + this.amountOfWater + "L of water on " + fire;
+		return this.robot + " pours " + this.robot.getWater_amount() + "L of water on " + fire;
 	}
 }

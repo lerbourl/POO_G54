@@ -59,7 +59,6 @@ public class PathFinder {
 		boolean exit_while=false;
 		
 		while(exit_while!=true) {
-			System.out.println("test");
 			current = openlist.poll();
 			if(current == null)break;
 			closedtab[current.getCoord().x][current.getCoord().y]=true;

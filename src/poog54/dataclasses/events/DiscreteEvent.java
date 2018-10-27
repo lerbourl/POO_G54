@@ -42,5 +42,5 @@ public abstract class DiscreteEvent {
 	/**
 	 * Execute actions associated to an event
 	 */
-	abstract public void execute(Simulator sim);
+	public abstract void execute(Simulator sim);
 }

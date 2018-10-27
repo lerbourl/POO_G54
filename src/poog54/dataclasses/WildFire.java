@@ -28,4 +28,11 @@ public class WildFire extends Drawable {
 	public void setIntensity(int intensity) {
 		this.intensity = intensity;
 	}
+	
+	@Override
+	public String toString() {
+		return "Wild fire [" 
+	            + this.getCoord().x + ";" + this.getCoord().y + "] <"
+				+ this.intensity + ">";
+	}
 }

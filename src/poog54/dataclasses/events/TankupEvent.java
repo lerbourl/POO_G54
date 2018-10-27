@@ -13,7 +13,6 @@ import poog54.io.Simulator;
  *
  */
 public class TankupEvent extends DiscreteEvent {
-	private int amountOfWater;
 	private Robot robot;
 
 	/**
@@ -28,10 +27,9 @@ public class TankupEvent extends DiscreteEvent {
 	 * @param robot
 	 * @param amountOfWater
 	 */
-	public TankupEvent(int date, Robot robot, int amountOfWater) throws DataFormatException {
+	public TankupEvent(int date, Robot robot) throws DataFormatException {
 		super(date);
 		this.robot = robot;
-		this.amountOfWater = amountOfWater;
 	}
 
 	/*
@@ -41,7 +39,13 @@ public class TankupEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		this.robot.setWater_level(this.robot.getWater_level() + this.amountOfWater);
+		this.robot.tankUp();
+		try {
+			sim.addEvent(new TankFilledEvent(date + 1, robot));
+			robot.setNext_free_time(date + 1);
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -51,7 +55,7 @@ public class TankupEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return this.robot + " fills " + this.amountOfWater + "L of water in its tank";
+		return this.robot + " fills " + robot.getWater_level() + "L of water in its tank";
 	}
 
 }
