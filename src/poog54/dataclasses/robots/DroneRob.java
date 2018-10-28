@@ -57,10 +57,7 @@ public class DroneRob extends Robot {
 
 	@Override
 	public String toString() {
-		return "Drone robot [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
-				+ this.state + ") <"
-				+ this.water_level + ">";
+		return "Drone " + super.toString();
 	}
 
 }

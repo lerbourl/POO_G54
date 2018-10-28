@@ -6,6 +6,7 @@ package poog54.dataclasses.events;
 
 import poog54.io.*;
 import poog54.dataclasses.robots.*;
+import poog54.enums.RobotState;
 
 import java.awt.Point;
 import java.util.zip.DataFormatException;
@@ -42,6 +43,7 @@ public class MoveToWaterEvent extends MoveEvent {
 			}
 		} else {
 			// target not reached, continue the path...
+			this.robot.setState(RobotState.MOVING_TO_WATER);
 			travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
 			try {
 				sim.addEvent(new MoveToWaterEvent(date + travel_time, robot, nextPosition));

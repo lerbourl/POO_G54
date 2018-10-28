@@ -58,9 +58,6 @@ public class TrackedRob extends Robot {
 	
 	@Override
 	public String toString() {
-		return "Tracked robot [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
-				+ this.state + ") <"
-				+ this.water_level + ">";
+		return "Tracked " + super.toString();
 	}
 }

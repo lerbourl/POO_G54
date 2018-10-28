@@ -36,7 +36,7 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 				robot = robotListIt.next();
 				if (robot.getState() == RobotState.IDLE) {
 					// this robot has no assigned fire
-					System.out.println(robot + " assigned to fire (" + fire.getCoord() + ")");
+					System.out.println(robot + " assigned to fire (" + fire + ")");
 					robot.setTargetFire(fire);
 					robot.setState(RobotState.MOVING_TO_FIRE);
 					travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;

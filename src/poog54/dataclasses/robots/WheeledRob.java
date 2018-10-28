@@ -55,9 +55,6 @@ public class WheeledRob extends Robot {
 	
 	@Override
 	public String toString() {
-		return "Wheeled robot [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
-				+ this.state + ") <"
-				+ this.water_level + ">";
+		return "Wheeled " + super.toString();
 	}
 }

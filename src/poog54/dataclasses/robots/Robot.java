@@ -120,7 +120,7 @@ public abstract class Robot extends Drawable {
 	public Target getTargetFire() {
 		return targetFire;
 	}
-	
+
 	/**
 	 * @return the water target
 	 */
@@ -131,16 +131,16 @@ public abstract class Robot extends Drawable {
 	public TheMap getMap() {
 		return this.theMap;
 	}
-	
+
 	/**
 	 * search the closest water tile from the actual position
 	 */
 	public void locateClosestWaterTile() {
-		//@ TODO
-		Point p = new Point(2,2);
+		// @ TODO
+		Point p = new Point(3, 3);
 		this.targetWater = new Target(p, getPathToPoint(p));
 	}
-	
+
 	/**
 	 * @return the next_free_time
 	 */
@@ -213,7 +213,7 @@ public abstract class Robot extends Drawable {
 	 * @return the amount of water that a robot can pour out
 	 */
 	public int getWater_amount() {
-		return water_capacity;
+		return water_amount;
 	}
 
 	/**
@@ -281,12 +281,22 @@ public abstract class Robot extends Drawable {
 
 	/** Target fire assignment */
 	public void setTargetFire(WildFire fire) {
-		this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
+		if (fire == null) {
+			// cancel fire assignment
+			this.targetFire = null;
+		} else {
+			this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
+		}
 	}
 
 	/** Target water assignment */
 	public void setTargetWater(Point water) {
-		this.targetWater = new Target(water, getPathToPoint(water));
+		if (water == null) {
+			// reset water tile ref.
+			this.targetWater = null;
+		} else {
+			this.targetWater = new Target(water, getPathToPoint(water));
+		}
 	}
 
 	/**
@@ -322,5 +332,11 @@ public abstract class Robot extends Drawable {
 		water_level = water_capacity;
 
 	}
-
+	@Override
+	public String toString() {
+		return "robot [" 
+	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
+				+ this.state + ") <"
+				+ this.water_level + "L>";
+	}
 }

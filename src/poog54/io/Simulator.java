@@ -61,6 +61,12 @@ public class Simulator implements Simulable {
 		case "first_class":
 			this.firemanmaster = new FiremanMasterFirstClass(this);
 			break;
+		case "sergeant":
+			this.firemanmaster = new FiremanMasterSergeant(this);
+			break;
+		case "captain":
+			this.firemanmaster = new FiremanMasterCaptain(this);
+			break;
 			default:
 				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
 						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
@@ -165,8 +171,8 @@ public class Simulator implements Simulable {
 		DiscreteEvent event;
 		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
 			event = this.eventQueue.poll();
-			System.out.println(event);
 			event.execute(this);
+			System.out.println(event);
 		}
 	}
 
@@ -186,12 +192,13 @@ public class Simulator implements Simulable {
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
-		initTheMapOnFire();	
 		this.DrawableMap.clear();
+		initTheMapOnFire();	
 		this.eventQueue.clear();
 		this.date = -1;
 		this.firemanmaster.setData(this.data);	
 		try {
+			// create initial event
 			addEvent(new CarryOutStrategy(0));
 		} catch (DataFormatException e) {
 			e.printStackTrace();

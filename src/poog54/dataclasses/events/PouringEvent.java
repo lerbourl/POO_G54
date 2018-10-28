@@ -52,11 +52,15 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		if (robot.getTargetFire() != null) {
-			Point nextPosition;
-			int travel_time;
-			
+		Point nextPosition;
+		int travel_time;
+
+		if (robot.getTargetFire() == null) {
+			// the fire assignment is cancelled;
+			this.robot.setState(RobotState.IDLE);
+		} else {
 			// the fire assignment has not been cancelled
+			this.robot.setState(RobotState.POURING);
 			this.robot.pourOut();
 			this.fire.setIntensity(this.fire.getIntensity() - this.robot.getWater_amount());
 			try {

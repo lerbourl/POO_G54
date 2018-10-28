@@ -6,6 +6,7 @@ package poog54.dataclasses.events;
 
 import poog54.io.*;
 import poog54.dataclasses.robots.*;
+import poog54.enums.RobotState;
 
 import java.awt.Point;
 import java.util.zip.DataFormatException;
@@ -30,8 +31,12 @@ public class MoveToFireEvent extends MoveEvent {
 		Point nextPosition;
 		int travel_time;
 		
-		if (robot.getTargetFire() != null) {
+		if (robot.getTargetFire() == null) {
+			// the fire assignment is cancelled;
+			this.robot.setState(RobotState.IDLE);
+		} else {
 			// the fire assignment has not been cancelled
+			this.robot.setState(RobotState.MOVING_TO_FIRE);
 			sim.moveRobot(this.robot, this.p);
 			nextPosition = robot.getTargetFire().path.dequeueFirst();
 			if (nextPosition == null) {
