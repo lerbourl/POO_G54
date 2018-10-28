@@ -101,6 +101,7 @@ public abstract class Robot extends Drawable {
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
 		this.state = RobotState.IDLE;
+		this.pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
 		next_free_time = 1; // after init strategy
 	}
 
@@ -114,7 +115,6 @@ public abstract class Robot extends Drawable {
 			}
 		}
 		return algomap;
-
 	}
 
 	/**
@@ -178,7 +178,7 @@ public abstract class Robot extends Drawable {
 	}
 
 	public Path getPathToPoint(Point p) {
-		return pathFinder.Astar(this.getCoord(), p);
+		return pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
 	}
 
 	/**
@@ -289,10 +289,6 @@ public abstract class Robot extends Drawable {
 	 */
 	public void setNext_free_time(int next_free_time) {
 		this.next_free_time = next_free_time;
-	}
-
-	protected void setPathFinder() {
-		this.pathFinder = new PathFinder(getAlgoMap(), theMap.getNbLines(), theMap.getNbColums());
 	}
 
 	public abstract void setSpeed();

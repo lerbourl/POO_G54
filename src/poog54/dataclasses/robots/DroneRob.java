@@ -34,7 +34,6 @@ public class DroneRob extends Robot {
 		this.setImageFilePath("assets/drone-robot.png");
 		this.setGraphic_priority(2);
 		setSpeed();
-		super.setPathFinder();
 		this.water_capacity = 10000;
 		this.water_level = 10000;
 		this.water_amount = 10000;

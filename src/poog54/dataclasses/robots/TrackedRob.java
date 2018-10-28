@@ -35,7 +35,6 @@ public class TrackedRob extends Robot {
 		this.setImageFilePath("assets/tracked-robot.png");
 		this.setGraphic_priority(2);
 		setSpeed();
-		super.setPathFinder();
 		this.water_capacity = 2000;
 		this.water_level = 2000;
 		this.water_amount = 100;

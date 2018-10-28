@@ -6,24 +6,19 @@ import java.util.*;
 
 public class PathFinder {
 
-	private AlgoTile[][] grid;
 	private PriorityQueue<AlgoTile> openlist;
-	private boolean[][] closedtab;
-	
 	private int height,width;
 	
 
-	public PathFinder(AlgoTile[][] grid, int height,int width) {
-		this.grid = grid;
-		closedtab = new boolean[height][width];
-		openlist = new PriorityQueue<AlgoTile>(height * width, (t1, t2) -> {
+	public PathFinder(int height,int width) {
+		this.openlist = new PriorityQueue<AlgoTile>(height * width, (t1, t2) -> {
 			return t1.getFinal_cost()<t2.getFinal_cost()?-1:t1.getFinal_cost()>t2.getFinal_cost()?1:0;
 		});
 		this.height = height;
 		this.width = width;
 	}
 	
-	public void updateCost(AlgoTile current, AlgoTile t, double cost) {
+	public void updateCost(AlgoTile current, AlgoTile t, double cost, boolean[][] closedtab) {
 		if(t == null || closedtab[t.getCoord().x][t.getCoord().y]) return;
 		double t_final_cost = t.getHeuristic_cost()+cost;
 		
@@ -35,12 +30,12 @@ public class PathFinder {
 		}
 	}
 	
-	public double getCostTime(AlgoTile current) {
+	public double getCostTime(AlgoTile current, AlgoTile[][] grid) {
 		return grid[current.getCoord().x][current.getCoord().y].getTime_cost();
 	}
 	
 	
-	private void setHeuristicValues(Point end) {
+	private void setHeuristicValues(Point end, AlgoTile[][] grid) {
 		
 		for(int i = 0; i < this.height ;++i){
             for(int j = 0 ; j < this.width ; ++j){
@@ -51,9 +46,11 @@ public class PathFinder {
 
 	
 	
-	public Path Astar(Point start, Point end) {
+	public Path Astar(Point start, Point end, AlgoTile[][] grid) {
+		this.openlist.clear();
+		boolean[][] closedtab = new boolean[height][width];
 		Path path = new Path();
-		setHeuristicValues(end);
+		setHeuristicValues(end, grid);
 		this.openlist.add(grid[start.x][start.y]);
 		AlgoTile current = null;
 		boolean exit_while=false;
@@ -71,22 +68,22 @@ public class PathFinder {
 			
 			if(current.getCoord().x-1>=0) {
 				t = grid[current.getCoord().x-1][current.getCoord().y];				
-				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
+				updateCost(current,t,current.getFinal_cost()+getCostTime(t, grid),closedtab); 
 				}
 			
 			if(current.getCoord().x+1 < grid.length) {
 				t = grid[current.getCoord().x+1][current.getCoord().y];
-				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
+				updateCost(current,t,current.getFinal_cost()+getCostTime(t, grid), closedtab); 
 				}
 			
 			if(current.getCoord().y-1>=0) {
 				t = grid[current.getCoord().x][current.getCoord().y-1];
-				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
+				updateCost(current,t,current.getFinal_cost()+getCostTime(t, grid), closedtab); 
 				}
 			
 			if(current.getCoord().y+1<grid[0].length) {
 				t = grid[current.getCoord().x][current.getCoord().y+1];
-				updateCost(current,t,current.getFinal_cost()+getCostTime(t)); 
+				updateCost(current,t,current.getFinal_cost()+getCostTime(t, grid), closedtab); 
 				}
 		}
 			
