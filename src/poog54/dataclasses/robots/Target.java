@@ -30,12 +30,12 @@ public class Target {
 	public WildFire fire;
 	
 	/** Constructor */
-	Target(Point location, Path path) {
+	public Target(Point location, Path path) {
 		this.location = location;
 		this.path = path;
 	}
 	
-	Target(WildFire fire, Path path) {
+	public Target(WildFire fire, Path path) {
 		this(fire.getCoord(), path);
 		this.fire = fire;
 	}

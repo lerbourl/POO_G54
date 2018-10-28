@@ -9,5 +9,6 @@
 - Drawable en abstract class !
 - les 'discrete events' sont gÃ©rÃ©s avec une machine d'Ã©tat -> modifications ultÃ©rieures facilitÃ©es
 - les transitions de la machine d'Ã©tat sont stockÃ©es dans une "table vÃ©ritÃ©"
+- la stratégie est portée par le chef pompier. chaque chef a une stratégie différente: plus le grade du chef est élevé, plus la stratégie est évoluée
 - lorsqu'un feu est éteint, tous les robot qui lui étaient affectés sont libérés en même temps afin de permettre de futures stratégies de groupe (impossible si les robots sont libérés un par un)
 - le chef pompier affecte les feus aux robots, mais les robots vont se recharger en eau de manière autonome (ils connaissent la carte et trouve le point d'eau le plus proche de leur position courante.)

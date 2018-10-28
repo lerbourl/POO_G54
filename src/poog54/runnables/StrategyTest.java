@@ -15,9 +15,9 @@ public class StrategyTest {
 			System.out.println("<map_file_path>: path to .map file");
 			System.out.println("<fireman_rank>: first_class / sergeant / captain / major / colonel / general\n");
 			System.out.println("The firefighters' strategy depends on the rank of their chief: ");
-			System.out.println("\t[first_class]: the 1st available robot is affected to the 1st available fire");
-			System.out.println("\t[sergeant]: a robot is assigned to its closest fire");
-			System.out.println("\t[captain]: a robot is affected to the closest unassigned fire");
+			System.out.println("\t[first_class]: all robots are affected to the 1st available fire");
+			System.out.println("\t[sergeant]: a robot is assigned to the 1st unassigned fire");
+			System.out.println("\t[captain]: a robot is assigned to its closest fire");
 			System.out.println("\t[major]: not implemented");
 			System.out.println("\t[colonel]: not implemented");
 			System.out.println("\t[general]: not implemented");

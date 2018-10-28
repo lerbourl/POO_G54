@@ -1,7 +1,6 @@
 /**
  * Strategy First Class:
- * the first available robot is assigned to the first available fire,
- * whatever are their relative positions on the map
+ * a robot is assigned to the 1st unassigned fire
  */
 
 package poog54.strategies;

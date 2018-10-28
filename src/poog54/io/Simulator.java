@@ -68,6 +68,12 @@ public class Simulator implements Simulable {
 		case "captain":
 			this.firemanmaster = new FiremanMasterCaptain(this);
 			break;
+		case "colonel":
+			this.firemanmaster = new FiremanMasterColonel(this);
+			break;
+		case "general":
+			this.firemanmaster = new FiremanMasterGeneral(this);
+			break;
 			default:
 				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
 						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
