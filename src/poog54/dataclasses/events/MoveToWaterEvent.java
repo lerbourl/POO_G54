@@ -55,11 +55,14 @@ public class MoveToWaterEvent extends MoveEvent {
 	public void execute(Simulator sim) {
 		Point nextPosition;
 		
-		sim.moveRobot(this.robot, this.p);
+		if (p != null) {
+			sim.moveRobot(this.robot, this.p);
+		}
 		nextPosition = robot.getTargetWater().path.dequeueFirst();
-		if (nextPosition == null) {
+		if (nextPosition == null || p == null) {
 			// this robot has reached the water tile
 			try {
+				this.robot.setState(RobotState.TANK_UP);
 				sim.addEvent(new TankupEvent(date + robot.getTankUpTime(), robot));
 				robot.setNext_free_time(date + robot.getTankUpTime() + 1);
 			} catch (DataFormatException e) {

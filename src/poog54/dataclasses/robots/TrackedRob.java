@@ -1,6 +1,9 @@
 package poog54.dataclasses.robots;
 
+import java.awt.Point;
+
 import poog54.dataclasses.*;
+import poog54.strategies.Path;
 
 /**
   * Represents a caterpillar firefighter.
@@ -58,5 +61,13 @@ public class TrackedRob extends Robot {
 	@Override
 	public String toString() {
 		return "Tracked " + super.toString();
+	}
+
+	@Override
+	public Path getPathToPoint(Point p) {
+		Path pathToPoint;
+		pathToPoint = super.getPathToPoint(p);
+		pathToPoint.removeLast();
+		return pathToPoint;
 	}
 }

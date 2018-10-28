@@ -165,7 +165,7 @@ public abstract class Robot extends Drawable {
 			mapTarget = new Target(waterPoint, getPathToPoint(waterPoint));
 			if(mapTarget.path.getTraveltime()<this.targetWater.path.getTraveltime()){
 				//this water tile is closer
-				this.targetWater = mapTarget;
+				this.targetWater = new Target(waterPoint, getPathToPoint(waterPoint));
 			}
 		}
 	}

@@ -61,13 +61,16 @@ public class MoveToFireEvent extends MoveEvent {
 		} else {
 			// the fire assignment has not been cancelled
 			this.robot.setState(RobotState.MOVING_TO_FIRE);
-			sim.moveRobot(this.robot, this.p);
+			if (p != null) {
+				sim.moveRobot(this.robot, this.p);
+			}
 			nextPosition = robot.getTargetFire().path.dequeueFirst();
-			if (nextPosition == null) {
+			if (nextPosition == null || p == null) {
 				// this robot has reached the fire tile
 				try {
-					sim.addEvent(new PouringEvent(date + robot.getPourTime(), robot, robot.getTargetFire().fire));
-					robot.setNext_free_time(date + robot.getPourTime() + 1);
+					sim.addEvent(new PouringEvent(robot.getNext_free_time() + robot.getPourTime(), robot,
+							robot.getTargetFire().fire));
+					robot.setNext_free_time(robot.getNext_free_time() + robot.getPourTime() + 1);
 				} catch (DataFormatException e) {
 					e.printStackTrace();
 				}

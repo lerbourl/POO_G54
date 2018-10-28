@@ -51,9 +51,11 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		if (this.robot.getTargetFire() == null) {
+		if (this.robot.getTargetFire() == null ||
+			this.fire.getIntensity() <=0 ) {
 			// the fire assignment is cancelled
 			this.robot.setState(RobotState.IDLE);
+			this.robot.setTargetFire(null);
 		} else {
 			// the fire assignment has not been cancelled
 			this.robot.setState(RobotState.POURING);
@@ -76,7 +78,7 @@ public class PouringEvent extends DiscreteEvent {
 				}
 				if (this.fire.getIntensity() <= 0) {
 					// this fire is now extinguished
-					sim.addEvent(new FireExtinguishedEvent(this.date, this.fire, sim));
+					sim.addEvent(new FireExtinguishedEvent(this.date+1, this.fire, sim));
 				}
 			} catch (DataFormatException e) {
 				e.printStackTrace();

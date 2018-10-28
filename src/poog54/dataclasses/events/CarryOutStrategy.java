@@ -31,6 +31,7 @@ public class CarryOutStrategy extends DiscreteEvent {
 	public void execute(Simulator sim) {
 		if (sim.getFiremanMaster().getData().getWfList().isEmpty()) {
 			System.out.println("Tous les feux sont éteints. Beau travail les gars !\nFin de la simulation.");
+			sim.clearAllEvents();
 		}
 		else sim.getFiremanMaster().performStrategy();
 	}

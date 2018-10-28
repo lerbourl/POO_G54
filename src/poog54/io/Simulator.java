@@ -89,6 +89,13 @@ public class Simulator implements Simulable {
 		this.eventQueue.add(e);
 	}
 
+	/**
+	 * clear event queue
+	 */
+	public void clearAllEvents() {
+		this.eventQueue.clear();
+	}
+	
 	private void draw(Drawable d) {
 		Iterator<Drawable> it = drawableMapFill(d);
 		while (it.hasNext()) {
