@@ -20,16 +20,40 @@ public class MoveToFireEvent extends MoveEvent {
 	/**
 	 * @param date
 	 * @param robot
-	 * @param direction
+	 * @param destination
 	 */
 	public MoveToFireEvent(int date, Robot robot, Point p) throws DataFormatException {
 		super(date, robot, p);
 	}
 
+	/**
+	 * Constructor
+	 * move event : move a robot along its specified target path.
+	 * @param robot
+	 */
+	public MoveToFireEvent(Robot robot) throws DataFormatException {
+		this.robot = robot;
+		this.p = this.robot.getTargetFire().path.dequeueFirst();
+		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
+		this.robot.setNext_free_time(this.date + 1);
+	}
+
+	/**
+	 * Constructor
+	 * move event : move a robot to a specified point.
+	 * @param robot
+	 * @param destination
+	 */
+	public MoveToFireEvent(Robot robot, Point p) throws DataFormatException {
+		this.robot = robot;
+		this.p = p;
+		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
+		this.robot.setNext_free_time(this.date + 1);
+	}
+	
 	@Override
 	public void execute(Simulator sim) {
 		Point nextPosition;
-		int travel_time;
 		
 		if (robot.getTargetFire() == null) {
 			// the fire assignment is cancelled;
@@ -48,15 +72,25 @@ public class MoveToFireEvent extends MoveEvent {
 					e.printStackTrace();
 				}
 			} else {
-				// target not reached, continue the path...
-				travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
+				// target not reached, continue along the path...
 				try {
-					sim.addEvent(new MoveToFireEvent(date + travel_time, robot, nextPosition));
-					robot.setNext_free_time(date + travel_time + 1);
+					sim.addEvent(new MoveToFireEvent(robot, nextPosition));
 				} catch (DataFormatException e) {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	/*
+	 * Print displacement details
+	 */
+	@Override
+	public String toString() {
+		if (robot.getTargetFire() == null) {
+			return "fire assignment canceled for " + this.robot;
+		} else {
+			return super.toString();
 		}
 	}
 

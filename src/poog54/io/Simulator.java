@@ -57,6 +57,7 @@ public class Simulator implements Simulable {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
 		this.DrawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
+		
 		switch (strategy) {
 		case "first_class":
 			this.firemanmaster = new FiremanMasterFirstClass(this);

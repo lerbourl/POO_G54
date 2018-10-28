@@ -26,10 +26,34 @@ public class MoveToWaterEvent extends MoveEvent {
 		super(date, robot, p);
 	}
 
+	/**
+	 * Constructor
+	 * move event : move a robot along its specified target path.
+	 * @param robot
+	 */
+	public MoveToWaterEvent(Robot robot) throws DataFormatException {
+		this.robot = robot;
+		this.p = this.robot.getTargetWater().path.dequeueFirst();
+		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
+		this.robot.setNext_free_time(this.date + 1);
+	}
+
+	/**
+	 * Constructor
+	 * move event : move a robot to a specified point.
+	 * @param robot
+	 * @param destination
+	 */
+	public MoveToWaterEvent(Robot robot, Point p) throws DataFormatException {
+		this.robot = robot;
+		this.p = p;
+		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
+		this.robot.setNext_free_time(this.date + 1);
+	}
+	
 	@Override
 	public void execute(Simulator sim) {
 		Point nextPosition;
-		int travel_time;
 		
 		sim.moveRobot(this.robot, this.p);
 		nextPosition = robot.getTargetWater().path.dequeueFirst();
@@ -44,10 +68,8 @@ public class MoveToWaterEvent extends MoveEvent {
 		} else {
 			// target not reached, continue the path...
 			this.robot.setState(RobotState.MOVING_TO_WATER);
-			travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
 			try {
-				sim.addEvent(new MoveToWaterEvent(date + travel_time, robot, nextPosition));
-				robot.setNext_free_time(date + travel_time + 1);
+				sim.addEvent(new MoveToWaterEvent(robot, nextPosition));
 			} catch (DataFormatException e) {
 				e.printStackTrace();
 			}

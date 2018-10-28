@@ -23,11 +23,11 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 
 	@Override
 	public void performStrategy() {
-		int travel_time;
 		Robot robot;
 		WildFire fire;
 		ListIterator<Robot> robotListIt;
 
+		//all available robots are affected to the 1st available fire
 		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
 			fire = this.data.getWfList().get(1);
@@ -39,11 +39,8 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 					System.out.println(robot + " assigned to fire (" + fire + ")");
 					robot.setTargetFire(fire);
 					robot.setState(RobotState.MOVING_TO_FIRE);
-					travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
 					try {
-						sim.addEvent(new MoveToFireEvent(robot.getNext_free_time() + travel_time, robot,
-								robot.getTargetFire().path.dequeueFirst()));
-						robot.setNext_free_time(robot.getNext_free_time() + travel_time + 1);
+						sim.addEvent(new MoveToFireEvent(robot));
 					} catch (DataFormatException e) {
 						e.printStackTrace();
 					}

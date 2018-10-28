@@ -3,7 +3,6 @@
  */
 package poog54.dataclasses.events;
 
-import java.awt.Point;
 import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.WildFire;
@@ -52,35 +51,28 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		Point nextPosition;
-		int travel_time;
-
-		if (robot.getTargetFire() == null) {
-			// the fire assignment is cancelled;
+		if (this.robot.getTargetFire() == null) {
+			// the fire assignment is cancelled
 			this.robot.setState(RobotState.IDLE);
 		} else {
 			// the fire assignment has not been cancelled
 			this.robot.setState(RobotState.POURING);
 			this.robot.pourOut();
-			this.fire.setIntensity(this.fire.getIntensity() - this.robot.getWater_amount());
 			try {
 				if (robot.getWater_level() <= 0) {
 					// the tank is empty
 					robot.setState(RobotState.MOVING_TO_WATER);
 					robot.locateClosestWaterTile();
-					nextPosition = robot.getTargetWater().path.dequeueFirst();
-					travel_time = (int) robot.getTimeType(robot.getCoord()) + 1;
 					try {
-						sim.addEvent(new MoveToWaterEvent(date + travel_time, robot, nextPosition));
-						robot.setNext_free_time(date + travel_time + 1);
+						sim.addEvent(new MoveToWaterEvent(this.robot));
 					} catch (DataFormatException e) {
 						e.printStackTrace();
 					}
 				} else {
 					// pour another time
 					// this order will be cancelled if the fire is extinguished
-					sim.addEvent(new PouringEvent(date + robot.getPourTime(), robot, this.fire));
-					robot.setNext_free_time(date + robot.getPourTime() + 1);
+					sim.addEvent(new PouringEvent(this.date + this.robot.getPourTime(), this.robot, this.fire));
+					robot.setNext_free_time(this.date + this.robot.getPourTime() + 1);
 				}
 				if (this.fire.getIntensity() <= 0) {
 					// this fire is now extinguished
@@ -99,6 +91,10 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return this.robot + " pours " + this.robot.getWater_amount() + "L of water on " + fire;
+		if (this.robot.getTargetFire() == null) {
+			return "pouring order on " + fire + " canceled for " + this.robot;
+		}else{
+			return this.robot + " pours " + this.robot.getWater_amount() + "L of water on " + fire;
+		}
 	}
 }

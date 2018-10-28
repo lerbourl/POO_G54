@@ -22,11 +22,20 @@ public abstract class MoveEvent extends DiscreteEvent {
 	public Robot getRobot() {
 		return robot;
 	}
-
+	
 	/**
+	 * Default constructor
+	 */
+	public MoveEvent() throws DataFormatException {
+		super(0);
+	}
+	
+	/**
+	 * Constructor
+	 * move event : move a robot to the specified 'destination'. The destination is reached at 'date'.
 	 * @param date
 	 * @param robot
-	 * @param direction
+	 * @param destination
 	 */
 	public MoveEvent(int date, Robot robot, Point p) throws DataFormatException {
 		super(date);

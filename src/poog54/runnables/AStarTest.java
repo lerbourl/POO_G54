@@ -17,9 +17,21 @@ public class AStarTest {
 		try {
 			SimulationData data = OurDataReader.DataFromFile(args[0]);
 			
-			Path p = data.getRobotList().get(0).getPathToPoint(new Point(48,7));
+			//rob #1
+			Path p = data.getRobotList().get(0).getPathToPoint(new Point(4,5));
+			System.out.println(p.toString());
+			
+			p = data.getRobotList().get(0).getPathToPoint(new Point(4,5));
 			System.out.println(p.toString());
 		
+			
+			//rob #2
+			p = data.getRobotList().get(1).getPathToPoint(new Point(4,5));
+			System.out.println(p.toString());
+			
+			p = data.getRobotList().get(1).getPathToPoint(new Point(4,5));
+			System.out.println(p.toString());
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("fichier " + args[0] + " inconnu ou illisible");
 		} catch (DataFormatException e) {
