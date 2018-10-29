@@ -1,6 +1,9 @@
 package poog54.dataclasses.robots;
 
+import java.awt.Point;
+
 import poog54.dataclasses.*;
+import poog54.strategies.Path;
 
 /**
   * Represents a walking firefighter.
@@ -64,4 +67,11 @@ public class WalkingRob extends Robot {
 		return "Walking " + super.toString();
 	}
 
+	@Override
+	public Path getPathToPoint(Point p) {
+		Path pathToPoint;
+		pathToPoint = super.getPathToPoint(p);
+		pathToPoint.removeLast();
+		return pathToPoint;
+	}
 }

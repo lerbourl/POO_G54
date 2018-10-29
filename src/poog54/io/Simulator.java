@@ -83,6 +83,13 @@ public class Simulator implements Simulable {
 		System.out.println("NEW EVENT ADDED AT " + e.getDate()+ " : "+ e.toString());
 	}
 
+	/**
+	 * clear event queue
+	 */
+	public void clearAllEvents() {
+		this.eventQueue.clear();
+	}
+	
 	private void draw(Drawable d) {
 		Iterator<Drawable> it = drawableMapFill(d);
 		while (it.hasNext()) {
