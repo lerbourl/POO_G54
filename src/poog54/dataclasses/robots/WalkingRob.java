@@ -46,7 +46,7 @@ public class WalkingRob extends Robot {
 	@Override
 	public void pourOut() {
 		// water level is never decreased
-		this.targetFire.fire.setIntensity(this.targetFire.fire.getIntensity() - this.water_amount);
+		this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.water_amount);
 	}
 
 	@Override

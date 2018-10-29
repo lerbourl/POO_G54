@@ -22,15 +22,15 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 	}
 
 	@Override
-	public void performStrategy() {
+	public void orderRobotToFire(Robot rob, Simulator sim) {
 		Robot robot;
-		WildFire fire;
+		WildFire fire = null;
 		ListIterator<Robot> robotListIt;
 
 		//all available robots are affected to the 1st available fire
 		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
-			fire = this.data.getWfList().get(1);
+			fire = this.data.getWfList().get(0);
 			robotListIt = this.data.getRobotList().listIterator();
 			while (robotListIt.hasNext()) {
 				robot = robotListIt.next();
@@ -38,7 +38,6 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 					// this robot has no assigned fire
 					System.out.println(robot + " assigned to fire (" + fire + ")");
 					robot.setTargetFire(fire);
-					robot.setState(RobotState.MOVING_TO_FIRE);
 					try {
 						sim.addEvent(new MoveToFireEvent(robot));
 					} catch (DataFormatException e) {

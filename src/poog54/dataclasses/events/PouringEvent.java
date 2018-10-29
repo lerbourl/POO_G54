@@ -38,10 +38,11 @@ public class PouringEvent extends DiscreteEvent {
 	 * @param amountOfWater
 	 * @param fire
 	 */
-	public PouringEvent(int date, Robot robot, WildFire fire) throws DataFormatException {
-		super(date);
-		this.robot = robot;
-		this.fire = fire;
+	public PouringEvent(Robot rob) throws DataFormatException {
+		super(rob.getNext_free_time() + rob.getPourTime());
+		this.robot = rob;
+		this.fire = rob.getTargetFire().getFire();
+		this.robot.setNext_free_time(this.date + 1);
 	}
 
 	/*
@@ -51,37 +52,40 @@ public class PouringEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		if (this.robot.getTargetFire() == null) {
-			// the fire assignment is cancelled
-			this.robot.setState(RobotState.IDLE);
-		} else {
-			// the fire assignment has not been cancelled
-			this.robot.setState(RobotState.POURING);
+		if (sim.getData().getWfList().contains(this.robot.getTargetFire().getFire())) {
+			// the fire is still here
 			this.robot.pourOut();
 			try {
-				if (robot.getWater_level() <= 0) {
-					// the tank is empty
-					robot.setState(RobotState.MOVING_TO_WATER);
-					robot.locateClosestWaterTile();
-					try {
-						sim.addEvent(new MoveToWaterEvent(this.robot));
-					} catch (DataFormatException e) {
-						e.printStackTrace();
+				if (this.fire.getIntensity() <= 0) {
+					// The fire is successfully extinguished !
+					sim.removeFire(this.fire);
+					if(sim.getData().getWfList().isEmpty())	sim.addEvent(new TheEndEvent(this.date + 1));
+					else {
+						if (robot.getWater_level() <= 0) {
+							// the tank is empty
+							robot.locateClosestWaterTile();
+							sim.addEvent(new MoveToWaterEvent(this.robot));
+						} else sim.getFiremanmaster().orderRobotToFire(robot, sim);
 					}
 				} else {
-					// pour another time
-					// this order will be cancelled if the fire is extinguished
-					sim.addEvent(new PouringEvent(this.date + this.robot.getPourTime(), this.robot, this.fire));
-					robot.setNext_free_time(this.date + this.robot.getPourTime() + 1);
-				}
-				if (this.fire.getIntensity() <= 0) {
-					// this fire is now extinguished
-					sim.addEvent(new FireExtinguishedEvent(this.date, this.fire, sim));
+					if (robot.getWater_level() <= 0) {
+						// the tank is empty
+						robot.locateClosestWaterTile();
+						sim.addEvent(new MoveToWaterEvent(this.robot));
+					} else {
+						// pour another time
+						sim.addEvent(new PouringEvent(this.robot));
+					}
 				}
 			} catch (DataFormatException e) {
 				e.printStackTrace();
 			}
-		}
+		}else
+
+	{
+		// No fire left, we have to change target
+		sim.getFiremanmaster().orderRobotToFire(robot, sim);
+	}
 	}
 
 	/*
@@ -93,7 +97,7 @@ public class PouringEvent extends DiscreteEvent {
 	public String toString() {
 		if (this.robot.getTargetFire() == null) {
 			return "pouring order on " + fire + " canceled for " + this.robot;
-		}else{
+		} else {
 			return this.robot + " pours " + this.robot.getWater_amount() + "L of water on " + fire;
 		}
 	}

@@ -1,6 +1,9 @@
 package poog54.dataclasses.robots;
 
+import java.awt.Point;
+
 import poog54.dataclasses.*;
+import poog54.strategies.Path;
 
 /**
   * Represents a drone firefighter.
@@ -38,7 +41,7 @@ public class DroneRob extends Robot {
 		this.water_level = 10000;
 		this.water_amount = 10000;
 		this.pourTime = 30;
-		this.tankUpTime = 1800; // 30min
+		this.tankUpTime = 30*60; // 30min
 	}
 
 	@Override
@@ -57,6 +60,13 @@ public class DroneRob extends Robot {
 	@Override
 	public String toString() {
 		return "Drone " + super.toString();
+	}
+	
+	// stop on the tile !
+	@Override
+	public Path getPathToPoint(Point p) {
+		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
+		return path;
 	}
 
 }

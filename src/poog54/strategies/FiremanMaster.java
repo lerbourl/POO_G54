@@ -33,7 +33,7 @@ abstract public class FiremanMaster {
 	public void setData(SimulationData data) {
 		this.data = data;
 	}
-
+/*
 	public void orderRobotToPath(Robot rob, Path path) {
 		Point p;
 		while (!path.getThepath().isEmpty()) {
@@ -42,7 +42,7 @@ abstract public class FiremanMaster {
 		}
 	}
 	
-	// plus utilisé car chaque MoveEvent génère l'événement suivant
+	// plus utilise car chaque MoveEvent genere l'evenement suivant
 	private void orderMoveRobot(Robot rob, Point p) {
 		int travel_time = (int) rob.getTimeType(p) + 1; // Arrondi au supÃ©rieur
 		try {
@@ -52,7 +52,7 @@ abstract public class FiremanMaster {
 		}
 		rob.setNext_free_time(rob.getNext_free_time() + travel_time + 1);
 	}
+*/
 
-
-	abstract public void performStrategy();
+	abstract public void orderRobotToFire(Robot rob, Simulator sim);
 }

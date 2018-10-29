@@ -27,7 +27,7 @@ public abstract class DiscreteEvent {
 	 */
 	public DiscreteEvent(int date) throws DataFormatException {
 		if (date < 0) {
-			throw new DataFormatException("Bad event timestamp...");
+			throw new DataFormatException("Bad event timestamp..." + date);
 		}
 		this.date = date;
 	}

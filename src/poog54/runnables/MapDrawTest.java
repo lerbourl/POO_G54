@@ -16,7 +16,7 @@ public class MapDrawTest {
 		try {
 			GUISimulator gui = new GUISimulator(920, 920, Color.BLACK);
 			@SuppressWarnings("unused")
-			Simulator sim = new Simulator(gui, args[0], "first_class");
+			Simulator sim = new Simulator(gui, args[0], "captain");
 		} catch (FileNotFoundException e) {
 			System.out.println("fichier " + args[0] + " inconnu ou illisible");
 		} catch (DataFormatException e) {
@@ -25,5 +25,4 @@ public class MapDrawTest {
 			System.out.println("\n\t**strategy not found \"" + args[0] + "\": " + e.getMessage());
 		}
 	}
-
 }

@@ -38,7 +38,7 @@ public class WheeledRob extends Robot {
 		this.water_level = 5000;
 		this.water_amount = 100;
 		this.pourTime = 5;
-		this.tankUpTime = 600; // 10min
+		this.tankUpTime = 10*60; // 10min
 	}
 
 	@Override

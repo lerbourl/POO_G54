@@ -18,67 +18,36 @@ import java.util.zip.DataFormatException;
 public class MoveToFireEvent extends MoveEvent {
 
 	/**
-	 * @param date
-	 * @param robot
-	 * @param destination
-	 */
-	public MoveToFireEvent(int date, Robot robot, Point p) throws DataFormatException {
-		super(date, robot, p);
-	}
-
-	/**
-	 * Constructor
-	 * move event : move a robot along its specified target path.
+	 * Constructor move event : move a robot along its specified target path.
+	 * 
 	 * @param robot
 	 */
-	public MoveToFireEvent(Robot robot) throws DataFormatException {
-		this.robot = robot;
-		this.p = this.robot.getTargetFire().path.dequeueFirst();
-		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
+	public MoveToFireEvent(Robot rob) throws DataFormatException {
+		super(rob.getNext_free_time() + (int) rob.getTimeType(rob.getCoord()) + 1, rob,
+				rob.getTargetFire().getPath().dequeueFirst());
 		this.robot.setNext_free_time(this.date + 1);
 	}
 
-	/**
-	 * Constructor
-	 * move event : move a robot to a specified point.
-	 * @param robot
-	 * @param destination
-	 */
-	public MoveToFireEvent(Robot robot, Point p) throws DataFormatException {
-		this.robot = robot;
-		this.p = p;
-		this.date = this.robot.getNext_free_time() + (int) this.robot.getTimeType(robot.getCoord()) + 1;
-		this.robot.setNext_free_time(this.date + 1);
-	}
-	
 	@Override
 	public void execute(Simulator sim) {
-		Point nextPosition;
-		
-		if (robot.getTargetFire() == null) {
-			// the fire assignment is cancelled;
-			this.robot.setState(RobotState.IDLE);
-		} else {
-			// the fire assignment has not been cancelled
-			this.robot.setState(RobotState.MOVING_TO_FIRE);
+		if (sim.getData().getWfList().contains(this.robot.getTargetFire().getFire())) {
+			// The fire is still here
 			sim.moveRobot(this.robot, this.p);
-			nextPosition = robot.getTargetFire().path.dequeueFirst();
-			if (nextPosition == null) {
-				// this robot has reached the fire tile
-				try {
-					sim.addEvent(new PouringEvent(date + robot.getPourTime(), robot, robot.getTargetFire().fire));
+			try {
+				if (robot.getTargetFire().getPath().isEmpty()) {
+					// this robot has reached the fire tile
+					sim.addEvent(new PouringEvent(robot));
 					robot.setNext_free_time(date + robot.getPourTime() + 1);
-				} catch (DataFormatException e) {
-					e.printStackTrace();
+				} else {
+					// target not reached, continue along the path...
+					sim.addEvent(new MoveToFireEvent(robot));
 				}
-			} else {
-				// target not reached, continue along the path...
-				try {
-					sim.addEvent(new MoveToFireEvent(robot, nextPosition));
-				} catch (DataFormatException e) {
-					e.printStackTrace();
-				}
+			} catch (DataFormatException e) {
+				e.printStackTrace();
 			}
+		} else {
+			// No fire left, we have to change target
+			sim.getFiremanmaster().orderRobotToFire(robot, sim);
 		}
 	}
 

@@ -7,8 +7,19 @@
 - temps pour les dÃ©placements arrondis au supÃ©rieur
 - Map de priorityQueue de drawables stylÃ©e ! (superposition par niveau!)
 - Drawable en abstract class !
+
+STRATEGIE
 - les 'discrete events' sont gÃ©rÃ©s avec une machine d'Ã©tat -> modifications ultÃ©rieures facilitÃ©es
 - les transitions de la machine d'Ã©tat sont stockÃ©es dans une "table vÃ©ritÃ©"
-- la stratégie est portée par le chef pompier. chaque chef a une stratégie différente: plus le grade du chef est élevé, plus la stratégie est évoluée
-- lorsqu'un feu est éteint, tous les robot qui lui étaient affectés sont libérés en même temps afin de permettre de futures stratégies de groupe (impossible si les robots sont libérés un par un)
-- le chef pompier affecte les feus aux robots, mais les robots vont se recharger en eau de manière autonome (ils connaissent la carte et trouve le point d'eau le plus proche de leur position courante.)
+- la strategie est portee par le chef pompier. chaque chef a une strategie differente: plus le grade du chef est eleve, plus la strategie est evoluee
+- lorsqu'un feu est eteint, tous les robot qui lui etaient affectes sont liberes en meme temps afin de permettre de futures strategies de groupe (impossible si les robots sont liberes un par un)
+- le chef pompier affecte les feus aux robots, mais les robots vont se recharger en eau de maniere autonome (ils connaissent la carte et trouve le point d'eau le plus proche de leur position courante.)
+
+OU ALORS
+- le chef pompier sert juste Ã  decider la cible du robot! (beaucoup plus facile et propre!)
+fisrt class: premier feu, eau la plus proche
+sergeant: feu le plus proche, eau la plus proche
+captain: feu le plus proche, eau sur le chemin du feu le plus proche
+major: strategie de robots : walking --> petits feux proches ? Drone Gros feux loin ?
+colonel:
+general:

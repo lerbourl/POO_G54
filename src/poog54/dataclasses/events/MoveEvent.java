@@ -24,13 +24,6 @@ public abstract class MoveEvent extends DiscreteEvent {
 	}
 	
 	/**
-	 * Default constructor
-	 */
-	public MoveEvent() throws DataFormatException {
-		super(0);
-	}
-	
-	/**
 	 * Constructor
 	 * move event : move a robot to the specified 'destination'. The destination is reached at 'date'.
 	 * @param date
@@ -48,7 +41,7 @@ public abstract class MoveEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return "Move " + this.robot + " to " + this.p;
+		return "Move " + this.robot + " to " + this.robot.getTargetFire().getFire();
 	}
 
 }

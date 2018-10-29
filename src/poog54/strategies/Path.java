@@ -15,24 +15,23 @@ public class Path {
 	private Deque<Point> thepath;
 	private double traveltime;
 
-	
 	public Path() {
 		this.thepath = new ArrayDeque<Point>();
 		this.traveltime = 0;
 	}
-	
+
 	public Deque<Point> getThepath() {
 		return thepath;
 	}
-	
+
 	public double getTraveltime() {
 		return traveltime;
 	}
-	
+
 	public void incTravelTime(double traveltime) {
 		this.traveltime += traveltime;
 	}
-	
+
 	public void addFirst(Point e) {
 		this.thepath.addFirst(e);
 	}
@@ -44,9 +43,13 @@ public class Path {
 	public Point removeLast() {
 		return this.thepath.pollLast();
 	}
-	
-	@Override 
+
+	public boolean isEmpty() {
+		return this.thepath.isEmpty();
+	}
+
+	@Override
 	public String toString() {
-		return "Time travel =" + this.traveltime +"list = " + thepath.toString();
+		return "Time travel =" + this.traveltime + "list = " + thepath.toString();
 	}
 }

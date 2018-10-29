@@ -39,7 +39,7 @@ public class TrackedRob extends Robot {
 		this.water_level = 2000;
 		this.water_amount = 100;
 		this.pourTime = 8;
-		this.tankUpTime = 300; // 5min
+		this.tankUpTime = 5*60; // 5min
 	}
 
 	@Override

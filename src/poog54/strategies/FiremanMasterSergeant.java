@@ -21,7 +21,7 @@ public class FiremanMasterSergeant extends FiremanMaster {
 	}
 
 	@Override
-	public void performStrategy() {
+	public void orderRobotToFire(Robot rob, Simulator sim) {
 		Robot robot;
 		WildFire wf;
 		ListIterator<Robot> robotListIt;
@@ -40,7 +40,6 @@ public class FiremanMasterSergeant extends FiremanMaster {
 					// this robot has no assigned fire
 					System.out.println(robot + " assigned to fire (" + wf + ")");
 					robot.setTargetFire(wf);
-					robot.setState(RobotState.MOVING_TO_FIRE);
 					try {
 						sim.addEvent(new MoveToFireEvent(robot));
 					} catch (DataFormatException e) {

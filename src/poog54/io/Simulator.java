@@ -68,17 +68,10 @@ public class Simulator implements Simulable {
 		case "captain":
 			this.firemanmaster = new FiremanMasterCaptain(this);
 			break;
-		case "colonel":
-			this.firemanmaster = new FiremanMasterColonel(this);
-			break;
-		case "general":
-			this.firemanmaster = new FiremanMasterGeneral(this);
-			break;
 			default:
 				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
 						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
 		}
-		
 		restart();
 	}
 
@@ -87,6 +80,7 @@ public class Simulator implements Simulable {
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
+		System.out.println("NEW EVENT ADDED AT " + e.getDate()+ " : "+ e.toString());
 	}
 
 	private void draw(Drawable d) {
@@ -148,7 +142,6 @@ public class Simulator implements Simulable {
 		while (drawit.hasNext()) {
 			this.draw(drawit.next());
 		}
-		System.out.println(this.DrawableMap);
 	}
 
 	private void loadData() throws FileNotFoundException, DataFormatException {
@@ -164,11 +157,10 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date++;
+			this.date+=1;
 			System.out.println("t=" + this.date);
 			processEvents();
-		} else
-			System.out.println("end of simulation");
+		}
 	}
 
 	/**
@@ -178,8 +170,8 @@ public class Simulator implements Simulable {
 		DiscreteEvent event;
 		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
 			event = this.eventQueue.poll();
-			event.execute(this);
 			System.out.println(event);
+			event.execute(this);
 		}
 	}
 
@@ -188,6 +180,17 @@ public class Simulator implements Simulable {
 			this.undraw(wf);
 			data.getWfList().remove(wf);
 		}
+	}
+	private void initSimulation() {
+		// create initial event
+		Iterator<Robot> it = this.getData().getRobotList().iterator();
+		while(it.hasNext()) {
+			this.firemanmaster.orderRobotToFire(it.next(), this);
+		}
+	}
+	
+	public void clearEvents(){
+		this.eventQueue.clear();
 	}
 
 	@Override
@@ -200,15 +203,16 @@ public class Simulator implements Simulable {
 			e.printStackTrace();
 		}
 		this.DrawableMap.clear();
-		initTheMapOnFire();	
-		this.eventQueue.clear();
+		this.initTheMapOnFire();	
+		clearEvents();
 		this.date = -1;
-		this.firemanmaster.setData(this.data);	
-		try {
-			// create initial event
-			addEvent(new CarryOutStrategy(0));
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		}
+		this.initSimulation();
+	}
+
+	/**
+	 * @return the firemanmaster
+	 */
+	public FiremanMaster getFiremanmaster() {
+		return firemanmaster;
 	}
 }

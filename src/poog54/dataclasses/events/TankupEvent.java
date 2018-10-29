@@ -28,9 +28,10 @@ public class TankupEvent extends DiscreteEvent {
 	 * @param robot
 	 * @param amountOfWater
 	 */
-	public TankupEvent(int date, Robot robot) throws DataFormatException {
-		super(date);
+	public TankupEvent(Robot robot) throws DataFormatException {
+		super(robot.getNext_free_time() + robot.getTankUpTime());
 		this.robot = robot;
+		this.robot.setNext_free_time(this.date + 1);
 	}
 
 	/*
@@ -40,14 +41,8 @@ public class TankupEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
-		this.robot.setState(RobotState.TANK_UP);
 		this.robot.tankUp();
-		try {
-			sim.addEvent(new TankFilledEvent(date + 1, robot));
-			robot.setNext_free_time(date + 1);
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		}
+		sim.getFiremanmaster().orderRobotToFire(robot, sim);
 	}
 
 	/*
@@ -57,7 +52,7 @@ public class TankupEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return this.robot + " fills " + robot.getWater_level() + "L of water in its tank";
+		return this.robot + " fills " + robot.getWater_capacity() + "L of water in its tank";
 	}
 
 }

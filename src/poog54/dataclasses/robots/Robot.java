@@ -163,7 +163,7 @@ public abstract class Robot extends Drawable {
 		while(waterTileListIt.hasNext()){
 			waterPoint = waterTileListIt.next();
 			mapTarget = new Target(waterPoint, getPathToPoint(waterPoint));
-			if(mapTarget.path.getTraveltime()<this.targetWater.path.getTraveltime()){
+			if(mapTarget.getPath().getTraveltime()<this.targetWater.getPath().getTraveltime()){
 				//this water tile is closer
 				this.targetWater = mapTarget;
 			}
@@ -178,7 +178,9 @@ public abstract class Robot extends Drawable {
 	}
 
 	public Path getPathToPoint(Point p) {
-		return pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
+		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
+		path.removeLast(); // stop before the tile
+		return path;
 	}
 
 	/**
@@ -210,11 +212,11 @@ public abstract class Robot extends Drawable {
 		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
 	}
 
+	/* Return the time to enter a tile of the type, in seconds */
 	public double getTimeType(Point p) {
-		double speed_factor = 10; // to speed up the simulation !
 		TypeField type = this.theMap.getTile(p).getTypeField();
 
-		double speed = 0.000001;
+		double speed = 0.000001; // for null speeds
 
 		switch (type) {
 		case EAU:
@@ -235,7 +237,8 @@ public abstract class Robot extends Drawable {
 		default:
 			break;
 		}
-		return this.theMap.getTileSize() / speed / speed_factor;
+		return this.theMap.getTileSize() / (speed * 1000 / 3600) ;
+		/* t (s) = d (metres ) / v (km / h)*/
 	}
 
 	/**
@@ -259,13 +262,6 @@ public abstract class Robot extends Drawable {
 		return water_level;
 	}
 
-	public void move(CardinalPoints dir) {
-		if (theMap.hasNeighbour(this.getTile(), dir)) {
-			this.translate(dir);
-		} else
-			System.out.println("Move robot on non allowed tile");
-	}
-
 	public void move(Point p) {
 		if (this.theMap.tileIsIn(p)) {
 			this.setCoord(p);
@@ -279,7 +275,7 @@ public abstract class Robot extends Drawable {
 	public void pourOut() {
 		if (this.water_level > 0) {
 			this.water_level -= this.water_amount;
-			this.targetFire.fire.setIntensity(this.targetFire.fire.getIntensity() - this.water_amount);
+			this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.water_amount);
 		}
 	}
 
@@ -297,14 +293,6 @@ public abstract class Robot extends Drawable {
 	 * Speed assignment Abstract cause it depends on the Robot Type
 	 */
 	public abstract void setSpeed(int speed);
-
-	/**
-	 * @param the
-	 *            new execution state of a robot
-	 */
-	public void setState(RobotState state) {
-		this.state = state;
-	}
 
 	/** Target fire assignment */
 	public void setTargetFire(WildFire fire) {
