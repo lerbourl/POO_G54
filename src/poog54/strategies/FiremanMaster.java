@@ -46,7 +46,7 @@ abstract public class FiremanMaster {
 	private void orderMoveRobot(Robot rob, Point p) {
 		int travel_time = (int) rob.getTimeType(p) + 1; // Arrondi au supérieur
 		try {
-			sim.addEvent(new MoveToFireEvent(rob.getNext_free_time()+travel_time, rob, p));
+			sim.addEvent(new MoveToFireEvent(rob.getNext_free_time()+travel_time, rob, p, rob.getTargetFire().fire));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}

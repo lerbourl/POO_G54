@@ -3,6 +3,7 @@
  */
 package poog54.dataclasses.events;
 
+import java.util.ListIterator;
 import java.util.zip.DataFormatException;
 import poog54.dataclasses.robots.*;
 import poog54.enums.RobotState;
@@ -38,16 +39,30 @@ public class TankFilledEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
+		int nextFreeTime;
+		Robot rob;
+		ListIterator<Robot> robListIt;
+
 		this.robot.setState(RobotState.IDLE);
+		// get the list of IDLE robots and get the next free time of the group
+		nextFreeTime = 0;
+		robListIt = sim.getData().getRobotList().listIterator();
+		while (robListIt.hasNext()) {
+			rob = robListIt.next();
+			if (rob.getState() == RobotState.IDLE) {
+				if (robot.getNext_free_time() > nextFreeTime) {
+					nextFreeTime = robot.getNext_free_time();
+				}
+			}
+		}
+
 		// ask for fire assignment
 		try {
-			sim.addEvent(new CarryOutStrategy(date+1));
-			robot.setNext_free_time(date+1);
+			sim.addEvent(new CarryOutStrategy(nextFreeTime));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
 	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

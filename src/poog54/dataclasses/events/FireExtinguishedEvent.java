@@ -43,24 +43,29 @@ public class FireExtinguishedEvent extends DiscreteEvent {
 	 */
 	@Override
 	public void execute(Simulator sim) {
+		int nextFreeTime;
 		Robot robot;
 		ListIterator<Robot> robotListIt;
 
 		// stop any robot that is still assigned to this fire
+		nextFreeTime = 0;
 		robotListIt = this.sim.getData().getRobotList().listIterator();
 		while (robotListIt.hasNext()) {
 			robot = robotListIt.next();
-			if (      (robot.getState() == RobotState.POURING
+			if ((      robot.getState() == RobotState.POURING
 					|| robot.getState() == RobotState.MOVING_TO_FIRE)
 					&& robot.getTargetFire().fire == this.fire) {
 				robot.setState(RobotState.IDLE);
 				robot.setTargetFire(null);
+				if (robot.getNext_free_time() > nextFreeTime) {
+					nextFreeTime = robot.getNext_free_time();
+				}
 			}
 		}
 		
 		// re-affects robots to remaining fires
 		try {
-			sim.addEvent(new CarryOutStrategy(this.date+1));
+			sim.addEvent(new CarryOutStrategy(nextFreeTime));
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}

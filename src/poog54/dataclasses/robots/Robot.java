@@ -361,9 +361,6 @@ public abstract class Robot extends Drawable {
 	}
 	@Override
 	public String toString() {
-		return "robot [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] (" 
-				+ this.state + ") <"
-				+ this.water_level + "L>";
+		return "robot";
 	}
 }

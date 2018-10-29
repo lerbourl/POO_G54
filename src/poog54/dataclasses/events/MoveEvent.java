@@ -48,7 +48,11 @@ public abstract class MoveEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return "Move " + this.robot + " to " + this.p;
+		if(this.p!=null) {
+			return "Move " + this.robot + " to [" + this.p.x + "," + this.p.y + "]";
+		} else {
+			return this.robot + "not moved";
+		}
 	}
 
 }

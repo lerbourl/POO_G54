@@ -43,8 +43,8 @@ public class TankupEvent extends DiscreteEvent {
 		this.robot.setState(RobotState.TANK_UP);
 		this.robot.tankUp();
 		try {
-			sim.addEvent(new TankFilledEvent(date + 1, robot));
-			robot.setNext_free_time(date + 1);
+			sim.addEvent(new TankFilledEvent(this.robot.getNext_free_time(), robot));
+			robot.setNext_free_time(this.robot.getNext_free_time() + 1);
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}

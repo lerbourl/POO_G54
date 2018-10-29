@@ -73,8 +73,8 @@ public class PouringEvent extends DiscreteEvent {
 				} else {
 					// pour another time
 					// this order will be cancelled if the fire is extinguished
-					sim.addEvent(new PouringEvent(this.date + this.robot.getPourTime(), this.robot, this.fire));
-					robot.setNext_free_time(this.date + this.robot.getPourTime() + 1);
+					sim.addEvent(new PouringEvent(this.robot.getNext_free_time() + this.robot.getPourTime(), this.robot, this.fire));
+					robot.setNext_free_time(this.robot.getNext_free_time() + this.robot.getPourTime() + 1);
 				}
 				if (this.fire.getIntensity() <= 0) {
 					// this fire is now extinguished
