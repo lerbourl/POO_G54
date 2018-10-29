@@ -157,7 +157,7 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=1;
+			this.date+=10;
 			System.out.println("t=" + this.date);
 			processEvents();
 		}
