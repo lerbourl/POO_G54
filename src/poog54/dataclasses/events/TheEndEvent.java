@@ -19,7 +19,7 @@ public class TheEndEvent extends DiscreteEvent {
 
 	@Override
 	public void execute(Simulator sim) {
-		sim.clearEvents();
+		sim.clearAllEvents();
 		System.out.println("END OF SIMULATION ! WELL DONE !\nduration : " + (this.date - 1) + "s");
 	}
 

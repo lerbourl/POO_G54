@@ -56,7 +56,7 @@ public class MoveToFireEvent extends MoveEvent {
 		if (robot.getTargetFire() == null) {
 			return "fire assignment canceled for " + this.robot;
 		} else {
-			return super.toString();
+			return "Move " + this.robot + " to " + this.robot.getTargetFire().getFire();
 		}
 	}
 

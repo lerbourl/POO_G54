@@ -62,12 +62,4 @@ public class TrackedRob extends Robot {
 	public String toString() {
 		return "Tracked " + super.toString();
 	}
-
-	@Override
-	public Path getPathToPoint(Point p) {
-		Path pathToPoint;
-		pathToPoint = super.getPathToPoint(p);
-		pathToPoint.removeLast();
-		return pathToPoint;
-	}
 }

@@ -66,12 +66,4 @@ public class WalkingRob extends Robot {
 	public String toString() {
 		return "Walking " + super.toString();
 	}
-
-	@Override
-	public Path getPathToPoint(Point p) {
-		Path pathToPoint;
-		pathToPoint = super.getPathToPoint(p);
-		pathToPoint.removeLast();
-		return pathToPoint;
-	}
 }

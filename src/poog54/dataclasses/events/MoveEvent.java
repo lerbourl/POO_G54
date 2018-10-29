@@ -41,7 +41,7 @@ public abstract class MoveEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return "Move " + this.robot + " to " + this.robot.getTargetFire().getFire();
+		return "Move " + this.robot + " to " + this.robot.getTargetFire().getLocation();
 	}
 
 }

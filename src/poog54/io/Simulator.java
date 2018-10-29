@@ -195,10 +195,6 @@ public class Simulator implements Simulable {
 			this.firemanmaster.orderRobotToFire(it.next(), this);
 		}
 	}
-	
-	public void clearEvents(){
-		this.eventQueue.clear();
-	}
 
 	@Override
 	public void restart() {
@@ -211,7 +207,7 @@ public class Simulator implements Simulable {
 		}
 		this.DrawableMap.clear();
 		this.initTheMapOnFire();	
-		clearEvents();
+		clearAllEvents();
 		this.date = -1;
 		this.initSimulation();
 	}

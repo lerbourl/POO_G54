@@ -59,12 +59,4 @@ public class WheeledRob extends Robot {
 	public String toString() {
 		return "Wheeled " + super.toString();
 	}
-	
-	@Override
-	public Path getPathToPoint(Point p) {
-		Path pathToPoint;
-		pathToPoint = super.getPathToPoint(p);
-		pathToPoint.removeLast();
-		return pathToPoint;
-	}
 }

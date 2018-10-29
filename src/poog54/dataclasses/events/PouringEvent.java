@@ -57,6 +57,7 @@ public class PouringEvent extends DiscreteEvent {
 			try {
 				if (this.fire.getIntensity() <= 0) {
 					// The fire is successfully extinguished !
+					System.out.println("The fire " + this.fire + " is successfully extinguished");
 					sim.removeFire(this.fire);
 					if(sim.getData().getWfList().isEmpty())	sim.addEvent(new TheEndEvent(this.date + 1));
 					else {
@@ -79,12 +80,10 @@ public class PouringEvent extends DiscreteEvent {
 			} catch (DataFormatException e) {
 				e.printStackTrace();
 			}
-		}else
-
-	{
-		// No fire left, we have to change target
-		sim.getFiremanmaster().orderRobotToFire(robot, sim);
-	}
+		} else {
+			// No fire left, we have to change target
+			sim.getFiremanmaster().orderRobotToFire(robot, sim);
+		}
 	}
 
 	/*

@@ -6,10 +6,8 @@
 
 package poog54.strategies;
 
-import java.util.*;
 import java.util.zip.DataFormatException;
 
-import poog54.enums.*;
 import poog54.dataclasses.*;
 import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
@@ -23,28 +21,20 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 
 	@Override
 	public void orderRobotToFire(Robot rob, Simulator sim) {
-		Robot robot;
-		WildFire fire = null;
-		ListIterator<Robot> robotListIt;
+		WildFire wf = null;
 
-		//all available robots are affected to the 1st available fire
-		if (!this.data.getWfList().isEmpty()) {
+		// all available robots are affected to the 1st available fire
+		if (!this.sim.getData().getWfList().isEmpty()) {
 			// there are remaining fires
-			fire = this.data.getWfList().get(0);
-			robotListIt = this.data.getRobotList().listIterator();
-			while (robotListIt.hasNext()) {
-				robot = robotListIt.next();
-				if (robot.getState() == RobotState.IDLE) {
-					// this robot has no assigned fire
-					System.out.println(robot + " assigned to fire (" + fire + ")");
-					robot.setTargetFire(fire);
-					try {
-						sim.addEvent(new MoveToFireEvent(robot));
-					} catch (DataFormatException e) {
-						e.printStackTrace();
-					}
-				}
+			wf = this.sim.getData().getWfList().get(0);
+			System.out.println(rob + " assigned to " + wf);
+			rob.setTargetFire(wf);
+			try {
+				sim.addEvent(new MoveToFireEvent(rob));
+			} catch (DataFormatException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 }
+

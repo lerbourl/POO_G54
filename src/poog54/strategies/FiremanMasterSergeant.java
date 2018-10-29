@@ -8,7 +8,6 @@ package poog54.strategies;
 import java.util.*;
 import java.util.zip.DataFormatException;
 
-import poog54.enums.*;
 import poog54.dataclasses.*;
 import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
@@ -22,36 +21,50 @@ public class FiremanMasterSergeant extends FiremanMaster {
 
 	@Override
 	public void orderRobotToFire(Robot rob, Simulator sim) {
-		Robot robot;
-		WildFire wf;
+		// a robot is affected to the 1st fire without assignment
+		// or the fire with the fewest assigned firefighters
+		
+		int currentNum, selectedNum; // num of assigned robots
+		Robot currentRob;
+		WildFire currentWF, selectedWF;
 		ListIterator<Robot> robotListIt;
 		ListIterator<WildFire> wfListIt;
 
-		//each robot is assigned to the next available fire.
-		//it loops back on the fire list if there are more robots than fires
-		if (!this.data.getWfList().isEmpty()) {
+		if (!this.sim.getData().getWfList().isEmpty()) {
 			// there are remaining fires
-			wfListIt = this.data.getWfList().listIterator();
-			wf = wfListIt.next();
-			robotListIt = this.data.getRobotList().listIterator();
-			while (robotListIt.hasNext()) {
-				robot = robotListIt.next();
-				if (robot.getState() == RobotState.IDLE) {
-					// this robot has no assigned fire
-					System.out.println(robot + " assigned to fire (" + wf + ")");
-					robot.setTargetFire(wf);
-					try {
-						sim.addEvent(new MoveToFireEvent(robot));
-					} catch (DataFormatException e) {
-						e.printStackTrace();
+			selectedWF = null;
+			selectedNum = Integer.MAX_VALUE;
+			wfListIt = this.sim.getData().getWfList().listIterator();
+			
+			// searches the fire with the fewest assigned robots
+			while (wfListIt.hasNext()) {
+				currentNum = 0;
+				currentWF = wfListIt.next();
+				robotListIt = this.sim.getData().getRobotList().listIterator();
+				
+				// counts the num of assigned robots
+				while (robotListIt.hasNext()) {
+					currentRob = robotListIt.next();
+					if (currentRob.getTargetFire() != null) {
+						if (currentRob.getTargetFire().getFire() == currentWF) {
+							currentNum++;
+						}
 					}
-					//get next fire
-					if(!wfListIt.hasNext()){
-						//loops on the wild fire list as long as there are robots left 
-						wfListIt = this.data.getWfList().listIterator();
-					}
-					wf = wfListIt.next();
 				}
+				
+				// selects the appropriate fire
+				if (currentNum < selectedNum) {
+					selectedWF = currentWF;
+				}
+			}
+			
+			// assigns the selected fire to the robot
+			System.out.println(rob + " assigned to " + selectedWF);
+			rob.setTargetFire(selectedWF);
+			try {
+				sim.addEvent(new MoveToFireEvent(rob));
+			} catch (DataFormatException e) {
+				e.printStackTrace();
 			}
 		}
 	}
