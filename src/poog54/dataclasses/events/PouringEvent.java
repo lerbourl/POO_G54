@@ -7,7 +7,6 @@ import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.WildFire;
 import poog54.dataclasses.robots.*;
-import poog54.enums.RobotState;
 import poog54.io.Simulator;
 
 /**

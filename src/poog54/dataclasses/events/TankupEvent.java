@@ -6,7 +6,6 @@ package poog54.dataclasses.events;
 import java.util.zip.DataFormatException;
 
 import poog54.dataclasses.robots.Robot;
-import poog54.enums.RobotState;
 import poog54.io.Simulator;
 
 /**

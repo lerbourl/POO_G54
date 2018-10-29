@@ -3,11 +3,7 @@
  */
 package poog54.strategies;
 
-import java.awt.Point;
-import java.util.zip.DataFormatException;
-
 import poog54.dataclasses.*;
-import poog54.dataclasses.events.*;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
 

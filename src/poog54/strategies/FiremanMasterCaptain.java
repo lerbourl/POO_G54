@@ -7,8 +7,6 @@ package poog54.strategies;
 
 import java.util.*;
 import java.util.zip.DataFormatException;
-
-import poog54.enums.*;
 import poog54.dataclasses.*;
 import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
