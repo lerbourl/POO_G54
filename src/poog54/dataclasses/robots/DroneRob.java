@@ -62,11 +62,11 @@ public class DroneRob extends Robot {
 		return "Drone " + super.toString();
 	}
 	
-	// stop on the tile !
+	
 	@Override
 	public Path getPathToPoint(Point p) {
-		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
-		return path;
+		// stop on the tile
+		return pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
 	}
 
 }

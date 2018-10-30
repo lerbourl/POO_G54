@@ -27,7 +27,7 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 		if (!this.sim.getData().getWfList().isEmpty()) {
 			// there are remaining fires
 			wf = this.sim.getData().getWfList().get(0);
-			System.out.println(rob + " assigned to " + wf);
+			System.out.println("t=" + sim.getDate() + ": " + rob + " assigned to " + wf);
 			rob.setTargetFire(wf);
 			try {
 				sim.addEvent(new MoveToFireEvent(rob));

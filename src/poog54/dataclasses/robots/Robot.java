@@ -171,7 +171,13 @@ public abstract class Robot extends Drawable {
 
 	public Path getPathToPoint(Point p) {
 		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
-		path.removeLast(); // stop before the tile
+		if (path.getThepath().size() < 2) {
+			// robots remains on the same tile
+			path.getThepath().clear();
+		} else {
+			// stop before the tile
+			path.removeLast();
+		}
 		return path;
 	}
 
@@ -254,7 +260,7 @@ public abstract class Robot extends Drawable {
 			} else
 				System.out.println("Move robot on non allowed tile");
 		} else {
-			System.out.println(this + " remains on the same tile");
+			System.out.println("t=" + (this.next_free_time-1) + ": " + this + " remains on the same tile");
 		}
 	}
 

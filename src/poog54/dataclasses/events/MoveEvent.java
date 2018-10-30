@@ -34,6 +34,10 @@ public abstract class MoveEvent extends DiscreteEvent {
 		super(date);
 		this.robot = robot;
 		this.p = p;
+		if(this.p == null){
+			// the robot remains on the same tile
+			this.date = this.robot.getNext_free_time();
+		}
 	}
 
 	/*

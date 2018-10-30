@@ -45,10 +45,6 @@ public class MoveToWaterEvent extends MoveEvent {
 	 */
 	@Override
 	public String toString() {
-		if (robot.getTargetFire() == null) {
-			return "fire assignment canceled for " + this.robot;
-		} else {
-			return "Move " + this.robot + " to water tile [" + this.robot.getTargetWater().getLocation().x + "," + this.robot.getTargetWater().getLocation().y + "]";
-		}
+		return "Move " + this.robot + " to water tile [" + this.robot.getTargetWater().getLocation().x + "," + this.robot.getTargetWater().getLocation().y + "]";
 	}
 }
