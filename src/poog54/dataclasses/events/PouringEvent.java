@@ -57,7 +57,7 @@ public class PouringEvent extends DiscreteEvent {
 			try {
 				if (this.fire.getIntensity() <= 0) {
 					// The fire is successfully extinguished !
-					System.out.println("The fire " + this.fire + " is successfully extinguished");
+					System.out.println("t=" + this.date + ": " + this.fire + " is successfully extinguished");
 					sim.removeFire(this.fire);
 					if(sim.getData().getWfList().isEmpty())	sim.addEvent(new TheEndEvent(this.date + 1));
 					else {
@@ -65,7 +65,7 @@ public class PouringEvent extends DiscreteEvent {
 							// the tank is empty
 							robot.locateClosestWaterTile();
 							sim.addEvent(new MoveToWaterEvent(this.robot));
-						} else sim.getFiremanmaster().orderRobotToFire(robot, sim);
+						} else sim.getFiremanMaster().orderRobotToFire(robot, sim);
 					}
 				} else {
 					if (robot.getWater_level() <= 0) {
@@ -82,7 +82,7 @@ public class PouringEvent extends DiscreteEvent {
 			}
 		} else {
 			// No fire left, we have to change target
-			sim.getFiremanmaster().orderRobotToFire(robot, sim);
+			sim.getFiremanMaster().orderRobotToFire(robot, sim);
 		}
 	}
 

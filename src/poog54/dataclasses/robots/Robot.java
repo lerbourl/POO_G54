@@ -59,13 +59,6 @@ public abstract class Robot extends Drawable {
 	 * fire path: path to the assigned fire. path[0] is always the current
 	 * location.
 	 */
-	protected RobotState state;
-
-	/**
-	 * Fire target location: position of the targeted fire on the theMap Target
-	 * fire path: path to the assigned fire. path[0] is always the current
-	 * location.
-	 */
 	protected Target targetFire;
 
 	/**
@@ -100,9 +93,8 @@ public abstract class Robot extends Drawable {
 		super(xCoord, yCoord);
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
-		this.state = RobotState.IDLE;
 		this.pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
-		next_free_time = 1; // after init strategy
+		this.next_free_time = 1; // after init strategy
 	}
 
 	protected AlgoTile[][] getAlgoMap() {
@@ -201,13 +193,6 @@ public abstract class Robot extends Drawable {
 		return speed;
 	}
 
-	/**
-	 * @return the robot state
-	 */
-	public RobotState getState() {
-		return this.state;
-	}
-
 	public Tile getTile() {
 		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
 	}
@@ -263,10 +248,14 @@ public abstract class Robot extends Drawable {
 	}
 
 	public void move(Point p) {
-		if (this.theMap.tileIsIn(p)) {
-			this.setCoord(p);
-		} else
-			System.out.println("Move robot on non allowed tile");
+		if (p != null) {
+			if (this.theMap.tileIsIn(p)) {
+				this.setCoord(p);
+			} else
+				System.out.println("Move robot on non allowed tile");
+		} else {
+			System.out.println(this + " remains on the same tile");
+		}
 	}
 
 	/**
@@ -303,7 +292,12 @@ public abstract class Robot extends Drawable {
 			this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
 		}
 	}
-
+	
+	/** Target fire assignment */
+	public void setTargetFire(Target fire) {
+			this.targetFire = fire;
+	}
+	
 	/** Target water assignment */
 	public void setTargetWater(Point water) {
 		if (water == null) {

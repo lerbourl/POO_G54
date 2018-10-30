@@ -1,9 +1,6 @@
 package poog54.dataclasses.robots;
 
-import java.awt.Point;
-
 import poog54.dataclasses.*;
-import poog54.strategies.Path;
 
 /**
   * Represents a walking firefighter.

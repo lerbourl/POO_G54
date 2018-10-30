@@ -41,7 +41,7 @@ public class TankupEvent extends DiscreteEvent {
 	@Override
 	public void execute(Simulator sim) {
 		this.robot.tankUp();
-		sim.getFiremanmaster().orderRobotToFire(robot, sim);
+		sim.getFiremanMaster().orderRobotToFire(robot, sim);
 	}
 
 	/*

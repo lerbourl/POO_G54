@@ -8,8 +8,7 @@ import java.util.zip.DataFormatException;
 import poog54.io.Simulator;
 
 /**
- * @author louis
- *
+ * @author POO_G54
  */
 public class TheEndEvent extends DiscreteEvent {
 
@@ -20,7 +19,15 @@ public class TheEndEvent extends DiscreteEvent {
 	@Override
 	public void execute(Simulator sim) {
 		sim.clearAllEvents();
-		System.out.println("END OF SIMULATION ! WELL DONE !\nduration : " + (this.date - 1) + "s");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "END OF SIMULATION ! WELL DONE !\nduration : " + (this.date - 1) + "s";
+	}
 }

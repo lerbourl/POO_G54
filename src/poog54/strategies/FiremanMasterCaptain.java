@@ -1,13 +1,11 @@
 /**
- * Strategy First Class:
+ * Strategy Captain:
  * a robot is assigned to its closest fire
  */
 
 package poog54.strategies;
 
-import java.util.*;
 import java.util.zip.DataFormatException;
-import poog54.dataclasses.*;
 import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
@@ -20,21 +18,11 @@ public class FiremanMasterCaptain extends FiremanMaster {
 
 	@Override
 	public void orderRobotToFire(Robot rob, Simulator sim) {
-		Target target, closestTarget;
-		WildFire wf;
-		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
-		
-		wf = wfListIt.next();
-		closestTarget = new Target(wf, rob.getPathToPoint(wf.getCoord()));
-		while (wfListIt.hasNext()) {
-			wf = wfListIt.next();
-			target = new Target(wf, rob.getPathToPoint(wf.getCoord()));
-			if (target.getPath().getTraveltime() < closestTarget.getPath().getTraveltime()) {
-				closestTarget = target;
-			}
-		}
+		Target closestTarget;
+
+		closestTarget = getClosestFire(rob);
 		System.out.println(rob + " assigned to fire (" + closestTarget.getFire() + ")");
-		rob.setTargetFire(closestTarget.getFire());
+		rob.setTargetFire(closestTarget);
 		try {
 			sim.addEvent(new MoveToFireEvent(rob));
 		} catch (DataFormatException e) {

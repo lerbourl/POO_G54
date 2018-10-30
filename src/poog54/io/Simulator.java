@@ -68,6 +68,9 @@ public class Simulator implements Simulable {
 		case "captain":
 			this.firemanmaster = new FiremanMasterCaptain(this);
 			break;
+		case "major":
+			this.firemanmaster = new FiremanMasterMajor(this);
+			break;
 			default:
 				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
 						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
@@ -80,7 +83,7 @@ public class Simulator implements Simulable {
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
-		System.out.println("NEW EVENT ADDED AT " + e.getDate()+ " : "+ e.toString());
+		//System.out.println("NEW EVENT ADDED AT " + e.getDate()+ " : "+ e.toString());
 	}
 
 	/**
@@ -136,12 +139,19 @@ public class Simulator implements Simulable {
 		return this.eventQueue.isEmpty();
 	}
 
+	/**
+	 * @return the firemanmaster
+	 */
 	public FiremanMaster getFiremanMaster() {
 		return this.firemanmaster;
 	}
 
 	public SimulationData getData() {
 		return this.data;
+	}
+
+	public int getDate() {
+		return this.date;
 	}
 	
 	private void initTheMapOnFire() {
@@ -164,8 +174,8 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=10;
-			System.out.println("t=" + this.date);
+			this.date+=1;
+			System.out.print("t=" + this.date + "\r");
 			processEvents();
 		}
 	}
@@ -177,7 +187,7 @@ public class Simulator implements Simulable {
 		DiscreteEvent event;
 		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
 			event = this.eventQueue.poll();
-			System.out.println(event);
+			System.out.println("t=" + this.date + ": " + event);
 			event.execute(this);
 		}
 	}
@@ -208,14 +218,7 @@ public class Simulator implements Simulable {
 		this.DrawableMap.clear();
 		this.initTheMapOnFire();	
 		clearAllEvents();
-		this.date = -1;
+		this.date = 0;
 		this.initSimulation();
-	}
-
-	/**
-	 * @return the firemanmaster
-	 */
-	public FiremanMaster getFiremanmaster() {
-		return firemanmaster;
 	}
 }

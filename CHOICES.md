@@ -12,14 +12,11 @@ STRATEGIE
 - les 'discrete events' sont gérés avec une machine d'état -> modifications ultérieures facilitées
 - les transitions de la machine d'état sont stockées dans une "table vérité"
 - la strategie est portee par le chef pompier. chaque chef a une strategie differente: plus le grade du chef est eleve, plus la strategie est evoluee
-- lorsqu'un feu est eteint, tous les robot qui lui etaient affectes sont liberes en meme temps afin de permettre de futures strategies de groupe (impossible si les robots sont liberes un par un)
 - le chef pompier affecte les feus aux robots, mais les robots vont se recharger en eau de maniere autonome (ils connaissent la carte et trouve le point d'eau le plus proche de leur position courante.)
-
-OU ALORS
 - le chef pompier sert juste à decider la cible du robot! (beaucoup plus facile et propre!)
 fisrt class: premier feu, eau la plus proche
-sergeant: feu le plus proche, eau la plus proche
-captain: feu le plus proche, eau sur le chemin du feu le plus proche
-major: strategie de robots : walking --> petits feux proches ? Drone Gros feux loin ?
+sergeant: feu qui a le moins de pompier affect�, eau la plus proche
+captain: feu le plus proche, eau la plus proche
+major: strategie d�pendante du robot : walking --> feu le plus proche, drone --> feu le plus loin, les autres -> feux qui ont le moins de pompiers affect�s
 colonel:
 general:

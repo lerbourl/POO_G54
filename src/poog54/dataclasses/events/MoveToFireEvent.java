@@ -44,7 +44,7 @@ public class MoveToFireEvent extends MoveEvent {
 			}
 		} else {
 			// No fire left, we have to change target
-			sim.getFiremanmaster().orderRobotToFire(robot, sim);
+			sim.getFiremanMaster().orderRobotToFire(robot, sim);
 		}
 	}
 
