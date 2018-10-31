@@ -3,6 +3,7 @@
  */
 package poog54.strategies;
 
+import java.awt.Point;
 import java.util.ListIterator;
 
 import poog54.dataclasses.*;
@@ -34,16 +35,22 @@ abstract public class FiremanMaster {
 
 	abstract public void orderRobotToFire(Robot rob, Simulator sim);
 
-	public Target getClosestFire(Robot rob) {
-		Target target, closestTarget;
-		WildFire wf;
+	/**
+	 * @param robot
+	 * @param point
+	 * @return the closest fire tile from the specified point, that is not
+	 *         necessarily the robot position
+	 */
+	public Target getClosestFire(Robot rob, Point p) {
+		TheMap theMap = this.data.getMap();
 		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
+		PathFinder pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
+		WildFire wf = wfListIt.next();
+		Target target, closestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
 
-		wf = wfListIt.next();
-		closestTarget = new Target(wf, rob.getPathToPoint(wf.getCoord()));
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
-			target = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
 			if (target.getPath().getTraveltime() < closestTarget.getPath().getTraveltime()) {
 				closestTarget = target;
 			}
@@ -51,16 +58,30 @@ abstract public class FiremanMaster {
 		return closestTarget;
 	}
 
-	public Target getFarthestFire(Robot rob) {
-		Target target, farthestTarget;
-		WildFire wf;
-		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
+	/**
+	 * @param robot
+	 * @return the closest fire tile from current position of the robot
+	 */
+	public Target getClosestFire(Robot rob) {
+		return getClosestFire(rob, rob.getCoord());
+	}
 
-		wf = wfListIt.next();
-		farthestTarget = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+	/**
+	 * @param robot
+	 * @param point
+	 * @return the farthest fire tile from the specified point, that is not
+	 *         necessarily the robot position
+	 */
+	public Target getFarthestFire(Robot rob, Point p) {
+		TheMap theMap = this.data.getMap();
+		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
+		PathFinder pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
+		WildFire wf = wfListIt.next();
+		Target target, farthestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
+
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
-			target = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
 			if (target.getPath().getTraveltime() > farthestTarget.getPath().getTraveltime()) {
 				farthestTarget = target;
 			}
@@ -68,6 +89,18 @@ abstract public class FiremanMaster {
 		return farthestTarget;
 	}
 
+	/**
+	 * @param robot
+	 * @return the closest fire tile from current position of the robot
+	 */
+	public Target getFarthestFire(Robot rob) {
+		return getFarthestFire(rob, rob.getCoord());
+	}
+
+	/**
+	 * @param robot
+	 * @return the fire to which the fewest firefighters are assigned
+	 */
 	public Target getFireWithFewestRob(Robot rob) {
 		int currentNum, selectedNum; // num of assigned robots
 		WildFire wf;
@@ -101,6 +134,89 @@ abstract public class FiremanMaster {
 			if (currentNum < selectedNum) {
 				selectedNum = currentNum;
 				selectedFire = currentFire;
+			}
+		}
+		return selectedFire;
+	}
+
+	/**
+	 * @param robot
+	 * @return the fire which is the farthest from any other robot (most
+	 *         isolated)
+	 */
+	public Target getMostIsolatedFire(Robot rob) {
+		Robot r;
+		WildFire wf;
+		double closestDistance;
+		double currentDistance = 0;
+		Target currentRobot;
+		Target closestRobot = null;
+		Target mostIsolatedFire = null;
+		ListIterator<Robot> robListIt;
+		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
+
+		// get the closest robot for each fire
+		// and select the fire for which the distance to the closest robot is
+		// max
+		while (wfListIt.hasNext()) {
+			wf = wfListIt.next();
+			closestDistance = Double.MAX_VALUE;
+			robListIt = sim.getData().getRobotList().listIterator();
+
+			// get the closest robot for this fire
+			while (robListIt.hasNext()) {
+				r = robListIt.next();
+				if (r != rob) {
+					//skip the current drone robot
+					currentRobot = new Target(wf, r.getPathToPoint(wf.getCoord()));
+					if (currentRobot.getPath().getTraveltime() < closestDistance) {
+						closestDistance = currentRobot.getPath().getTraveltime();
+						closestRobot = currentRobot;
+					}
+
+				}
+			}
+
+			// get the most isolated fire
+			if (closestRobot.getPath().getTraveltime() > currentDistance) {
+				currentDistance = closestRobot.getPath().getTraveltime();
+				mostIsolatedFire = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+			}
+		}
+		return mostIsolatedFire;
+	}
+
+	/**
+	 * @param robot
+	 * @return the fire which is the closest from any water tile
+	 */
+	public Target getFireClosestFromWater(Robot rob) {
+		WildFire wf;
+		ListIterator<Point> waterListIt;
+		TheMap theMap = this.data.getMap();
+		double currentDistance = Double.MAX_VALUE;
+		ListIterator<WildFire> wfListIt = sim.getData().getWfList().listIterator();
+		PathFinder pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
+		Target currentWater, closestWater, selectedFire = null;
+
+		// get the closest water tile for each fire
+		while (wfListIt.hasNext()) {
+			wf = wfListIt.next();
+			waterListIt = sim.getData().getMap().getWaterTileListIt();
+			closestWater = new Target(wf, pathFinder.Astar(wf.getCoord(), waterListIt.next(), rob.getAlgoMap()));
+
+			// get the closest water tile for this fire
+			while (waterListIt.hasNext()) {
+				currentWater = new Target(wf, pathFinder.Astar(wf.getCoord(), waterListIt.next(), rob.getAlgoMap()));
+				if (currentWater.getPath().getTraveltime() < closestWater.getPath().getTraveltime()) {
+					closestWater = currentWater;
+				}
+			}
+
+			// get the most isolated fire
+			if (closestWater.getPath().getTraveltime() < currentDistance) {
+				currentDistance = closestWater.getPath().getTraveltime();
+				selectedFire = new Target(wf, rob.getPathToPoint(wf.getCoord()));
 			}
 		}
 		return selectedFire;

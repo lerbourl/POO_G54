@@ -22,7 +22,7 @@ public class FiremanMasterCaptain extends FiremanMaster {
 
 		closestTarget = getClosestFire(rob);
 		System.out.println("t=" + sim.getDate() + ": " + rob + " assigned to fire (" + closestTarget.getFire() + ")");
-		rob.setTargetFire(closestTarget);
+		rob.setTargetFire(closestTarget.getFire());
 		try {
 			sim.addEvent(new MoveToFireEvent(rob));
 		} catch (DataFormatException e) {

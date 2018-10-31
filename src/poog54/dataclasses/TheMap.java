@@ -8,7 +8,7 @@ import poog54.enums.*;
 import poog54.io.Drawable;
 
 /**
- * @author Rey-Ricord Yoann
+ * @author POO_G54
  * 
  */
 
@@ -17,12 +17,14 @@ public class TheMap {
 	private int tileSize;
 	private int nbLines, nbColums;
 	private Map<Point, Tile> TileMatrix;
+	private List<Point> waterTileList;
 
 	public TheMap(int tileSize, int nbLines, int nbColums, Map<Point, Tile> TileMatrix) {
 		this.tileSize = tileSize;
 		this.nbLines = nbLines;
 		this.nbColums = nbColums;
 		this.TileMatrix = TileMatrix;
+		this.buildWaterTileList();
 	}
 
 	public List<Drawable> getDrawableList() {
@@ -130,5 +132,25 @@ public class TheMap {
 			return TileMatrix.get(p);
 		}
 		return null; // error
+	}
+	
+	private void buildWaterTileList(){
+		Tile mapTile;
+		int i,j;
+		
+		// read the water tiles position
+		this.waterTileList = new ArrayList<Point>();
+		for(i=0;i<getNbLines();i++){
+			for(j=0;j<getNbLines();j++){
+				mapTile=getTile(i, j);
+				if(mapTile.getTypeField()==TypeField.EAU){
+					this.waterTileList.add(mapTile.getCoord());
+				}
+			}
+		}
+	}
+
+	public ListIterator<Point> getWaterTileListIt(){
+		return this.waterTileList.listIterator();
 	}
 }

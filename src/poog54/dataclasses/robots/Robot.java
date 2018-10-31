@@ -1,8 +1,6 @@
 package poog54.dataclasses.robots;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 import poog54.dataclasses.*;
@@ -97,7 +95,7 @@ public abstract class Robot extends Drawable {
 		this.next_free_time = 1; // after init strategy
 	}
 
-	protected AlgoTile[][] getAlgoMap() {
+	public AlgoTile[][] getAlgoMap() {
 
 		AlgoTile[][] algomap = new AlgoTile[this.theMap.getNbLines()][this.theMap.getNbColums()];
 
@@ -132,23 +130,11 @@ public abstract class Robot extends Drawable {
 	 */
 	public void locateClosestWaterTile() {
 		ListIterator<Point> waterTileListIt;
-		List<Point> waterTileList;
 		Target mapTarget;
 		Point waterPoint;
-		Tile mapTile;
-		int i,j;
 		
 		//read the map and get the water tiles position
-		waterTileList = new ArrayList<Point>();
-		for(i=0;i<this.theMap.getNbLines();i++){
-			for(j=0;j<this.theMap.getNbLines();j++){
-				mapTile=this.theMap.getTile(i, j);
-				if(mapTile.getTypeField()==TypeField.EAU){
-					waterTileList.add(mapTile.getCoord());
-				}
-			}
-		}
-		waterTileListIt=waterTileList.listIterator();
+		waterTileListIt=this.theMap.getWaterTileListIt();
 		waterPoint = waterTileListIt.next();
 		this.targetWater = new Target(waterPoint, getPathToPoint(waterPoint));
 		//enumerates water tiles and selects the closest
@@ -297,11 +283,6 @@ public abstract class Robot extends Drawable {
 		} else {
 			this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
 		}
-	}
-	
-	/** Target fire assignment */
-	public void setTargetFire(Target fire) {
-			this.targetFire = fire;
 	}
 	
 	/** Target water assignment */

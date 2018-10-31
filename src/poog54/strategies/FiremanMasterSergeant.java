@@ -31,7 +31,7 @@ public class FiremanMasterSergeant extends FiremanMaster {
 
 			// assigns the selected fire to the robot
 			System.out.println("t=" + sim.getDate() + ": " + rob + " assigned to " + assignedFire);
-			rob.setTargetFire(assignedFire);
+			rob.setTargetFire(assignedFire.getFire());
 			try {
 				sim.addEvent(new MoveToFireEvent(rob));
 			} catch (DataFormatException e) {

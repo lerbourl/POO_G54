@@ -1,9 +1,8 @@
 /**
  * Strategy Major:
- * -> a Walking robot is always assigned to its closest fire (Sergeant strategy)
- * -> a Drone robot is always assigned to its farthest fire
- * -> the other robots are assigned to their closest and unassigned fire if there are any
- * or the fires with the fewest affected robots (Captain strategy)
+ * -> a Walking robot is always assigned to its closest fire
+ * -> a Drone robot is assigned to the fire which is the farthest from all the other robots
+ * -> the other robots are assigned to fires which are the closest from the water tiles
  */
 
 package poog54.strategies;
@@ -14,9 +13,9 @@ import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
 
-public class FiremanMasterMajor extends FiremanMaster {
+public class FiremanMasterColonel extends FiremanMaster {
 
-	public FiremanMasterMajor(Simulator sim) {
+	public FiremanMasterColonel(Simulator sim) {
 		super(sim);
 	}
 
@@ -37,12 +36,12 @@ public class FiremanMasterMajor extends FiremanMaster {
 				
 			case "poog54.dataclasses.robots.DroneRob":
 				// get farthest fire
-				assignedFire = getFarthestFire(rob);
+				assignedFire = getMostIsolatedFire(rob);
 				break;
 				
 			default:
-				// get the fire with the fewest assigned robots
-				assignedFire = getFireWithFewestRob(rob);
+				// get the fire which is the closest from a water tile
+				assignedFire = getFireClosestFromWater(rob);
 			}
 			
 			// assigns the selected fire to the robot
