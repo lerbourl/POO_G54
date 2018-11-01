@@ -24,7 +24,7 @@ public class FiremanMasterMajor extends FiremanMaster {
 	public void orderRobotToFire(Robot rob, Simulator sim) {
 		Target assignedFire;
 
-		if (!this.sim.getData().getWfList().isEmpty()) {
+		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
 			
 			// strategy depends on the robot type

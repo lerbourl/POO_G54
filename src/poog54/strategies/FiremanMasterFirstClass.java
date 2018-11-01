@@ -24,9 +24,9 @@ public class FiremanMasterFirstClass extends FiremanMaster {
 		WildFire wf = null;
 
 		// all available robots are affected to the 1st available fire
-		if (!this.sim.getData().getWfList().isEmpty()) {
+		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
-			wf = this.sim.getData().getWfList().get(0);
+			wf = this.data.getWfList().get(0);
 			System.out.println("t=" + sim.getDate() + ": " + rob + " assigned to " + wf);
 			rob.setTargetFire(wf);
 			try {

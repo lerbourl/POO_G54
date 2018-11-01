@@ -7,23 +7,39 @@
 
 package poog54.strategies;
 
+import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;
 
+import poog54.dataclasses.SimulationData;
 import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
 
 public class FiremanMasterColonel extends FiremanMaster {
-
+	// fires are sorted by proximity with water tiles
+	private PriorityQueue<Target> wheeledRobFirePriority;
+	private PriorityQueue<Target> trackedRobFirePriority;
+	
 	public FiremanMasterColonel(Simulator sim) {
 		super(sim);
 	}
-
+	
+	@Override
+	public void setData(SimulationData data) {
+		super.setData(data);
+		
+		Robot rob;
+		rob = new WheeledRob(this.data.getMap(), 0, 0);
+		this.wheeledRobFirePriority = getFirePriorityQueue(rob);
+		rob = new TrackedRob(this.data.getMap(), 0, 0);
+		this.trackedRobFirePriority = getFirePriorityQueue(rob);
+	}
+	
 	@Override
 	public void orderRobotToFire(Robot rob, Simulator sim) {
 		Target assignedFire;
 
-		if (!this.sim.getData().getWfList().isEmpty()) {
+		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
 			
 			// strategy depends on the robot type
@@ -38,10 +54,19 @@ public class FiremanMasterColonel extends FiremanMaster {
 				// get farthest fire
 				assignedFire = getMostIsolatedFire(rob);
 				break;
-				
-			default:
+
+			case "poog54.dataclasses.robots.TrackedRob":
 				// get the fire which is the closest from a water tile
-				assignedFire = getFireClosestFromWater(rob);
+				assignedFire = getFireClosestFromWater(rob, this.trackedRobFirePriority);
+				break;
+				
+			case "poog54.dataclasses.robots.WheeledRob":
+				// get the fire which is the closest from a water tile
+				assignedFire = getFireClosestFromWater(rob, this.wheeledRobFirePriority);
+				break;
+
+			default:
+				assignedFire = getClosestFire(rob);
 			}
 			
 			// assigns the selected fire to the robot

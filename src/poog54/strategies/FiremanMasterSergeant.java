@@ -24,7 +24,7 @@ public class FiremanMasterSergeant extends FiremanMaster {
 		// or the fire with the fewest assigned firefighters
 		Target assignedFire;
 
-		if (!this.sim.getData().getWfList().isEmpty()) {
+		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
 
 			assignedFire = getFireWithFewestRob(rob);
