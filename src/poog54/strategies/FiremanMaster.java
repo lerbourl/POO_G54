@@ -32,7 +32,12 @@ abstract public class FiremanMaster {
 	public void setData(SimulationData data) {
 		this.data = data;
 	}
-
+	/**
+	 * affect a fire target to a robot
+	 * @param robot
+	 * @param simulator
+	 * 
+	 */
 	abstract public void orderRobotToFire(Robot rob, Simulator sim);
 
 	/**
@@ -91,7 +96,7 @@ abstract public class FiremanMaster {
 
 	/**
 	 * @param robot
-	 * @return the closest fire tile from current position of the robot
+	 * @return the farthest fire tile from the current position of the robot
 	 */
 	public Target getFarthestFire(Robot rob) {
 		return getFarthestFire(rob, rob.getCoord());
