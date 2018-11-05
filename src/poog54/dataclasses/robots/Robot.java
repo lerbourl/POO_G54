@@ -53,15 +53,14 @@ public abstract class Robot extends Drawable {
 	protected Speed speed;
 
 	/**
-	 * Fire target location: position of the targeted fire on the theMap Target
-	 * fire path: path to the assigned fire. path[0] is always the current
-	 * location.
+	 * Fire target location: position of the targeted fire on the theMap Target fire
+	 * path: path to the assigned fire. path[0] is always the current location.
 	 */
 	protected Target targetFire;
 
 	/**
-	 * Nearest water location: position of the water reserve on the theMap and
-	 * path to it path[0] is always the current location.
+	 * Nearest water location: position of the water reserve on the theMap and path
+	 * to it path[0] is always the current location.
 	 */
 	protected Target targetWater;
 
@@ -132,17 +131,17 @@ public abstract class Robot extends Drawable {
 		ListIterator<Point> waterTileListIt;
 		Target mapTarget;
 		Point waterPoint;
-		
-		//read the map and get the water tiles position
-		waterTileListIt=this.theMap.getWaterTileListIt();
+
+		// read the map and get the water tiles position
+		waterTileListIt = this.theMap.getWaterTileListIt();
 		waterPoint = waterTileListIt.next();
 		this.targetWater = new Target(waterPoint, getPathToPoint(waterPoint));
-		//enumerates water tiles and selects the closest
-		while(waterTileListIt.hasNext()){
+		// enumerates water tiles and selects the closest
+		while (waterTileListIt.hasNext()) {
 			waterPoint = waterTileListIt.next();
 			mapTarget = new Target(waterPoint, getPathToPoint(waterPoint));
-			if(mapTarget.getPath().getTraveltime()<this.targetWater.getPath().getTraveltime()){
-				//this water tile is closer
+			if (mapTarget.getPath().getTraveltime() < this.targetWater.getPath().getTraveltime()) {
+				// this water tile is closer
 				this.targetWater = new Target(waterPoint, getPathToPoint(waterPoint));
 			}
 		}
@@ -190,32 +189,31 @@ public abstract class Robot extends Drawable {
 	}
 
 	/* Return the time to enter a tile of the type, in seconds */
-	public double getTimeType(Point p) {
+	public int getTimeType(Point p) {
 		TypeField type = this.theMap.getTile(p).getTypeField();
-
-		double speed = 0.000001; // for null speeds
-
+		double speed = 0;
 		switch (type) {
 		case EAU:
-			speed += this.getSpeed().getSpeedWater();
+			speed = this.getSpeed().getSpeedWater();
 			break;
 		case FORET:
-			speed += this.getSpeed().getSpeedForest();
+			speed = this.getSpeed().getSpeedForest();
 			break;
 		case ROCHE:
-			speed += this.getSpeed().getSpeedRock();
+			speed = this.getSpeed().getSpeedRock();
 			break;
 		case HABITAT:
-			speed += this.getSpeed().getSpeedHouse();
+			speed = this.getSpeed().getSpeedHouse();
 			break;
 		case TERRAIN_LIBRE:
-			speed += this.getSpeed().getSpeedEmptyField();
+			speed = this.getSpeed().getSpeedEmptyField();
 			break;
 		default:
 			break;
 		}
-		return this.theMap.getTileSize() / (speed * 1000 / 3600) ;
-		/* t (s) = d (metres ) / v (km / h)*/
+		if (speed == 0) return Integer.MAX_VALUE;
+		else return (int) (this.theMap.getTileSize() / (speed * 1000 / 3600));
+		/* t (s) = d (metres ) / v (km / h) */
 	}
 
 	/**
@@ -246,7 +244,7 @@ public abstract class Robot extends Drawable {
 			} else
 				System.out.println("Move robot on non allowed tile");
 		} else {
-			System.out.println("t=" + (this.next_free_time-1) + ": " + this + " remains on the same tile");
+			System.out.println("t=" + (this.next_free_time - 1) + ": " + this + " remains on the same tile");
 		}
 	}
 
@@ -261,8 +259,7 @@ public abstract class Robot extends Drawable {
 	}
 
 	/**
-	 * @param next_free_time
-	 *            the next_free_time to set
+	 * @param next_free_time the next_free_time to set
 	 */
 	public void setNext_free_time(int next_free_time) {
 		this.next_free_time = next_free_time;
@@ -284,7 +281,7 @@ public abstract class Robot extends Drawable {
 			this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
 		}
 	}
-	
+
 	/** Target water assignment */
 	public void setTargetWater(Point water) {
 		if (water == null) {
@@ -305,16 +302,14 @@ public abstract class Robot extends Drawable {
 	}
 
 	/**
-	 * @param water_capacity
-	 *            the water_capacity to set
+	 * @param water_capacity the water_capacity to set
 	 */
 	public void setWater_capacity(int water_capacity) {
 		this.water_capacity = water_capacity;
 	}
 
 	/**
-	 * @param water_level
-	 *            the water_level to set
+	 * @param water_level the water_level to set
 	 */
 	public void setWater_level(int water_level) {
 		this.water_level = water_level;
@@ -328,10 +323,9 @@ public abstract class Robot extends Drawable {
 		water_level = water_capacity;
 
 	}
+
 	@Override
 	public String toString() {
-		return "robot [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] <"
-				+ this.water_level + "L>";
+		return "robot [" + this.getCoord().x + ";" + this.getCoord().y + "] <" + this.water_level + "L>";
 	}
 }

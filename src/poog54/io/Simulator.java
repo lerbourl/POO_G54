@@ -14,6 +14,12 @@ import java.util.zip.DataFormatException;
 
 import gui.*;
 import poog54.strategies.*;
+import poog54.strategies.masters.FiremanMaster;
+import poog54.strategies.masters.FiremanMasterCaptain;
+import poog54.strategies.masters.FiremanMasterColonel;
+import poog54.strategies.masters.FiremanMasterFirstClass;
+import poog54.strategies.masters.FiremanMasterMajor;
+import poog54.strategies.masters.FiremanMasterSergeant;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
 import poog54.dataclasses.events.*;

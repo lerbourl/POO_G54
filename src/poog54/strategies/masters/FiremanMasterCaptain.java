@@ -3,7 +3,7 @@
  * a robot is assigned to its closest fire
  */
 
-package poog54.strategies;
+package poog54.strategies.masters;
 
 import java.util.zip.DataFormatException;
 import poog54.dataclasses.events.MoveToFireEvent;

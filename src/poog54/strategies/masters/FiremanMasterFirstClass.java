@@ -4,7 +4,7 @@
  * whatever are their relative positions on the map
  */
 
-package poog54.strategies;
+package poog54.strategies.masters;
 
 import java.util.zip.DataFormatException;
 

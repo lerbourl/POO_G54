@@ -5,7 +5,7 @@
  * -> the other robots are assigned to fires which are the closest from the water tiles
  */
 
-package poog54.strategies;
+package poog54.strategies.masters;
 
 import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;

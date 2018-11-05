@@ -6,7 +6,7 @@
  * or the fires with the fewest affected robots (Captain strategy)
  */
 
-package poog54.strategies;
+package poog54.strategies.masters;
 
 import java.util.zip.DataFormatException;
 

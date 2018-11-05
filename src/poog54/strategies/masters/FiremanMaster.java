@@ -1,7 +1,7 @@
 /**
  * An abstract class to represents the firefighters' strategies
  */
-package poog54.strategies;
+package poog54.strategies.masters;
 
 import java.awt.Point;
 import java.util.ListIterator;
@@ -10,6 +10,7 @@ import java.util.PriorityQueue;
 import poog54.dataclasses.*;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
+import poog54.strategies.PathFinder;
 
 /**
  * @author POO_G54
