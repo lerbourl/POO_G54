@@ -19,7 +19,7 @@ public class SolveMapWithStrategy {
 			System.out.println("\t[sergeant]: a robot is assigned to the 1st unassigned fire or the fire with the fewest assigned robots");
 			System.out.println("\t[captain]: a robot is assigned to its closest fire");
 			System.out.println("\t[major]: Walking robots assigned to their closest fires, Drone robots assigned to their farthest fires, other robots assigned to fires with the fewest affected robots");
-			System.out.println("\t[colonel]: not implemented");
+			System.out.println("\t[colonel]: Walking robots assigned to their closest fires, Drone robots assigned to the most isolated fires, other robots assigned to the fires closest to water tiles");
 			System.out.println("\t[general]: not implemented");
 			System.exit(1);
 		}

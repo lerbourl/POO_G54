@@ -27,18 +27,29 @@ public class MoveToFireEvent extends MoveEvent {
 	public void execute(Simulator sim) {
 		if (sim.getData().getWfList().contains(this.robot.getTargetFire().getFire())) {
 			// The fire is still here
-			sim.moveRobot(this.robot, this.p);
-			try {
-				if (robot.getTargetFire().getPath().isEmpty()) {
-					// this robot has reached the fire tile
-					sim.addEvent(new PouringEvent(robot));
-					robot.setNext_free_time(date + robot.getPourTime() + 1);
-				} else {
-					// target not reached, continue along the path...
-					sim.addEvent(new MoveToFireEvent(robot));
+			if (this.robot.getCrossingTileTime(p) != Integer.MAX_VALUE) {
+				sim.moveRobot(this.robot, this.p);
+				try {
+					if (robot.getTargetFire().getPath().isEmpty()) {
+						// this robot has reached the fire tile
+						sim.addEvent(new PouringEvent(robot));
+						robot.setNext_free_time(date + robot.getPourTime() + 1);
+					} else {
+						// target not reached, continue along the path...
+						sim.addEvent(new MoveToFireEvent(robot));
+					}
+				} catch (DataFormatException e) {
+					e.printStackTrace();
 				}
-			} catch (DataFormatException e) {
-				e.printStackTrace();
+			} else {
+				// this fire is not reachable
+				// remain on the same tile
+				this.robot.getTargetFire().getPath().addFirst(this.p);
+				try {
+					sim.addEvent(new MoveToFireEvent(robot));
+				} catch (DataFormatException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			// No fire left, we have to change target

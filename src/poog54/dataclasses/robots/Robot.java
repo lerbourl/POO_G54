@@ -190,6 +190,7 @@ public abstract class Robot extends Drawable {
 
 	/* Return the time to enter a tile of the type, in seconds */
 	public int getCrossingTileTime(Point p) {
+		if(p==null) return 0;
 		TypeField type = this.theMap.getTile(p).getTypeField();
 		double speed = 0;
 		switch (type) {
