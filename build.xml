@@ -45,7 +45,8 @@ See the README for more details...</echo>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
     </target>
 
-	<target name="run" depends="clean, jar">
+	<!-- run with map and strategy args (-Darg=myarg) -->
+	<target name="run" depends="clean, jar" description="run the program">
         <java fork="true" classname="${main-class}">
             <classpath>
                 <path refid="classpath"/>
