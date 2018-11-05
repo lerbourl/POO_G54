@@ -7,11 +7,11 @@ import gui.GUISimulator;
 
 import poog54.io.*;
 
-public class StrategyTest {
+public class SolveMapWithStrategy {
 
 	public static void main(String[] args) {
 		if (args.length < 2) {
-			System.out.println("Syntax: java StrategyTest <map_file_path> <fireman_rank>");
+			System.out.println("Syntax: java SolveMapWithStrategy <map_file_path> <fireman_rank>");
 			System.out.println("<map_file_path>: path to .map file");
 			System.out.println("<fireman_rank>: first_class / sergeant / captain / major / colonel / general\n");
 			System.out.println("The firefighters' strategy depends on the rank of their chief: ");

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Contains build instructions.
+Please refer to "ant info" or read README.md for how to use instructions -->
+
+<project name="poo_build" basedir="." default="info">
+	<!-- Some path variables -->
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="main-class" value="poog54.runnables.SolveMapWithStrategy" />
+	<property name="lib.dir"     value="lib"/>
+	<property name="maps.dir"     value="cartes"/>
+	<!-- Path to external libraries (gui.jar) -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+    
+    <!-- Ant Targets -->
+	<target name="clean" description="delete all builds">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="info" description="run instructions">
+		<echo>Group 54 presents: The big POO java project !
+Build with:
+ant jar
+Clean the builds with:
+	$ ant clean
+Run with:
+	$ ant -Dmap=yourMap.map -Dstrategy=strategy run
+with strategy one of :
+first_class, sergeant, captain, major, colonel, general
+See the README for more details...</echo>
+	</target>
+
+	<target name="compile" description="compiles the tasks">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="false"/>
+	</target>
+
+	<target name="jar" depends="compile" description="JARs the Tasks">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+    </target>
+
+	<target name="run" depends="clean, jar">
+        <java fork="true" classname="${main-class}">
+            <classpath>
+                <path refid="classpath"/>
+                <path location="${jar.dir}/${ant.project.name}.jar"/>
+            </classpath>
+            <arg value ="${map}"/>
+            <arg value ="${strategy}"/>
+        </java>
+    </target>
+
+</project>
