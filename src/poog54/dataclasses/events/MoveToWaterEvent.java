@@ -19,7 +19,7 @@ public class MoveToWaterEvent extends MoveEvent {
 	 * @param robot
 	 */
 	public MoveToWaterEvent(Robot rob) throws DataFormatException {
-		super(rob.getNext_free_time() + (int) rob.getTimeType(rob.getCoord()) + 1,
+		super(rob.getNext_free_time() + rob.getCrossingTileTime(rob.getCoord()),
 				rob, rob.getTargetWater().getPath().dequeueFirst());
 		this.robot.setNext_free_time(this.date + 1);
 	}

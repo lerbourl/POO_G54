@@ -20,7 +20,7 @@ public class MoveToFireEvent extends MoveEvent {
 	 * @param robot
 	 */
 	public MoveToFireEvent(Robot rob) throws DataFormatException {
-		super(rob.getNext_free_time() + (int) rob.getTimeType(rob.getCoord()) + 1, rob,
+		super(rob.getNext_free_time() + rob.getCrossingTileTime(rob.getCoord()), rob,
 				rob.getTargetFire().getPath().dequeueFirst());
 		this.robot.setNext_free_time(this.date + 1);
 	}

@@ -100,7 +100,7 @@ public abstract class Robot extends Drawable {
 
 		for (int i = 0; i < this.theMap.getNbLines(); i++) {
 			for (int j = 0; j < this.theMap.getNbColums(); j++) {
-				algomap[i][j] = new AlgoTile(this.getTimeType(new Point(i, j)), new Point(i, j));
+				algomap[i][j] = new AlgoTile(this.getCrossingTileTime(new Point(i, j)), new Point(i, j));
 			}
 		}
 		return algomap;
@@ -189,7 +189,7 @@ public abstract class Robot extends Drawable {
 	}
 
 	/* Return the time to enter a tile of the type, in seconds */
-	public int getTimeType(Point p) {
+	public int getCrossingTileTime(Point p) {
 		TypeField type = this.theMap.getTile(p).getTypeField();
 		double speed = 0;
 		switch (type) {
