@@ -14,6 +14,7 @@ import java.util.zip.DataFormatException;
  *
  */
 public abstract class MoveEvent extends DiscreteEvent {
+	
 	protected Robot robot;
 	protected Point p;
 	/**
@@ -30,14 +31,15 @@ public abstract class MoveEvent extends DiscreteEvent {
 	 * @param robot
 	 * @param destination
 	 */
-	public MoveEvent(int date, Robot robot, Point p) throws DataFormatException {
-		super(date);
-		this.robot = robot;
+	public MoveEvent(Robot rob, Point p) throws DataFormatException {
+		super(rob.getNext_free_time() + rob.getCrossingTileTime(rob.getCoord()));
+		this.robot = rob;
 		this.p = p;
 		if(this.p == null){
 			// the robot remains on the same tile
 			this.date = this.robot.getNext_free_time();
 		}
+		this.robot.setNext_free_time(this.date + 1);
 	}
 
 	/*

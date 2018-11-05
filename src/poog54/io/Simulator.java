@@ -91,6 +91,7 @@ public class Simulator implements Simulable {
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
+		System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
 	}
 
 	/**
@@ -181,8 +182,8 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=1;
-			System.out.print("t=" + this.date + "\r");
+			this.date+=10;
+			System.out.print("t=" + this.date + "\n");
 			processEvents();
 		}
 	}

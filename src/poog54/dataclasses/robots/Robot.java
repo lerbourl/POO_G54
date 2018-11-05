@@ -213,7 +213,7 @@ public abstract class Robot extends Drawable {
 		}
 		if (speed == 0) return Integer.MAX_VALUE;
 		else return (int) (this.theMap.getTileSize() / (speed * 1000 / 3600));
-		/* t (s) = d (metres ) / v (km / h) */
+		/* t (s) = d (metres ) / v (km / h)*/
 	}
 
 	/**

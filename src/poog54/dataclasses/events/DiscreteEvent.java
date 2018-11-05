@@ -19,6 +19,7 @@ public abstract class DiscreteEvent {
 	 * Event timestamp (iteration / simulation step / cycle number)
 	 */
 	protected int date;
+	/* to speed the simulation up ! */
 
 	/**
 	 * Generic constructor

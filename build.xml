@@ -55,6 +55,7 @@ See the README for more details...</echo>
             <arg value ="${map}"/>
             <arg value ="${strategy}"/>
         </java>
+        <antcall target="clean"/>
     </target>
 
 </project>
