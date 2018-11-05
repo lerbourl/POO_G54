@@ -93,7 +93,6 @@ public class PouringEvent extends DiscreteEvent {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
