@@ -1,2 +1,7 @@
-gui
-io
+poog54.dataclasses
+poog54.dataclasses.events
+poog54.dataclasses.robots
+poog54.enums
+poog54.io
+poog54.runnables
+poog54.strategies

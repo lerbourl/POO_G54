@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="lib/gui.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="poog54.strategies,poog54.dataclasses,poog54.dataclasses.events,poog54.dataclasses.robots,poog54.runnables,poog54.io,poog54.enums" source="1.8" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
