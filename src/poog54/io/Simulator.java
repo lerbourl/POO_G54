@@ -13,7 +13,6 @@ import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;
 
 import gui.*;
-import poog54.strategies.*;
 import poog54.strategies.masters.FiremanMaster;
 import poog54.strategies.masters.FiremanMasterCaptain;
 import poog54.strategies.masters.FiremanMasterColonel;
