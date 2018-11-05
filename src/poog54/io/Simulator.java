@@ -182,7 +182,7 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=10;
+			this.date+=50;
 			System.out.print("t=" + this.date + "\n");
 			processEvents();
 		}
@@ -195,7 +195,7 @@ public class Simulator implements Simulable {
 		DiscreteEvent event;
 		while ((this.eventQueue.peek() != null) && (this.eventQueue.peek().getDate() <= this.date)) {
 			event = this.eventQueue.poll();
-			System.out.println("t=" + this.date + ": " + event);
+			System.out.println("t=" + event.getDate() + ": " + event);
 			event.execute(this);
 		}
 	}
