@@ -8,13 +8,15 @@ import gui.GUISimulator;
 import poog54.io.*;
 
 /**
+ * This is the main class
+ * 
  * @author POO_G54
  *
  */
 public class SolveMapWithStrategy {
 
 	/**
-	 * @param args
+	 * @param args the file path, the strategy and the speedup factor to speed the simulation up
 	 */
 	public static void main(String[] args) {
 		if (args.length < 3) {
