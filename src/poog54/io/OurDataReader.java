@@ -25,11 +25,7 @@ public class OurDataReader {
 	public static SimulationData DataFromFile(String txtFile) throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Reading file" + txtFile);
 		OurDataReader reader = new OurDataReader(txtFile);
-		SimulationData data = new SimulationData();
-		reader.map = reader.getCarte();
-		data.setMap(reader.map);
-		data.setWfList(reader.getIncendies());
-		data.setRobotList(reader.getRobots());
+		SimulationData data = new SimulationData(reader.getRobots(), reader.getIncendies(), reader.map);
 		scanner.close();
 		System.out.println("\n == End of reading !");
 		return data;
@@ -42,6 +38,11 @@ public class OurDataReader {
 	private OurDataReader(String txtFile) throws FileNotFoundException {
 		scanner = new Scanner(new File(txtFile));
 		scanner.useLocale(Locale.US);
+		try {
+			map = this.getCarte();
+		} catch (DataFormatException e) {
+			e.printStackTrace();
+		}
 	}
 	
 

@@ -1,25 +1,33 @@
 package poog54.dataclasses;
 
 import java.awt.Point;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import poog54.enums.*;
 import poog54.io.Drawable;
 
 /**
- * @author POO_G54
+ * Class that represents the map of Tiles
  * 
+ * @author POO_G54
  */
-
 public class TheMap {
 
+	/* attributes */
 	private int tileSize;
 	private int nbLines, nbColums;
 	private Map<Point, Tile> tileMatrix;
 	private List<Point> waterTileList;
 
+	/* methods */
 	/**
+	 * Constructor
+	 * 
 	 * @param tileSize
 	 * @param nbLines
 	 * @param nbColums
@@ -33,8 +41,17 @@ public class TheMap {
 		this.buildWaterTileList();
 	}
 
+	private void buildWaterTileList() {
+		Set<Entry<Point, Tile>> tmpSet = this.tileMatrix.entrySet();
+		this.waterTileList = new ArrayList<Point>();
+		Iterator<Entry<Point, Tile>> it = tmpSet.iterator();
+		while (it.hasNext()) {
+			this.waterTileList.add(it.next().getValue().getCoord());
+		}
+	}
+
 	/**
-	 * @return
+	 * @return a list of all drawable tiles
 	 */
 	public List<Drawable> getDrawableList() {
 		Set<Entry<Point, Tile>> tmpSet = this.tileMatrix.entrySet();
@@ -47,37 +64,23 @@ public class TheMap {
 	}
 
 	/**
-	 * @return
-	 */
-	public int getTileSize() {
-		return this.tileSize;
-	}
-
-	/**
-	 * @return
-	 */
-	public int getNbLines() {
-		return this.nbLines;
-	}
-
-	/**
-	 * @return
-	 */
-	public Map<Point, Tile> getTileMatrix() {
-		return tileMatrix;
-	}
-
-	/**
-	 * @return
+	 * @return nbColumns
 	 */
 	public int getNbColums() {
 		return this.nbColums;
 	}
 
 	/**
+	 * @return nbLines
+	 */
+	public int getNbLines() {
+		return this.nbLines;
+	}
+
+	/**
 	 * @param xCoord
 	 * @param yCoord
-	 * @return
+	 * @return tile at (x, y) coord
 	 */
 	public Tile getTile(int xCoord, int yCoord) {
 		return this.tileMatrix.get(new Point(xCoord, yCoord));
@@ -85,119 +88,38 @@ public class TheMap {
 
 	/**
 	 * @param p
-	 * @return
+	 * @return tile at point p
 	 */
 	public Tile getTile(Point p) {
 		return this.tileMatrix.get(p);
 	}
 
 	/**
+	 * @return tileMatrix
+	 */
+	public Map<Point, Tile> getTileMatrix() {
+		return tileMatrix;
+	}
+
+	/**
+	 * @return tileSize
+	 */
+	public int getTileSize() {
+		return this.tileSize;
+	}
+
+	/**
+	 * @return an interator on a list of all the watertiles
+	 */
+	public ListIterator<Point> getWaterTileListIt() {
+		return this.waterTileList.listIterator();
+	}
+
+	/**
 	 * @param p
-	 * @return
+	 * @return True if tileMatrix contain the Tile at point p
 	 */
 	public Boolean tileIsIn(Point p) {
 		return this.tileMatrix.containsKey(p);
-	}
-
-	/**
-	 * @param src
-	 * @param dir
-	 * @return
-	 */
-	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
-		switch (dir) {
-
-		/** North */
-		case NORTH:
-			if (src.getCoord().y == 0) {
-				return false;
-			} else {
-				return true;
-			}
-
-			/** South */
-		case SOUTH:
-			if (src.getCoord().y == nbLines - 1) {
-				return false;
-			} else {
-				return true;
-			}
-			/** East */
-		case EAST:
-			if (src.getCoord().x == nbColums - 1) {
-				return false;
-			} else {
-				return true;
-			}
-			/** West */
-		case WEST:
-			if (src.getCoord().x == 0) {
-				return false;
-			} else {
-				return true;
-			}
-
-		default:
-			return false;
-		}
-
-	}
-
-	/**
-	 * @param src
-	 * @param dir
-	 * @return
-	 */
-	public Tile getNeighbour(Tile src, CardinalPoints dir) {
-		/** Is there any Neighbour ?? */
-		if (hasNeighbour(src, dir)) {
-			Point p;
-			switch (dir) {
-			/** North */
-			case NORTH:
-				p = new Point(src.getx(), src.gety() - 1);
-				break;
-			/** South */
-			case SOUTH:
-				p = new Point(src.getx(), src.gety() + 1);
-				break;
-			/** East */
-			case EAST:
-				p = new Point(src.getx() + 1, src.gety());
-				break;
-			/** West */
-			case WEST:
-				p = new Point(src.getx() - 1, src.gety());
-				break;
-			/** Unknown direction... don't move! */
-			default:
-				p = new Point(src.getx(), src.gety());
-			}
-			return tileMatrix.get(p);
-		}
-		return null; // error
-	}
-	
-	private void buildWaterTileList(){
-		Tile mapTile;
-		int i,j;
-		
-		// read the water tiles position
-		this.waterTileList = new ArrayList<Point>();
-		for(i=0;i<getNbLines();i++){
-			for(j=0;j<getNbLines();j++){
-				mapTile=getTile(i, j);
-				if(mapTile.getTypeField()==TypeField.EAU){
-					this.waterTileList.add(mapTile.getCoord());
-				}
-			}
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public ListIterator<Point> getWaterTileListIt(){
-		return this.waterTileList.listIterator();
 	}
 }
