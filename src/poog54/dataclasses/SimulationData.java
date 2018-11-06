@@ -8,19 +8,21 @@ import poog54.dataclasses.robots.Robot;
 import poog54.io.Drawable;
 
 /**
- * @author POO_G54
  * This class stores all the data of the simulation
+ * 
+ * @author POO_G54
  */
 public class SimulationData {
-	
+
 	/* attributes */
 	private List<Robot> robotList;
 	private List<WildFire> wfList;
 	private TheMap theMap;
-	
+
 	/* methods */
 	/**
 	 * Constructor
+	 * 
 	 * @param robotList
 	 * @param wfList
 	 * @param theMap
@@ -30,7 +32,7 @@ public class SimulationData {
 		this.wfList = wfList;
 		this.theMap = theMap;
 	}
-	
+
 	/**
 	 * @return an iterator on all the Drawables of the simulation
 	 */
@@ -41,42 +43,42 @@ public class SimulationData {
 		AllDrawables.addAll(this.wfList);
 		return AllDrawables.listIterator();
 	}
-	
+
 	/**
 	 * @return theMap
 	 */
 	public TheMap getMap() {
 		return theMap;
 	}
-	
+
 	/**
 	 * @return robotList
 	 */
 	public List<Robot> getRobotList() {
 		return robotList;
 	}
-	
+
 	/**
 	 * @return wfList
 	 */
 	public List<WildFire> getWfList() {
 		return wfList;
 	}
-	
+
 	/**
 	 * @param theMap
 	 */
 	public void setMap(TheMap theMap) {
 		this.theMap = theMap;
 	}
-	
+
 	/**
 	 * @param robotList
 	 */
 	public void setRobotList(List<Robot> robotList) {
 		this.robotList = robotList;
 	}
-	
+
 	/**
 	 * @param wfList
 	 */

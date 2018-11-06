@@ -1,33 +1,33 @@
-/*
- * Represents a WildFire.
- * WildFire has no need to know the tile on which he is.
- * Extends Drawable : it has coordinates.
- */
-
 package poog54.dataclasses;
+
 import poog54.io.Drawable;
 
 /**
- * @author Rey-Ricord Yoann
+ * This class represents a WildFire, it's a drawable object
  * 
+ * @author POO_G54
+ *
  */
-
 public class WildFire extends Drawable {
 
+	/* attributes */
 	private int intensity;
 
+	/* methods */
 	/**
+	 * Constructor
+	 * 
 	 * @param xCoord
 	 * @param yCoord
 	 * @param intensity
 	 */
 	public WildFire(int xCoord, int yCoord, int intensity) {
-		super("assets/fire.png", 1,xCoord, yCoord);
+		super("assets/fire.png", 1, xCoord, yCoord);
 		this.intensity = intensity;
 	}
 
 	/**
-	 * @return
+	 * @return intensity
 	 */
 	public int getIntensity() {
 		return intensity;
@@ -39,11 +39,9 @@ public class WildFire extends Drawable {
 	public void setIntensity(int intensity) {
 		this.intensity = intensity;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Wild fire [" 
-	            + this.getCoord().x + ";" + this.getCoord().y + "] <"
-				+ this.intensity + ">";
+		return "Wild fire [" + this.getCoord().x + ";" + this.getCoord().y + "] <" + this.intensity + ">";
 	}
 }

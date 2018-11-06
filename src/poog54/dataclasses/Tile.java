@@ -1,27 +1,29 @@
 package poog54.dataclasses;
 
-import poog54.enums.*;
+import poog54.enums.TypeField;
 import poog54.io.Drawable;
 
 /**
- * Represents a tile of the theMap
- */
-
-/**
- * @author Rey-Ricord Yoann
+ * This class represents a tile of the map, it's a drawable object
  * 
+ * @author POO_G54
  */
-
 public class Tile extends Drawable {
-	/** Type of the field */
+	
+	/* attributes */
 	TypeField type;
-	/** Image ressource */
-	String filepath;
+	String filepath; // the path of the image
 
-	/** Tile constructor */
-
+	/* methods */
+	/**
+	 * Constructor
+	 * 
+	 * @param xCoord
+	 * @param yCoord
+	 * @param type
+	 */
 	public Tile(int xCoord, int yCoord, TypeField type) {
-		super(tileImageFilePath(type), 0,xCoord, yCoord);
+		super(tileImageFilePath(type), 0, xCoord, yCoord);
 		this.type = type;
 	}
 
@@ -42,8 +44,9 @@ public class Tile extends Drawable {
 		}
 	}
 
-	/** Access to Type Field 
-	 * @return */
+	/**
+	 * @return type
+	 */
 	public TypeField getTypeField() {
 		return this.type;
 	}

@@ -12,7 +12,7 @@ import java.util.Set;
 import poog54.io.Drawable;
 
 /**
- * Class that represents the map of Tiles
+ * This class represents the map of Tiles
  * 
  * @author POO_G54
  */
