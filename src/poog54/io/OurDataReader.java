@@ -46,7 +46,7 @@ public class OurDataReader {
 	public static SimulationData DataFromFile(String txtFile) throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Reading file" + txtFile);
 		OurDataReader reader = new OurDataReader(txtFile);
-		SimulationData data = new SimulationData(reader.getRobots(), reader.getIncendies(), reader.map);
+		SimulationData data = new SimulationData(reader.getIncendies(), reader.getRobots(), reader.map);
 		scanner.close();
 		System.out.println("\n == End of reading !");
 		return data;

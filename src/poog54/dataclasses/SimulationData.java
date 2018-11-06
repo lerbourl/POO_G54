@@ -23,11 +23,11 @@ public class SimulationData {
 	/**
 	 * Constructor
 	 * 
-	 * @param robotList
 	 * @param wfList
+	 * @param robotList
 	 * @param theMap
 	 */
-	public SimulationData(List<Robot> robotList, List<WildFire> wfList, TheMap theMap) {
+	public SimulationData(List<WildFire> wfList, List<Robot> robotList, TheMap theMap) {
 		this.robotList = robotList;
 		this.wfList = wfList;
 		this.theMap = theMap;
