@@ -1,12 +1,31 @@
 package poog54.enums;
 
 /**
- * enumeration of the different possibilities of the fieldS
+ * enumerate the tile types of field
  * 
  * @author POO_G54
  *
  */
 public enum TypeField {
 
-	TERRAIN_LIBRE, EAU, FORET, ROCHE, HABITAT;
+	/**
+	 * free tile
+	 */
+	TERRAIN_LIBRE,
+	/**
+	 * water tile
+	 */
+	EAU,
+	/**
+	 * forest tile
+	 */
+	FORET,
+	/**
+	 * rock tile
+	 */
+	ROCHE,
+	/**
+	 * housing tile
+	 */
+	HABITAT;
 }
