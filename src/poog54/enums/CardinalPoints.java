@@ -1,24 +1,12 @@
 package poog54.enums;
-/**
- * Set the four cardinal points
- */
 
 /**
- * @author lerbourl
+ * Enumerates the four cardinal points
+ * 
+ * @author POO_G54
  *
  */
 public enum CardinalPoints {
-	/**
-	 * 
-	 */
-	NORTH, /**
-	 * 
-	 */
-	SOUTH, /**
-	 * 
-	 */
-	EAST, /**
-	 * 
-	 */
-	WEST;
+
+	NORTH, SOUTH, EAST, WEST;
 }
