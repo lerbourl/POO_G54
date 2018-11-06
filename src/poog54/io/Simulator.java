@@ -1,6 +1,3 @@
-/**
- * 
- */
 package poog54.io;
 
 import java.awt.Point;
@@ -12,43 +9,43 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.zip.DataFormatException;
 
-import gui.*;
+import gui.GUISimulator;
+import gui.Simulable;
+import poog54.dataclasses.SimulationData;
+import poog54.dataclasses.WildFire;
+import poog54.dataclasses.events.DiscreteEvent;
+import poog54.dataclasses.robots.Robot;
 import poog54.strategies.masters.FiremanMaster;
 import poog54.strategies.masters.FiremanMasterCaptain;
 import poog54.strategies.masters.FiremanMasterColonel;
 import poog54.strategies.masters.FiremanMasterFirstClass;
 import poog54.strategies.masters.FiremanMasterMajor;
 import poog54.strategies.masters.FiremanMasterSergeant;
-import poog54.dataclasses.*;
-import poog54.dataclasses.robots.*;
-import poog54.dataclasses.events.*;
 
 /**
+ * This class runs the simulation, based on the SimulationData. The simulator
+ * draws the elements on the screen, and process the simulation events.
+ * 
  * @author POO_G54
  *
  */
 public class Simulator implements Simulable {
 
-	/** All data associated with the simulator */
+	/* attributes */
 	private SimulationData data;
-	
-	/** speedup factor that accelerates the simulation */
-	private int speedup;
-
-	/** Discrete event management */
+	private int speedup; // speeding the simulation up
+	private String filePath; // path to the map file
+	/* events management */
 	private int date; // current simulation date
 	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a chronological way
-
-	/** Firefighters' strategy management */
-	private FiremanMaster firemanMaster;
-	
-	/** Graphical interface management */
+	private FiremanMaster firemanMaster; // strategy management
+	/* graphical interface management */
 	private GUISimulator gui;
 	private Map<Point, PriorityQueue<Drawable>> drawableMap; // Drawables on a map, Queued by graphic_priority
-	private String filePath; // path to the map file
-
 
 	/**
+	 * Constructor
+	 * 
 	 * @param gui
 	 * @param filepath
 	 * @param strategy
@@ -71,7 +68,7 @@ public class Simulator implements Simulable {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
 		this.drawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
-		
+
 		switch (strategy) {
 		case "first_class":
 			this.firemanMaster = new FiremanMasterFirstClass(this);
@@ -88,19 +85,21 @@ public class Simulator implements Simulable {
 		case "colonel":
 			this.firemanMaster = new FiremanMasterColonel(this);
 			break;
-			default:
-				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
-						                         "Valid args: first_class, sergeant, captain, major, colonel, general");
+		default:
+			throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n"
+					+ "Valid args: first_class, sergeant, captain, major, colonel, general");
 		}
 		restart();
 	}
 
 	/**
 	 * add an event into the priority queue
+	 * @param e 
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
-		//System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
+		// System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " +
+		// e.toString());
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class Simulator implements Simulable {
 	public void clearAllEvents() {
 		this.eventQueue.clear();
 	}
-	
+
 	private void draw(Drawable d) {
 		Iterator<Drawable> it = drawableMapFill(d);
 		while (it.hasNext()) {
@@ -117,13 +116,6 @@ public class Simulator implements Simulable {
 		}
 	}
 
-	private void undraw(Drawable d) {
-		Iterator<Drawable> it = drawableMapRemove(d);
-		while (it.hasNext()) {
-			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
-		}
-	}
-	
 	private Iterator<Drawable> drawableMapFill(Drawable val) {
 		Point key = val.getCoord();
 		PriorityQueue<Drawable> queue = this.drawableMap.get(key);
@@ -158,26 +150,34 @@ public class Simulator implements Simulable {
 	}
 
 	/**
-	 * @return the firemanmaster
-	 */
-	public FiremanMaster getFiremanMaster() {
-		return this.firemanMaster;
-	}
-
-	/**
-	 * @return
+	 * @return data
 	 */
 	public SimulationData getData() {
 		return this.data;
 	}
 
 	/**
-	 * @return
+	 * @return date
 	 */
 	public int getDate() {
 		return this.date;
 	}
-	
+
+	/**
+	 * @return firemanMaster
+	 */
+	public FiremanMaster getFiremanMaster() {
+		return this.firemanMaster;
+	}
+
+	private void initSimulation() {
+		// create initial event
+		Iterator<Robot> it = this.getData().getRobotList().iterator();
+		while (it.hasNext()) {
+			this.firemanMaster.orderRobotToFire(it.next(), this);
+		}
+	}
+
 	private void initTheMapOnFire() {
 		ListIterator<Drawable> drawit = data.getDrawablesIt();
 		while (drawit.hasNext()) {
@@ -190,6 +190,7 @@ public class Simulator implements Simulable {
 	}
 
 	/**
+	 * Move a robot on the screen and into data
 	 * @param rob
 	 * @param p
 	 */
@@ -202,7 +203,7 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=this.speedup;
+			this.date += this.speedup;
 			System.out.println("t=" + this.date);
 			processEvents();
 		}
@@ -221,19 +222,13 @@ public class Simulator implements Simulable {
 	}
 
 	/**
+	 * remove a wildfire from the simulation
 	 * @param wf
 	 */
 	public void removeFire(WildFire wf) {
 		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
 			this.undraw(wf);
 			data.getWfList().remove(wf);
-		}
-	}
-	private void initSimulation() {
-		// create initial event
-		Iterator<Robot> it = this.getData().getRobotList().iterator();
-		while(it.hasNext()) {
-			this.firemanMaster.orderRobotToFire(it.next(), this);
 		}
 	}
 
@@ -247,10 +242,17 @@ public class Simulator implements Simulable {
 			e.printStackTrace();
 		}
 		this.drawableMap.clear();
-		this.initTheMapOnFire();	
+		this.initTheMapOnFire();
 		clearAllEvents();
 		this.date = 0;
 		this.firemanMaster.setData(this.data);
 		this.initSimulation();
+	}
+
+	private void undraw(Drawable d) {
+		Iterator<Drawable> it = drawableMapRemove(d);
+		while (it.hasNext()) {
+			gui.addGraphicalElement(it.next().getImage(gui, data.getMap().getNbLines()));
+		}
 	}
 }
