@@ -17,16 +17,16 @@ Strategy			Duration
 -colonel			16331
 
 ## MAP mushroomOfHell-20x20.map
-Strategy			Duration		Note
--first_class		20198			Le robot à roue se coince sur une tuile forêt dès le début
--sergeant			16152			Le robot à roue se coince sur une tuile forêt
--captain			12143			Le robot à roue se coince sur une tuile forêt pour le dernier feu
--major				15884			Le robot à roue se coince sur une tuile forêt dès le début
+Strategy			Duration
+-first_class		20198
+-sergeant			16152
+-captain			12143
+-major				15884
 -colonel			11554
 
 ## MAP spiralOfMadness-50x50.map
-Strategy			Duration		Note
--first_class		54124			Il n'y a que des feux de forêt inatteignables pour le robot à roue
+Strategy			Duration
+-first_class		54124
 -sergeant			52687
 -captain			51644
 -major				53199

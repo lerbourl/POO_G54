@@ -25,11 +25,11 @@ Please refer to "ant info" or read README.md for how to use instructions -->
 	<target name="info" description="run instructions">
 		<echo>Group 54 presents: The big POO java project !
 Build with:
-ant jar
+	$ ant jar
 Clean the builds with:
 	$ ant clean
 Run with:
-	$ ant -Dmap=yourMap.map -Dstrategy=strategy run
+	$ ant -Dmap=yourMapPath.map -Dstrategy=strategy -Dspeedup=speedupfactor run
 with strategy one of :
 first_class, sergeant, captain, major, colonel, general
 See the README for more details...</echo>
@@ -54,6 +54,7 @@ See the README for more details...</echo>
             </classpath>
             <arg value ="${map}"/>
             <arg value ="${strategy}"/>
+            <arg value ="${speedup}"/>
         </java>
         <antcall target="clean"/>
     </target>

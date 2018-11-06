@@ -39,7 +39,7 @@ public abstract class MoveEvent extends DiscreteEvent {
 			// the robot remains on the same tile
 			this.date = this.robot.getNext_free_time();
 		}
-		this.robot.setNext_free_time(this.date + 1);
+		this.robot.setNext_free_time(this.date);
 	}
 
 	/*

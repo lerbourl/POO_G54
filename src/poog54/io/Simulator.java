@@ -31,6 +31,9 @@ public class Simulator implements Simulable {
 
 	/** All data associated with the simulator */
 	private SimulationData data;
+	
+	/** speedup factor that accelerates the simulation */
+	private int speedup;
 
 	/** Discrete event management */
 	private int date; // current simulation date
@@ -52,9 +55,13 @@ public class Simulator implements Simulable {
 	 * @throws FileNotFoundException
 	 * @throws ClassNotFoundException
 	 */
-	public Simulator(GUISimulator gui, String filepath, String strategy)
+	public Simulator(GUISimulator gui, String filepath, String strategy, int speedup)
 			throws FileNotFoundException, DataFormatException, ClassNotFoundException {
 		this.gui = gui;
+		if (speedup > 0)
+			this.speedup = speedup;
+		else
+			this.speedup = 1;
 		this.filepath = filepath;
 		this.gui.setSimulable(this);
 		/* first of the queue will be the lowest date event */
@@ -91,7 +98,7 @@ public class Simulator implements Simulable {
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
-		System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
+		//System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
 	}
 
 	/**
@@ -182,8 +189,8 @@ public class Simulator implements Simulable {
 	@Override
 	public void next() {
 		if (!endOfSimulation()) {
-			this.date+=10;
-			System.out.print("t=" + this.date + "\n");
+			this.date+=this.speedup;
+			System.out.println("t=" + this.date);
 			processEvents();
 		}
 	}

@@ -43,7 +43,7 @@ public class MoveToFireEvent extends MoveEvent {
 				}
 			} else {
 				// this fire is not reachable
-				// remain on the same tile
+				// remains on the same tile
 				this.robot.getTargetFire().getPath().addFirst(this.p);
 				try {
 					sim.addEvent(new MoveToFireEvent(robot));

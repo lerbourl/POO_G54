@@ -41,7 +41,7 @@ public class PouringEvent extends DiscreteEvent {
 		super(rob.getNext_free_time() + rob.getPourTime());
 		this.robot = rob;
 		this.fire = rob.getTargetFire().getFire();
-		this.robot.setNext_free_time(this.date + 1);
+		this.robot.setNext_free_time(this.date);
 	}
 
 	/*

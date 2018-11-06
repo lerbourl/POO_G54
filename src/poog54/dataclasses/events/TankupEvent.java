@@ -30,7 +30,7 @@ public class TankupEvent extends DiscreteEvent {
 	public TankupEvent(Robot robot) throws DataFormatException {
 		super(robot.getNext_free_time() + robot.getTankUpTime());
 		this.robot = robot;
-		this.robot.setNext_free_time(this.date + 1);
+		this.robot.setNext_free_time(this.date);
 	}
 
 	/*
