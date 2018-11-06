@@ -12,8 +12,15 @@ import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
 
+/**
+ * @author POO_G54
+ *
+ */
 public class FiremanMasterSergeant extends FiremanMaster {
 
+	/**
+	 * @param sim
+	 */
 	public FiremanMasterSergeant(Simulator sim) {
 		super(sim);
 	}

@@ -40,12 +40,12 @@ public class Simulator implements Simulable {
 	private PriorityQueue<DiscreteEvent> eventQueue; // events are ordered in a chronological way
 
 	/** Firefighters' strategy management */
-	private FiremanMaster firemanmaster;
+	private FiremanMaster firemanMaster;
 	
 	/** Graphical interface management */
 	private GUISimulator gui;
-	private Map<Point, PriorityQueue<Drawable>> DrawableMap; // Drawables on a map, Queued by graphic_priority
-	private String filepath; // path to the map file
+	private Map<Point, PriorityQueue<Drawable>> drawableMap; // Drawables on a map, Queued by graphic_priority
+	private String filePath; // path to the map file
 
 	/**
 	 * @param gui
@@ -62,29 +62,29 @@ public class Simulator implements Simulable {
 			this.speedup = speedup;
 		else
 			this.speedup = 1;
-		this.filepath = filepath;
+		this.filePath = filepath;
 		this.gui.setSimulable(this);
 		/* first of the queue will be the lowest date event */
 		this.eventQueue = new PriorityQueue<DiscreteEvent>(11, (e1, e2) -> {
 			return e1.getDate() < e2.getDate() ? -1 : e1.getDate() > e2.getDate() ? 1 : 0;
 		});
-		this.DrawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
+		this.drawableMap = new LinkedHashMap<Point, PriorityQueue<Drawable>>();
 		
 		switch (strategy) {
 		case "first_class":
-			this.firemanmaster = new FiremanMasterFirstClass(this);
+			this.firemanMaster = new FiremanMasterFirstClass(this);
 			break;
 		case "sergeant":
-			this.firemanmaster = new FiremanMasterSergeant(this);
+			this.firemanMaster = new FiremanMasterSergeant(this);
 			break;
 		case "captain":
-			this.firemanmaster = new FiremanMasterCaptain(this);
+			this.firemanMaster = new FiremanMasterCaptain(this);
 			break;
 		case "major":
-			this.firemanmaster = new FiremanMasterMajor(this);
+			this.firemanMaster = new FiremanMasterMajor(this);
 			break;
 		case "colonel":
-			this.firemanmaster = new FiremanMasterColonel(this);
+			this.firemanMaster = new FiremanMasterColonel(this);
 			break;
 			default:
 				throw new ClassNotFoundException("Bad strategy class \"" + strategy + "\"\n" +
@@ -124,14 +124,14 @@ public class Simulator implements Simulable {
 	
 	private Iterator<Drawable> drawableMapFill(Drawable val) {
 		Point key = val.getCoord();
-		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		PriorityQueue<Drawable> queue = this.drawableMap.get(key);
 		if (queue == null) {
 			/* first of the queue will be the lowest graphic priority */
 			queue = new PriorityQueue<Drawable>(11, (e1, e2) -> {
 				return e1.getGraphic_priority() < e2.getGraphic_priority() ? -1
 						: e1.getGraphic_priority() > e2.getGraphic_priority() ? 1 : 0;
 			});
-			this.DrawableMap.put(key, queue);
+			this.drawableMap.put(key, queue);
 		}
 		queue.add(val);
 		return queue.iterator();
@@ -139,9 +139,10 @@ public class Simulator implements Simulable {
 
 	private Iterator<Drawable> drawableMapRemove(Drawable val) {
 		Point key = val.getCoord();
-		PriorityQueue<Drawable> queue = this.DrawableMap.get(key);
+		PriorityQueue<Drawable> queue = this.drawableMap.get(key);
 		if (queue == null) {
 			System.out.println("error ! Drawable not in a the drawable map!\n");
+			return null;
 		}
 		queue.remove(val);
 		return queue.iterator();
@@ -158,13 +159,19 @@ public class Simulator implements Simulable {
 	 * @return the firemanmaster
 	 */
 	public FiremanMaster getFiremanMaster() {
-		return this.firemanmaster;
+		return this.firemanMaster;
 	}
 
+	/**
+	 * @return
+	 */
 	public SimulationData getData() {
 		return this.data;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getDate() {
 		return this.date;
 	}
@@ -177,9 +184,13 @@ public class Simulator implements Simulable {
 	}
 
 	private void loadData() throws FileNotFoundException, DataFormatException {
-		this.data = OurDataReader.DataFromFile(this.filepath);
+		this.data = OurDataReader.DataFromFile(this.filePath);
 	}
 
+	/**
+	 * @param rob
+	 * @param p
+	 */
 	public void moveRobot(Robot rob, Point p) {
 		undraw(rob);
 		rob.move(p);
@@ -207,6 +218,9 @@ public class Simulator implements Simulable {
 		}
 	}
 
+	/**
+	 * @param wf
+	 */
 	public void removeFire(WildFire wf) {
 		if (!data.getWfList().isEmpty() && data.getWfList().contains(wf)) {
 			this.undraw(wf);
@@ -217,7 +231,7 @@ public class Simulator implements Simulable {
 		// create initial event
 		Iterator<Robot> it = this.getData().getRobotList().iterator();
 		while(it.hasNext()) {
-			this.firemanmaster.orderRobotToFire(it.next(), this);
+			this.firemanMaster.orderRobotToFire(it.next(), this);
 		}
 	}
 
@@ -230,11 +244,11 @@ public class Simulator implements Simulable {
 		} catch (DataFormatException e) {
 			e.printStackTrace();
 		}
-		this.DrawableMap.clear();
+		this.drawableMap.clear();
 		this.initTheMapOnFire();	
 		clearAllEvents();
 		this.date = 0;
-		this.firemanmaster.setData(this.data);
+		this.firemanMaster.setData(this.data);
 		this.initSimulation();
 	}
 }

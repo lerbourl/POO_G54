@@ -18,14 +18,14 @@ public abstract class Drawable {
 
 	private String imageFilePath;
 	private Point coord;
-	private int graphic_priority;
+	private int graphicPriority;
 	
 	protected Drawable(int xCoord, int yCoord) {
 		this.coord = new Point(xCoord, yCoord);
 	}
 	protected Drawable(String ImageFilePath, int graphic_priority, int xCoord, int yCoord) {
 		this(xCoord, yCoord);
-		this.graphic_priority = graphic_priority;
+		this.graphicPriority = graphic_priority;
 		this.imageFilePath = ImageFilePath;
 	}
 	
@@ -33,13 +33,13 @@ public abstract class Drawable {
 	 * @return the graphic_priority
 	 */
 	public int getGraphic_priority() {
-		return graphic_priority;
+		return graphicPriority;
 	}
 	/**
 	 * @param graphic_priority the graphic_priority to set
 	 */
 	public void setGraphic_priority(int graphic_priority) {
-		this.graphic_priority = graphic_priority;
+		this.graphicPriority = graphic_priority;
 	}
 	/**
 	 * @return the imageFilePath
@@ -61,22 +61,38 @@ public abstract class Drawable {
 		return this.coord;
 	}
 	
+	/**
+	 * @param xCoord
+	 * @param yCoord
+	 */
 	public void setCoord(int xCoord, int yCoord) {
 		this.coord.x = xCoord;
 		this.coord.y = yCoord;
 	}
 	
+	/**
+	 * @param p
+	 */
 	public void setCoord(Point p) {
 		this.coord = p;
 	}
 	
+	/**
+	 * @param object
+	 */
 	public void setCoord(Drawable object) {
 		this.coord = object.getCoord();
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getx() {
 		return this.coord.x;
 	}
+	/**
+	 * @return
+	 */
 	public int gety() {
 		return this.coord.y;
 	}
@@ -103,6 +119,11 @@ public abstract class Drawable {
 	}
 
 	
+	/**
+	 * @param gui
+	 * @param rowsNumber
+	 * @return
+	 */
 	public ImageElement getImage(GUISimulator gui, int rowsNumber) {
 		int size = gui.getPanelHeight() / rowsNumber;
 		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);

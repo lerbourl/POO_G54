@@ -21,11 +21,11 @@ public class Tile extends Drawable {
 	/** Tile constructor */
 
 	public Tile(int xCoord, int yCoord, TypeField type) {
-		super(TileImageFilePath(type), 0,xCoord, yCoord);
+		super(tileImageFilePath(type), 0,xCoord, yCoord);
 		this.type = type;
 	}
 
-	private static String TileImageFilePath(TypeField type) {
+	private static String tileImageFilePath(TypeField type) {
 		switch (type) {
 		case EAU:
 			return "assets/water.png";
@@ -42,7 +42,8 @@ public class Tile extends Drawable {
 		}
 	}
 
-	/** Access to Type Field */
+	/** Access to Type Field 
+	 * @return */
 	public TypeField getTypeField() {
 		return this.type;
 	}

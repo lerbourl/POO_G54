@@ -12,44 +12,68 @@ import java.util.Deque;
  *
  */
 public class Path {
-	private Deque<Point> thepath;
-	private double traveltime;
+	private Deque<Point> thePath;
+	private double travelTime;
 
+	/**
+	 * 
+	 */
 	public Path() {
-		this.thepath = new ArrayDeque<Point>();
-		this.traveltime = 0;
+		this.thePath = new ArrayDeque<Point>();
+		this.travelTime = 0;
 	}
 
+	/**
+	 * @return
+	 */
 	public Deque<Point> getThepath() {
-		return thepath;
+		return thePath;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getTraveltime() {
-		return traveltime;
+		return travelTime;
 	}
 
+	/**
+	 * @param traveltime
+	 */
 	public void incTravelTime(double traveltime) {
-		this.traveltime += traveltime;
+		this.travelTime += traveltime;
 	}
 
+	/**
+	 * @param e
+	 */
 	public void addFirst(Point e) {
-		this.thepath.addFirst(e);
+		this.thePath.addFirst(e);
 	}
 
+	/**
+	 * @return
+	 */
 	public Point dequeueFirst() {
-		return this.thepath.pollFirst();
+		return this.thePath.pollFirst();
 	}
 
+	/**
+	 * @return
+	 */
 	public Point removeLast() {
-		return this.thepath.pollLast();
+		return this.thePath.pollLast();
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isEmpty() {
-		return this.thepath.isEmpty();
+		return this.thePath.isEmpty();
 	}
 
 	@Override
 	public String toString() {
-		return "Time travel =" + this.traveltime + "list = " + thepath.toString();
+		return "Time travel =" + this.travelTime + "list = " + thePath.toString();
 	}
 }

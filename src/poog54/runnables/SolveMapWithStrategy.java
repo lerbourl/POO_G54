@@ -7,8 +7,15 @@ import gui.GUISimulator;
 
 import poog54.io.*;
 
+/**
+ * @author POO_G54
+ *
+ */
 public class SolveMapWithStrategy {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		if (args.length < 3) {
 			System.out.println("Syntax: java SolveMapWithStrategy <map_file_path> <fireman_rank> <speedup_factor>");
@@ -29,7 +36,7 @@ public class SolveMapWithStrategy {
 			@SuppressWarnings("unused")
 			Simulator sim = new Simulator(gui, args[0], args[1], Integer.parseInt(args[2]));
 		} catch (FileNotFoundException e) {
-			System.out.println("\n\t**map file not found\"" + args[0] + "\"");
+			System.out.println("\n\t**map file not found\"" + args[0] + "\": " + e.getMessage());
 		} catch (DataFormatException e) {
 			System.out.println("\n\t**bad map file \"" + args[0] + "\": " + e.getMessage());
 		} catch (ClassNotFoundException e) {

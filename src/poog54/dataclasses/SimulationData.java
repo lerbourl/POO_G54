@@ -27,11 +27,17 @@ public class SimulationData {
 		this.wfList = wfList;
 		this.theMap = theMap;
 	}
+	/**
+	 * 
+	 */
 	public SimulationData() {
 	}
 	
 	/*
 	 * Return an iterator on all the Drawable objects
+	 */
+	/**
+	 * @return
 	 */
 	public ListIterator<Drawable> getDrawablesIt(){
 		List<Drawable> AllDrawables = new ArrayList<Drawable>();

@@ -72,6 +72,11 @@ public class Target {
 		this.path = path;
 	}
 	//for a fire
+	/**
+	 * 
+	 * @param fire
+	 * @param path
+	 */
 	public Target(WildFire fire, Path path) {
 		this(fire.getCoord(), path);
 		this.fire = fire;

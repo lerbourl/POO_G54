@@ -16,55 +16,94 @@ public class TheMap {
 
 	private int tileSize;
 	private int nbLines, nbColums;
-	private Map<Point, Tile> TileMatrix;
+	private Map<Point, Tile> tileMatrix;
 	private List<Point> waterTileList;
 
+	/**
+	 * @param tileSize
+	 * @param nbLines
+	 * @param nbColums
+	 * @param TileMatrix
+	 */
 	public TheMap(int tileSize, int nbLines, int nbColums, Map<Point, Tile> TileMatrix) {
 		this.tileSize = tileSize;
 		this.nbLines = nbLines;
 		this.nbColums = nbColums;
-		this.TileMatrix = TileMatrix;
+		this.tileMatrix = TileMatrix;
 		this.buildWaterTileList();
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Drawable> getDrawableList() {
-		Set<Entry<Point, Tile>> tmpSet = this.TileMatrix.entrySet();
+		Set<Entry<Point, Tile>> tmpSet = this.tileMatrix.entrySet();
 		List<Drawable> l = new ArrayList<Drawable>();
 		Iterator<Entry<Point, Tile>> it = tmpSet.iterator();
 		while (it.hasNext()) {
-			l.add((Drawable) it.next().getValue());
+			l.add(it.next().getValue());
 		}
 		return l;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getTileSize() {
 		return this.tileSize;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNbLines() {
 		return this.nbLines;
 	}
 
+	/**
+	 * @return
+	 */
 	public Map<Point, Tile> getTileMatrix() {
-		return TileMatrix;
+		return tileMatrix;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNbColums() {
 		return this.nbColums;
 	}
 
+	/**
+	 * @param xCoord
+	 * @param yCoord
+	 * @return
+	 */
 	public Tile getTile(int xCoord, int yCoord) {
-		return this.TileMatrix.get(new Point(xCoord, yCoord));
+		return this.tileMatrix.get(new Point(xCoord, yCoord));
 	}
 
+	/**
+	 * @param p
+	 * @return
+	 */
 	public Tile getTile(Point p) {
-		return this.TileMatrix.get(p);
+		return this.tileMatrix.get(p);
 	}
 
+	/**
+	 * @param p
+	 * @return
+	 */
 	public Boolean tileIsIn(Point p) {
-		return this.TileMatrix.containsKey(p);
+		return this.tileMatrix.containsKey(p);
 	}
 
+	/**
+	 * @param src
+	 * @param dir
+	 * @return
+	 */
 	public boolean hasNeighbour(Tile src, CardinalPoints dir) {
 		switch (dir) {
 
@@ -104,6 +143,11 @@ public class TheMap {
 
 	}
 
+	/**
+	 * @param src
+	 * @param dir
+	 * @return
+	 */
 	public Tile getNeighbour(Tile src, CardinalPoints dir) {
 		/** Is there any Neighbour ?? */
 		if (hasNeighbour(src, dir)) {
@@ -129,7 +173,7 @@ public class TheMap {
 			default:
 				p = new Point(src.getx(), src.gety());
 			}
-			return TileMatrix.get(p);
+			return tileMatrix.get(p);
 		}
 		return null; // error
 	}
@@ -150,6 +194,9 @@ public class TheMap {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public ListIterator<Point> getWaterTileListIt(){
 		return this.waterTileList.listIterator();
 	}

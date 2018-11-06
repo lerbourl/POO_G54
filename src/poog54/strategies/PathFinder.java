@@ -4,32 +4,51 @@ import java.awt.Point;
 import java.util.*;
 
 
+/**
+ * @author POO_G54
+ *
+ */
 public class PathFinder {
 
-	private PriorityQueue<AlgoTile> openlist;
+	private PriorityQueue<AlgoTile> openList;
 	private int height,width;
 	
 
+	/**
+	 * @param height
+	 * @param width
+	 */
 	public PathFinder(int height,int width) {
-		this.openlist = new PriorityQueue<AlgoTile>(height * width, (t1, t2) -> {
+		this.openList = new PriorityQueue<AlgoTile>(height * width, (t1, t2) -> {
 			return t1.getFinal_cost()<t2.getFinal_cost()?-1:t1.getFinal_cost()>t2.getFinal_cost()?1:0;
 		});
 		this.height = height;
 		this.width = width;
 	}
 	
+	/**
+	 * @param current
+	 * @param t
+	 * @param cost
+	 * @param closedtab
+	 */
 	public void updateCost(AlgoTile current, AlgoTile t, double cost, boolean[][] closedtab) {
 		if(t == null || closedtab[t.getCoord().x][t.getCoord().y]) return;
 		double t_final_cost = t.getHeuristic_cost()+cost;
 		
-		boolean test = openlist.contains(t);
+		boolean test = openList.contains(t);
 		if(!test ||t_final_cost<t.getFinal_cost()) {
 			t.setFinal_cost(t_final_cost);
 			t.setParent(current);
-			if(!test)openlist.add(t);
+			if(!test)openList.add(t);
 		}
 	}
 	
+	/**
+	 * @param current
+	 * @param grid
+	 * @return
+	 */
 	public double getCostTime(AlgoTile current, AlgoTile[][] grid) {
 		return grid[current.getCoord().x][current.getCoord().y].getTime_cost();
 	}
@@ -46,17 +65,23 @@ public class PathFinder {
 
 	
 	
+	/**
+	 * @param start
+	 * @param end
+	 * @param grid
+	 * @return
+	 */
 	public Path Astar(Point start, Point end, AlgoTile[][] grid) {
-		this.openlist.clear();
+		this.openList.clear();
 		boolean[][] closedtab = new boolean[height][width];
 		Path path = new Path();
 		setHeuristicValues(end, grid);
-		this.openlist.add(grid[start.x][start.y]);
+		this.openList.add(grid[start.x][start.y]);
 		AlgoTile current = null;
 		boolean exit_while=false;
 		
 		while(exit_while!=true) {
-			current = openlist.poll();
+			current = openList.poll();
 			if(current == null)break;
 			closedtab[current.getCoord().x][current.getCoord().y]=true;
 			

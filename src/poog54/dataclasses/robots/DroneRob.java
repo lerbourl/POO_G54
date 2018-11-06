@@ -37,9 +37,9 @@ public class DroneRob extends Robot {
 		this.setImageFilePath("assets/drone-robot.png");
 		this.setGraphic_priority(2);
 		setSpeed();
-		this.water_capacity = 10000;
-		this.water_level = 10000;
-		this.water_amount = 10000;
+		this.waterCapacity = 10000;
+		this.waterLevel = 10000;
+		this.waterAmount = 10000;
 		this.pourTime = 30;
 		this.tankUpTime = 30*60; // 30min
 	}

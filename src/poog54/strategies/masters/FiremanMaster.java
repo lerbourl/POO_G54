@@ -16,9 +16,12 @@ import poog54.strategies.PathFinder;
  * @author POO_G54
  *
  */
-abstract public class FiremanMaster {
+ public abstract class FiremanMaster {
 	protected SimulationData data;
 
+	/**
+	 * @param sim
+	 */
 	public FiremanMaster(Simulator sim) {
 		this.data = sim.getData();
 	}
@@ -30,9 +33,13 @@ abstract public class FiremanMaster {
 		return data;
 	}
 
+	/**
+	 * @param data
+	 */
 	public void setData(SimulationData data) {
 		this.data = data;
 	}
+	
 	/**
 	 * affect a fire target to a robot
 	 * @param robot
@@ -204,7 +211,7 @@ abstract public class FiremanMaster {
 	 * @param robot
 	 * @return the fire which is the closest from any water tile
 	 */
-	public Target getFireClosestFromWater(Robot rob, PriorityQueue<Target> wfPriorityQueue) {
+	public Target getFireClosestFromWater(PriorityQueue<Target> wfPriorityQueue) {
 		Target currentFire, selectedFire = null;
 		while (selectedFire == null) {
 			currentFire = wfPriorityQueue.peek();

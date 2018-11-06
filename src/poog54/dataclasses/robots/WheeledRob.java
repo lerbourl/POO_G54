@@ -34,9 +34,9 @@ public class WheeledRob extends Robot {
 		this.setImageFilePath("assets/wheeled-robot.png");
 		this.setGraphic_priority(2);
 		this.setSpeed(80);
-		this.water_capacity = 5000;
-		this.water_level = 5000;
-		this.water_amount = 100;
+		this.waterCapacity = 5000;
+		this.waterLevel = 5000;
+		this.waterAmount = 100;
 		this.pourTime = 5;
 		this.tankUpTime = 10*60; // 10min
 	}

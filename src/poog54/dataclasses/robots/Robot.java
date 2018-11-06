@@ -32,7 +32,7 @@ public abstract class Robot extends Drawable {
 	/**
 	 * The time the robot will be free to be involved into a new event an action
 	 */
-	private int next_free_time;
+	private int nextFreeTime;
 
 	/**
 	 * time needed to pour an amount of water
@@ -67,17 +67,17 @@ public abstract class Robot extends Drawable {
 	/**
 	 * Water capacity: tank size
 	 */
-	protected int water_capacity;
+	protected int waterCapacity;
 
 	/**
 	 * Water level: remaining water in the tank
 	 */
-	protected int water_level;
+	protected int waterLevel;
 
 	/**
 	 * Water amount: amount of water that a robot can pour at a time
 	 */
-	protected int water_amount;
+	protected int waterAmount;
 
 	protected PathFinder pathFinder;
 
@@ -91,9 +91,12 @@ public abstract class Robot extends Drawable {
 		// Speeds and water capacity must be set in the child constructors
 		this.theMap = theMap;
 		this.pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
-		this.next_free_time = 1; // after init strategy
+		this.nextFreeTime = 1; // after init strategy
 	}
 
+	/**
+	 * @return
+	 */
 	public AlgoTile[][] getAlgoMap() {
 
 		AlgoTile[][] algomap = new AlgoTile[this.theMap.getNbLines()][this.theMap.getNbColums()];
@@ -120,6 +123,9 @@ public abstract class Robot extends Drawable {
 		return this.targetWater;
 	}
 
+	/**
+	 * @return
+	 */
 	public TheMap getMap() {
 		return this.theMap;
 	}
@@ -151,9 +157,13 @@ public abstract class Robot extends Drawable {
 	 * @return the next_free_time
 	 */
 	public int getNext_free_time() {
-		return next_free_time;
+		return nextFreeTime;
 	}
 
+	/**
+	 * @param p
+	 * @return
+	 */
 	public Path getPathToPoint(Point p) {
 		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
 		if (path.getThepath().size() < 2) {
@@ -221,23 +231,26 @@ public abstract class Robot extends Drawable {
 	 * @return the amount of water that a robot can pour out
 	 */
 	public int getWater_amount() {
-		return water_amount;
+		return waterAmount;
 	}
 
 	/**
 	 * @return the water_capacity
 	 */
 	public int getWater_capacity() {
-		return water_capacity;
+		return waterCapacity;
 	}
 
 	/**
 	 * @return the water_level
 	 */
 	public int getWater_level() {
-		return water_level;
+		return waterLevel;
 	}
 
+	/**
+	 * @param p
+	 */
 	public void move(Point p) {
 		if (p != null) {
 			if (this.theMap.tileIsIn(p)) {
@@ -245,7 +258,7 @@ public abstract class Robot extends Drawable {
 			} else
 				System.out.println("Move robot on non allowed tile");
 		} else {
-			System.out.println("t=" + (this.next_free_time - 1) + ": " + this + " remains on the same tile");
+			System.out.println("t=" + (this.nextFreeTime - 1) + ": " + this + " remains on the same tile");
 		}
 	}
 
@@ -253,9 +266,9 @@ public abstract class Robot extends Drawable {
 	 * Pouring water: extinguish fire
 	 */
 	public void pourOut() {
-		if (this.water_level > 0) {
-			this.water_level -= this.water_amount;
-			this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.water_amount);
+		if (this.waterLevel > 0) {
+			this.waterLevel -= this.waterAmount;
+			this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.waterAmount);
 		}
 	}
 
@@ -263,9 +276,12 @@ public abstract class Robot extends Drawable {
 	 * @param next_free_time the next_free_time to set
 	 */
 	public void setNext_free_time(int next_free_time) {
-		this.next_free_time = next_free_time;
+		this.nextFreeTime = next_free_time;
 	}
 
+	/**
+	 * 
+	 */
 	public abstract void setSpeed();
 
 	/**
@@ -299,21 +315,21 @@ public abstract class Robot extends Drawable {
 	 * @param water_amount
 	 */
 	public void setWater_amount(int water_amount) {
-		this.water_capacity = water_amount;
+		this.waterCapacity = water_amount;
 	}
 
 	/**
 	 * @param water_capacity the water_capacity to set
 	 */
 	public void setWater_capacity(int water_capacity) {
-		this.water_capacity = water_capacity;
+		this.waterCapacity = water_capacity;
 	}
 
 	/**
 	 * @param water_level the water_level to set
 	 */
 	public void setWater_level(int water_level) {
-		this.water_level = water_level;
+		this.waterLevel = water_level;
 	}
 
 	/**
@@ -321,12 +337,12 @@ public abstract class Robot extends Drawable {
 	 */
 	public void tankUp() {
 
-		water_level = water_capacity;
+		waterLevel = waterCapacity;
 
 	}
 
 	@Override
 	public String toString() {
-		return "robot [" + this.getCoord().x + ";" + this.getCoord().y + "] <" + this.water_level + "L>";
+		return "robot [" + this.getCoord().x + ";" + this.getCoord().y + "] <" + this.waterLevel + "L>";
 	}
 }

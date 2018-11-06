@@ -15,11 +15,18 @@ import poog54.dataclasses.events.MoveToFireEvent;
 import poog54.dataclasses.robots.*;
 import poog54.io.Simulator;
 
+/**
+ * @author POO_G54
+ *
+ */
 public class FiremanMasterColonel extends FiremanMaster {
 	// fires are sorted by proximity with water tiles
 	private PriorityQueue<Target> wheeledRobFirePriority;
 	private PriorityQueue<Target> trackedRobFirePriority;
 	
+	/**
+	 * @param sim
+	 */
 	public FiremanMasterColonel(Simulator sim) {
 		super(sim);
 	}
@@ -57,12 +64,12 @@ public class FiremanMasterColonel extends FiremanMaster {
 
 			case "poog54.dataclasses.robots.TrackedRob":
 				// get the fire which is the closest from a water tile
-				assignedFire = getFireClosestFromWater(rob, this.trackedRobFirePriority);
+				assignedFire = getFireClosestFromWater(this.trackedRobFirePriority);
 				break;
 				
 			case "poog54.dataclasses.robots.WheeledRob":
 				// get the fire which is the closest from a water tile
-				assignedFire = getFireClosestFromWater(rob, this.wheeledRobFirePriority);
+				assignedFire = getFireClosestFromWater(this.wheeledRobFirePriority);
 				break;
 
 			default:

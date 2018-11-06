@@ -34,9 +34,9 @@ public class WalkingRob extends Robot {
 		this.setImageFilePath("assets/walking-robot.png");
 		this.setGraphic_priority(2);
 		setSpeed();
-		this.water_capacity = Integer.MAX_VALUE;
-		this.water_level = Integer.MAX_VALUE;
-		this.water_amount = 10;
+		this.waterCapacity = Integer.MAX_VALUE;
+		this.waterLevel = Integer.MAX_VALUE;
+		this.waterAmount = 10;
 		this.pourTime = 1;
 	}
 
@@ -46,7 +46,7 @@ public class WalkingRob extends Robot {
 	@Override
 	public void pourOut() {
 		// water level is never decreased
-		this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.water_amount);
+		this.targetFire.getFire().setIntensity(this.targetFire.getFire().getIntensity() - this.waterAmount);
 	}
 
 	@Override

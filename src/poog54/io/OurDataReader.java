@@ -16,6 +16,12 @@ import poog54.enums.*;
  *
  */
 public class OurDataReader {
+	/**
+	 * @param txtFile
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws DataFormatException
+	 */
 	public static SimulationData DataFromFile(String txtFile) throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Reading file" + txtFile);
 		OurDataReader reader = new OurDataReader(txtFile);

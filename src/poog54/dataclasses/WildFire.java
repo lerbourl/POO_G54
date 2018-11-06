@@ -16,15 +16,26 @@ public class WildFire extends Drawable {
 
 	private int intensity;
 
+	/**
+	 * @param xCoord
+	 * @param yCoord
+	 * @param intensity
+	 */
 	public WildFire(int xCoord, int yCoord, int intensity) {
 		super("assets/fire.png", 1,xCoord, yCoord);
 		this.intensity = intensity;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getIntensity() {
 		return intensity;
 	}
 
+	/**
+	 * @param intensity
+	 */
 	public void setIntensity(int intensity) {
 		this.intensity = intensity;
 	}
