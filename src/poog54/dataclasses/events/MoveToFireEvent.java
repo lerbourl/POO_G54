@@ -19,8 +19,8 @@ public class MoveToFireEvent extends MoveEvent {
 	 * 
 	 * @param robot
 	 */
-	public MoveToFireEvent(Robot rob) throws DataFormatException {
-		super(rob, rob.getTargetFire().getPath().dequeueFirst());
+	public MoveToFireEvent(Robot robot) throws DataFormatException {
+		super(robot, robot.getTargetFire().getPath().dequeueFirst());
 	}
 
 	@Override

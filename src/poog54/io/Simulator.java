@@ -47,12 +47,14 @@ public class Simulator implements Simulable {
 	private Map<Point, PriorityQueue<Drawable>> drawableMap; // Drawables on a map, Queued by graphic_priority
 	private String filePath; // path to the map file
 
+
 	/**
 	 * @param gui
-	 * @param file path
+	 * @param filepath
 	 * @param strategy
-	 * @throws DataFormatException
+	 * @param speedup
 	 * @throws FileNotFoundException
+	 * @throws DataFormatException
 	 * @throws ClassNotFoundException
 	 */
 	public Simulator(GUISimulator gui, String filepath, String strategy, int speedup)

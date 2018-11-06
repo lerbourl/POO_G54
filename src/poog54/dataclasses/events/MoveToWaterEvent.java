@@ -18,8 +18,8 @@ public class MoveToWaterEvent extends MoveEvent {
 	 * move event : move a robot along its specified target path.
 	 * @param robot
 	 */
-	public MoveToWaterEvent(Robot rob) throws DataFormatException {
-		super(rob, rob.getTargetWater().getPath().dequeueFirst());
+	public MoveToWaterEvent(Robot robot) throws DataFormatException {
+		super(robot, robot.getTargetWater().getPath().dequeueFirst());
 	}
 	
 	@Override

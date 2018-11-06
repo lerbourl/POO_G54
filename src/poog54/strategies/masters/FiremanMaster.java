@@ -43,27 +43,27 @@ import poog54.strategies.PathFinder;
 	/**
 	 * affect a fire target to a robot
 	 * @param robot
-	 * @param simulator
+	 * @param sim
 	 * 
 	 */
-	abstract public void orderRobotToFire(Robot rob, Simulator sim);
+	abstract public void orderRobotToFire(Robot robot, Simulator sim);
 
 	/**
 	 * @param robot
-	 * @param point
+	 * @param p
 	 * @return the closest fire tile from the specified point, that is not
 	 *         necessarily the robot position
 	 */
-	public Target getClosestFire(Robot rob, Point p) {
+	public Target getClosestFire(Robot robot, Point p) {
 		TheMap theMap = this.data.getMap();
 		ListIterator<WildFire> wfListIt = this.data.getWfList().listIterator();
 		PathFinder pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
 		WildFire wf = wfListIt.next();
-		Target target, closestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
+		Target target, closestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
-			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
+			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 			if (target.getPath().getTraveltime() < closestTarget.getPath().getTraveltime()) {
 				closestTarget = target;
 			}
@@ -75,26 +75,26 @@ import poog54.strategies.PathFinder;
 	 * @param robot
 	 * @return the closest fire tile from current position of the robot
 	 */
-	public Target getClosestFire(Robot rob) {
-		return getClosestFire(rob, rob.getCoord());
+	public Target getClosestFire(Robot robot) {
+		return getClosestFire(robot, robot.getCoord());
 	}
 
 	/**
 	 * @param robot
-	 * @param point
+	 * @param p
 	 * @return the farthest fire tile from the specified point, that is not
 	 *         necessarily the robot position
 	 */
-	public Target getFarthestFire(Robot rob, Point p) {
+	public Target getFarthestFire(Robot robot, Point p) {
 		TheMap theMap = this.data.getMap();
 		ListIterator<WildFire> wfListIt = this.data.getWfList().listIterator();
 		PathFinder pathFinder = new PathFinder(theMap.getNbLines(), theMap.getNbColums());
 		WildFire wf = wfListIt.next();
-		Target target, farthestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
+		Target target, farthestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
-			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), rob.getAlgoMap()));
+			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 			if (target.getPath().getTraveltime() > farthestTarget.getPath().getTraveltime()) {
 				farthestTarget = target;
 			}
@@ -106,15 +106,15 @@ import poog54.strategies.PathFinder;
 	 * @param robot
 	 * @return the farthest fire tile from the current position of the robot
 	 */
-	public Target getFarthestFire(Robot rob) {
-		return getFarthestFire(rob, rob.getCoord());
+	public Target getFarthestFire(Robot robot) {
+		return getFarthestFire(robot, robot.getCoord());
 	}
 
 	/**
 	 * @param robot
 	 * @return the fire to which the fewest firefighters are assigned
 	 */
-	public Target getFireWithFewestRob(Robot rob) {
+	public Target getFireWithFewestRob(Robot robot) {
 		int currentNum, selectedNum; // num of assigned robots
 		WildFire wf;
 		Robot currentRob;
@@ -130,7 +130,7 @@ import poog54.strategies.PathFinder;
 		while (wfListIt.hasNext()) {
 			currentNum = 0;
 			wf = wfListIt.next();
-			currentFire = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+			currentFire = new Target(wf, robot.getPathToPoint(wf.getCoord()));
 			robotListIt = this.data.getRobotList().listIterator();
 
 			// counts the num of assigned robots
@@ -157,7 +157,7 @@ import poog54.strategies.PathFinder;
 	 * @return the fire which is the farthest from any other robot (most
 	 *         isolated)
 	 */
-	public Target getMostIsolatedFire(Robot rob) {
+	public Target getMostIsolatedFire(Robot robot) {
 		Robot r;
 		WildFire wf;
 		double closestDistance;
@@ -178,7 +178,7 @@ import poog54.strategies.PathFinder;
 			// get the closest robot for this fire
 			while (robListIt.hasNext()) {
 				r = robListIt.next();
-				if (r.getClass() != rob.getClass()) {
+				if (r.getClass() != robot.getClass()) {
 					//skip robots of the same type / team
 					currentRobot = new Target(wf, r.getPathToPoint(wf.getCoord()));
 					if (currentRobot.getPath().getTraveltime() < closestDistance) {
@@ -192,24 +192,25 @@ import poog54.strategies.PathFinder;
 			// get the most isolated fire
 			// and select it if its intensity is > poured amount of water
 			if (closestRobot.getPath().getTraveltime() > currentDistance
-					&& closestRobot.getFire().getIntensity() >= rob.getWaterAmount()) {
+					&& closestRobot.getFire().getIntensity() >= robot.getWaterAmount()) {
 				currentDistance = closestRobot.getPath().getTraveltime();
-				mostIsolatedFire = new Target(wf, rob.getPathToPoint(wf.getCoord()));
+				mostIsolatedFire = new Target(wf, robot.getPathToPoint(wf.getCoord()));
 			}
 		}
 		
 		if (mostIsolatedFire == null) {
 			// there are only small fires remaining
 			// select the closest
-			mostIsolatedFire = getClosestFire(rob);
+			mostIsolatedFire = getClosestFire(robot);
 		}
 		
 		return mostIsolatedFire;
 	}
 
+	
 	/**
-	 * @param robot
-	 * @return the fire which is the closest from any water tile
+	 * @param wfPriorityQueue
+	 * @return closest fire from a water tile
 	 */
 	public Target getFireClosestFromWater(PriorityQueue<Target> wfPriorityQueue) {
 		Target currentFire, selectedFire = null;
@@ -228,7 +229,7 @@ import poog54.strategies.PathFinder;
 	 * @param robot
 	 * @return get the fire priority queue for the specified robot
 	 */
-	public PriorityQueue<Target> getFirePriorityQueue(Robot rob) {	
+	public PriorityQueue<Target> getFirePriorityQueue(Robot robot) {	
 		double distance;
 		WildFire wf;
 		Point waterTile;
@@ -248,7 +249,7 @@ import poog54.strategies.PathFinder;
 			waterListIt = this.data.getMap().getWaterTileListIt();
 			while (waterListIt.hasNext()) {
 				waterTile = waterListIt.next();
-				target = new Target(wf, pathFinder.Astar(waterTile, wf.getCoord(), rob.getAlgoMap()));
+				target = new Target(wf, pathFinder.Astar(waterTile, wf.getCoord(), robot.getAlgoMap()));
 				if (target.getPath().getTraveltime() < distance) {
 					closestWaterTarget = target;
 					distance = closestWaterTarget.getPath().getTraveltime();
