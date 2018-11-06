@@ -4,24 +4,45 @@
 package poog54.io;
 
 import java.awt.Point;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.zip.DataFormatException;
-import poog54.dataclasses.*;
-import poog54.dataclasses.robots.*;
-import poog54.enums.*;
+
+import poog54.dataclasses.SimulationData;
+import poog54.dataclasses.TheMap;
+import poog54.dataclasses.Tile;
+import poog54.dataclasses.WildFire;
+import poog54.dataclasses.robots.DroneRob;
+import poog54.dataclasses.robots.Robot;
+import poog54.dataclasses.robots.TrackedRob;
+import poog54.dataclasses.robots.WalkingRob;
+import poog54.dataclasses.robots.WheeledRob;
+import poog54.enums.TypeField;
 
 /**
  * @author louis
  *
  */
 public class OurDataReader {
+
+	/* static attributes */
+	private static Scanner scanner;
+
 	/**
 	 * @param txtFile
-	 * @return
+	 * @return a SimulationData class, filled by the data reader
 	 * @throws FileNotFoundException
 	 * @throws DataFormatException
 	 */
+
+	/* static methods */
 	public static SimulationData DataFromFile(String txtFile) throws FileNotFoundException, DataFormatException {
 		System.out.println("\n == Reading file" + txtFile);
 		OurDataReader reader = new OurDataReader(txtFile);
@@ -30,11 +51,12 @@ public class OurDataReader {
 		System.out.println("\n == End of reading !");
 		return data;
 	}
-	
-	// The following is private
-	private static Scanner scanner;
+
+	/* attributes */
 	private TheMap map;
-	
+
+	/* methods */
+	/* Constructor */
 	private OurDataReader(String txtFile) throws FileNotFoundException {
 		scanner = new Scanner(new File(txtFile));
 		scanner.useLocale(Locale.US);
@@ -44,17 +66,7 @@ public class OurDataReader {
 			e.printStackTrace();
 		}
 	}
-	
 
-	/*
-	 * Accesseurs pour remplir une simulationData
-	 */
-
-	/**
-	 * Lit et retourne les donnees de la carte.
-	 * 
-	 * @throws ExceptionFormatDonnees
-	 */
 	private TheMap getCarte() throws DataFormatException {
 		ignorerCommentaires();
 		try {
@@ -75,9 +87,6 @@ public class OurDataReader {
 		}
 	}
 
-	/**
-	 * Lit et retourne les donnees d'une case.
-	 */
 	private Tile getCase(int lig, int col) throws DataFormatException {
 		ignorerCommentaires();
 		System.out.print("Case (" + lig + "," + col + "): ");
@@ -102,30 +111,6 @@ public class OurDataReader {
 		return new Tile(col, lig, TypeField.valueOf(chaineNature));
 	}
 
-	/**
-	 * Lit et retourne les donnees des incendies.
-	 */
-	private List<WildFire> getIncendies() throws DataFormatException {
-		ignorerCommentaires();
-		List<WildFire> WFList = new ArrayList<WildFire>();
-		try {
-			int nbIncendies = scanner.nextInt();
-			System.out.println("Nb d'incendies = " + nbIncendies);
-			for (int i = 0; i < nbIncendies; i++) {
-				WFList.add(getIncendie(i));
-			}
-			return WFList;
-
-		} catch (NoSuchElementException e) {
-			throw new DataFormatException("Format invalide. " + "Attendu: nbIncendies");
-		}
-	}
-
-	/**
-	 * Lit et retourne les donnees du i-eme incendie.
-	 * 
-	 * @param i
-	 */
 	private WildFire getIncendie(int i) throws DataFormatException {
 		ignorerCommentaires();
 		System.out.print("Incendie " + i + ": ");
@@ -149,30 +134,22 @@ public class OurDataReader {
 		}
 	}
 
-	/**
-	 * Lit et retourne les donnees des robots.
-	 */
-	private List<Robot> getRobots() throws DataFormatException {
+	private List<WildFire> getIncendies() throws DataFormatException {
 		ignorerCommentaires();
-		List<Robot> robotList = new ArrayList<Robot>();
+		List<WildFire> WFList = new ArrayList<WildFire>();
 		try {
-			int nbRobots = scanner.nextInt();
-			System.out.println("Nb de robots = " + nbRobots);
-			for (int i = 0; i < nbRobots; i++) {
-				robotList.add(getRobot(i));
+			int nbIncendies = scanner.nextInt();
+			System.out.println("Nb d'incendies = " + nbIncendies);
+			for (int i = 0; i < nbIncendies; i++) {
+				WFList.add(getIncendie(i));
 			}
+			return WFList;
 
 		} catch (NoSuchElementException e) {
-			throw new DataFormatException("Format invalide. " + "Attendu: nbRobots");
+			throw new DataFormatException("Format invalide. " + "Attendu: nbIncendies");
 		}
-		return robotList;
 	}
 
-	/**
-	 * Lit et retourne les donnees du i-eme robot.
-	 * 
-	 * @param i
-	 */
 	private Robot getRobot(int i) throws DataFormatException {
 		ignorerCommentaires();
 		System.out.print("Robot " + i + ": ");
@@ -224,18 +201,28 @@ public class OurDataReader {
 		}
 	}
 
-	/** Ignore toute (fin de) ligne commencant par '#' */
+	private List<Robot> getRobots() throws DataFormatException {
+		ignorerCommentaires();
+		List<Robot> robotList = new ArrayList<Robot>();
+		try {
+			int nbRobots = scanner.nextInt();
+			System.out.println("Nb de robots = " + nbRobots);
+			for (int i = 0; i < nbRobots; i++) {
+				robotList.add(getRobot(i));
+			}
+
+		} catch (NoSuchElementException e) {
+			throw new DataFormatException("Format invalide. " + "Attendu: nbRobots");
+		}
+		return robotList;
+	}
+
 	private void ignorerCommentaires() {
 		while (scanner.hasNext("#.*")) {
 			scanner.nextLine();
 		}
 	}
 
-	/**
-	 * Verifie qu'il n'y a plus rien a lire sur cette ligne (int ou float).
-	 * 
-	 * @throws ExceptionFormatDonnees
-	 */
 	private void verifieLigneTerminee() throws DataFormatException {
 		if (scanner.findInLine("(\\d+)") != null) {
 			throw new DataFormatException("format invalide, donnees en trop.");
