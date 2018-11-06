@@ -4,54 +4,33 @@
  */
 package poog54.io;
 
-
 import java.awt.Point;
+
 import gui.GUISimulator;
 import gui.ImageElement;
-import poog54.enums.CardinalPoints;
 
 /**
- * @author louis
+ * This class makes it's childclasses drawable.
+ * 
+ * @author POO_G54
  *
  */
 public abstract class Drawable {
 
+	/* attributes */
 	private String imageFilePath;
 	private Point coord;
-	private int graphicPriority;
-	
+	private int graphicPriority; // 0 for a tile, 1 for a fire, 2 for a robot. 0 is drawn first, 2 is drawn last.
+
+	/* methods */
 	protected Drawable(int xCoord, int yCoord) {
 		this.coord = new Point(xCoord, yCoord);
 	}
+
 	protected Drawable(String ImageFilePath, int graphic_priority, int xCoord, int yCoord) {
 		this(xCoord, yCoord);
 		this.graphicPriority = graphic_priority;
 		this.imageFilePath = ImageFilePath;
-	}
-	
-	/**
-	 * @return the graphic_priority
-	 */
-	public int getGraphic_priority() {
-		return graphicPriority;
-	}
-	/**
-	 * @param graphic_priority the graphic_priority to set
-	 */
-	public void setGraphic_priority(int graphic_priority) {
-		this.graphicPriority = graphic_priority;
-	}
-	/**
-	 * @return the imageFilePath
-	 */
-	public String getImageFilePath() {
-		return imageFilePath;
-	}
-	/**
-	 * @param imageFilePath the imageFilePath to set
-	 */
-	protected void setImageFilePath(String imageFilePath) {
-		this.imageFilePath = imageFilePath;
 	}
 
 	/**
@@ -60,78 +39,62 @@ public abstract class Drawable {
 	public Point getCoord() {
 		return this.coord;
 	}
-	
+
 	/**
-	 * @param xCoord
-	 * @param yCoord
+	 * @return the graphic_priority
 	 */
-	public void setCoord(int xCoord, int yCoord) {
-		this.coord.x = xCoord;
-		this.coord.y = yCoord;
+	public int getGraphic_priority() {
+		return graphicPriority;
 	}
-	
+
 	/**
-	 * @param p
+	 * @param gui
+	 * @param rowsNumber
+	 * @return the ImageElement to be drawn by the gui
 	 */
-	public void setCoord(Point p) {
-		this.coord = p;
+	public ImageElement getImage(GUISimulator gui, int rowsNumber) {
+		int size = gui.getPanelHeight() / rowsNumber;
+		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);
 	}
-	
+
+	/**
+	 * @return imageFilePath
+	 */
+	public String getImageFilePath() {
+		return imageFilePath;
+	}
+
 	/**
 	 * @param object
 	 */
 	public void setCoord(Drawable object) {
 		this.coord = object.getCoord();
 	}
-	
+
 	/**
-	 * @return
+	 * @param p
 	 */
-	public int getx() {
-		return this.coord.x;
-	}
-	/**
-	 * @return
-	 */
-	public int gety() {
-		return this.coord.y;
-	}
-	
-	protected void translate(CardinalPoints dir) {
-		switch (dir) {
-		/** North */
-		case NORTH:
-			this.coord.translate(0, -1);
-			break;
-			/** South */
-		case SOUTH:
-			this.coord.translate(0, 1);
-			break;
-			/** East */
-		case EAST:
-			this.coord.translate(1, 0);
-			break;
-			/** West */
-		case WEST:
-			this.coord.translate(-1, 0);
-			break;
-		}
+	public void setCoord(Point p) {
+		this.coord = p;
 	}
 
-	
 	/**
-	 * @param gui
-	 * @param rowsNumber
-	 * @return
+	 * @param graphic_priority
 	 */
-	public ImageElement getImage(GUISimulator gui, int rowsNumber) {
-		int size = gui.getPanelHeight() / rowsNumber;
-		return new ImageElement(coord.x * size, coord.y * size, imageFilePath, size, size, gui);
+	public void setGraphic_priority(int graphic_priority) {
+		this.graphicPriority = graphic_priority;
 	}
+
+	/**
+	 * @param imageFilePath
+	 */
+	protected void setImageFilePath(String imageFilePath) {
+		this.imageFilePath = imageFilePath;
+	}
+
 	@Override
 	public String toString() {
-		return "\nWildFire || filepath: \"" + this.getImageFilePath() +
-				"\" | lin: " + this.gety() +
-				" | col: "+ this.getx() + " ||";
+		return "\nWildFire || filepath: \"" + this.getImageFilePath() + "\" | lin: " + this.coord.getY() + " | col: "
+				+ this.coord.getX() + " ||";
 	}
 }
