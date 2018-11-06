@@ -28,9 +28,9 @@ public class TankupEvent extends DiscreteEvent {
 	 * @param amountOfWater
 	 */
 	public TankupEvent(Robot robot) throws DataFormatException {
-		super(robot.getNext_free_time() + robot.getTankUpTime());
+		super(robot.getNextFreeTime() + robot.getTankUpTime());
 		this.robot = robot;
-		this.robot.setNext_free_time(this.date);
+		this.robot.setNextFreeTime(this.date);
 	}
 
 	/*
@@ -51,7 +51,7 @@ public class TankupEvent extends DiscreteEvent {
 	 */
 	@Override
 	public String toString() {
-		return this.robot + " fills " + robot.getWater_capacity() + "L of water in its tank";
+		return this.robot + " fills " + robot.getWaterCapacity() + "L of water in its tank";
 	}
 
 }

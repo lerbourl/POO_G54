@@ -192,7 +192,7 @@ import poog54.strategies.PathFinder;
 			// get the most isolated fire
 			// and select it if its intensity is > poured amount of water
 			if (closestRobot.getPath().getTraveltime() > currentDistance
-					&& closestRobot.getFire().getIntensity() >= rob.getWater_amount()) {
+					&& closestRobot.getFire().getIntensity() >= rob.getWaterAmount()) {
 				currentDistance = closestRobot.getPath().getTraveltime();
 				mostIsolatedFire = new Target(wf, rob.getPathToPoint(wf.getCoord()));
 			}

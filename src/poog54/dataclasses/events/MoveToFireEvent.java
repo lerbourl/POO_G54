@@ -33,7 +33,7 @@ public class MoveToFireEvent extends MoveEvent {
 					if (robot.getTargetFire().getPath().isEmpty()) {
 						// this robot has reached the fire tile
 						sim.addEvent(new PouringEvent(robot));
-						robot.setNext_free_time(date + robot.getPourTime() + 1);
+						robot.setNextFreeTime(date + robot.getPourTime() + 1);
 					} else {
 						// target not reached, continue along the path...
 						sim.addEvent(new MoveToFireEvent(robot));

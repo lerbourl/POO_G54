@@ -38,10 +38,10 @@ public class PouringEvent extends DiscreteEvent {
 	 * @param fire
 	 */
 	public PouringEvent(Robot rob) throws DataFormatException {
-		super(rob.getNext_free_time() + rob.getPourTime());
+		super(rob.getNextFreeTime() + rob.getPourTime());
 		this.robot = rob;
 		this.fire = rob.getTargetFire().getFire();
-		this.robot.setNext_free_time(this.date);
+		this.robot.setNextFreeTime(this.date);
 	}
 
 	/*
@@ -63,7 +63,7 @@ public class PouringEvent extends DiscreteEvent {
 						sim.clearAllEvents();
 						System.out.println("Bravo ! fin de la simulation.\n duration : " + this.date + "s");
 					} else {
-						if (robot.getWater_level() <= 0) {
+						if (robot.getWaterLevel() <= 0) {
 							// the tank is empty
 							robot.locateClosestWaterTile();
 							sim.addEvent(new MoveToWaterEvent(this.robot));
@@ -71,7 +71,7 @@ public class PouringEvent extends DiscreteEvent {
 							sim.getFiremanMaster().orderRobotToFire(robot, sim);
 					}
 				} else {
-					if (robot.getWater_level() <= 0) {
+					if (robot.getWaterLevel() <= 0) {
 						// the tank is empty
 						robot.locateClosestWaterTile();
 						sim.addEvent(new MoveToWaterEvent(this.robot));
@@ -99,7 +99,7 @@ public class PouringEvent extends DiscreteEvent {
 		if (this.robot.getTargetFire() == null) {
 			return "pouring order on " + fire + " canceled for " + this.robot;
 		} else {
-			return this.robot + " pours " + this.robot.getWater_amount() + "L of water on " + fire;
+			return this.robot + " pours " + this.robot.getWaterAmount() + "L of water on " + fire;
 		}
 	}
 }

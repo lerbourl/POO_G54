@@ -124,13 +124,6 @@ public abstract class Robot extends Drawable {
 	}
 
 	/**
-	 * @return
-	 */
-	public TheMap getMap() {
-		return this.theMap;
-	}
-
-	/**
 	 * search the closest water tile from the actual position
 	 */
 	public void locateClosestWaterTile() {
@@ -156,7 +149,7 @@ public abstract class Robot extends Drawable {
 	/**
 	 * @return the next_free_time
 	 */
-	public int getNext_free_time() {
+	public int getNextFreeTime() {
 		return nextFreeTime;
 	}
 
@@ -194,10 +187,6 @@ public abstract class Robot extends Drawable {
 		return speed;
 	}
 
-	public Tile getTile() {
-		return this.theMap.getTile(this.getCoord().x, this.getCoord().y);
-	}
-
 	/* Return the time to enter a tile of the type, in seconds */
 	public int getCrossingTileTime(Point p) {
 		if(p==null) return 0;
@@ -230,21 +219,21 @@ public abstract class Robot extends Drawable {
 	/**
 	 * @return the amount of water that a robot can pour out
 	 */
-	public int getWater_amount() {
+	public int getWaterAmount() {
 		return waterAmount;
 	}
 
 	/**
 	 * @return the water_capacity
 	 */
-	public int getWater_capacity() {
+	public int getWaterCapacity() {
 		return waterCapacity;
 	}
 
 	/**
 	 * @return the water_level
 	 */
-	public int getWater_level() {
+	public int getWaterLevel() {
 		return waterLevel;
 	}
 
@@ -275,7 +264,7 @@ public abstract class Robot extends Drawable {
 	/**
 	 * @param next_free_time the next_free_time to set
 	 */
-	public void setNext_free_time(int next_free_time) {
+	public void setNextFreeTime(int next_free_time) {
 		this.nextFreeTime = next_free_time;
 	}
 
@@ -297,39 +286,6 @@ public abstract class Robot extends Drawable {
 		} else {
 			this.targetFire = new Target(fire, getPathToPoint(fire.getCoord()));
 		}
-	}
-
-	/** Target water assignment */
-	public void setTargetWater(Point water) {
-		if (water == null) {
-			// reset water tile ref.
-			this.targetWater = null;
-		} else {
-			this.targetWater = new Target(water, getPathToPoint(water));
-		}
-	}
-
-	/**
-	 * set the amount of water that a robot can pour
-	 * 
-	 * @param water_amount
-	 */
-	public void setWater_amount(int water_amount) {
-		this.waterCapacity = water_amount;
-	}
-
-	/**
-	 * @param water_capacity the water_capacity to set
-	 */
-	public void setWater_capacity(int water_capacity) {
-		this.waterCapacity = water_capacity;
-	}
-
-	/**
-	 * @param water_level the water_level to set
-	 */
-	public void setWater_level(int water_level) {
-		this.waterLevel = water_level;
 	}
 
 	/**
