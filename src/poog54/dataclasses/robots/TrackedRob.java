@@ -27,7 +27,10 @@ public class TrackedRob extends Robot {
 
 	/**
 	 * Constructor This constructor sets the speed and the water capacity of a
-	 * drone. It also executes the generic constructor method
+	 * tracked robot. It also executes the generic constructor method
+	 * @param theMap 
+	 * @param xCoord 
+	 * @param yCoord 
 	 */
 
 	public TrackedRob(TheMap theMap, int xCoord, int yCoord) {

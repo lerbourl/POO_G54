@@ -40,6 +40,9 @@ public class FiremanMasterColonel extends FiremanMaster {
 		this.wheeledRobFirePriority = getFirePriorityQueue(rob);
 		rob = new TrackedRob(this.data.getMap(), 0, 0);
 		this.trackedRobFirePriority = getFirePriorityQueue(rob);
+		this.data.getWfList().sort((wf1, wf2) -> {
+			return wf1.getIntensity() > wf2.getIntensity() ? -1 : wf1.getIntensity() < wf2.getIntensity() ? 1 : 0;
+		});
 	}
 	
 	@Override
@@ -63,13 +66,21 @@ public class FiremanMasterColonel extends FiremanMaster {
 				break;
 
 			case "poog54.dataclasses.robots.TrackedRob":
+				if (rob.getWaterLevel()<rob.getWaterCapacity())
+				// pour on the closest fire before tanking up
+				assignedFire=getClosestFire(rob);
+			else
 				// get the fire which is the closest from a water tile
 				assignedFire = getFireClosestFromWater(this.trackedRobFirePriority);
-				break;
-				
+			break;
+			
 			case "poog54.dataclasses.robots.WheeledRob":
-				// get the fire which is the closest from a water tile
-				assignedFire = getFireClosestFromWater(this.wheeledRobFirePriority);
+				if (rob.getWaterLevel()<rob.getWaterCapacity())
+					// pour on the closest fire before tanking up
+					assignedFire=getClosestFire(rob);
+				else
+					// get the fire which is the closest from a water tile
+					assignedFire = getFireClosestFromWater(this.wheeledRobFirePriority);
 				break;
 
 			default:

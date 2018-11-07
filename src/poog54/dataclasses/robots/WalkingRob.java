@@ -25,8 +25,12 @@ import poog54.dataclasses.*;
 public class WalkingRob extends Robot {
 
 	/**
-	 * Constructor This constructor sets the speed and water capacity of a drone. It
+	 * Constructor
+	 * This constructor sets the speed and water capacity of a walking robot. It
 	 * also executes the generic constructor method
+	 * @param theMap 
+	 * @param xCoord 
+	 * @param yCoord 
 	 */
 
 	public WalkingRob(TheMap theMap, int xCoord, int yCoord) {

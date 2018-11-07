@@ -65,8 +65,10 @@ public class Target {
 	 */
 	private WildFire fire;
 	
-	/** Constructor */
-	//for a waterTile
+	/** Constructor 
+	 * @param location 
+	 * @param path
+	 */
 	public Target(Point location, Path path) {
 		this.location = location;
 		this.path = path;

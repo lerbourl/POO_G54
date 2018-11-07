@@ -18,6 +18,7 @@ public class MoveToFireEvent extends MoveEvent {
 	 * Constructor move event : move a robot along its specified target path.
 	 * 
 	 * @param robot
+	 * @throws DataFormatException 
 	 */
 	public MoveToFireEvent(Robot robot) throws DataFormatException {
 		super(robot, robot.getTargetFire().getPath().dequeueFirst());

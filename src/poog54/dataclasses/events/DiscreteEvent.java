@@ -25,6 +25,7 @@ public abstract class DiscreteEvent {
 	 * Generic constructor
 	 * 
 	 * @param date
+	 * @throws DataFormatException 
 	 */
 	public DiscreteEvent(int date) throws DataFormatException {
 		if (date < 0) {
@@ -42,6 +43,7 @@ public abstract class DiscreteEvent {
 
 	/**
 	 * Execute actions associated to an event
+	 * @param sim 
 	 */
 	public abstract void execute(Simulator sim);
 }

@@ -24,6 +24,7 @@ public class TankupEvent extends DiscreteEvent {
 
 	/**
 	 * @param robot
+	 * @throws DataFormatException 
 	 */
 	public TankupEvent(Robot robot) throws DataFormatException {
 		super(robot.getNextFreeTime() + robot.getTankUpTime());

@@ -29,6 +29,7 @@ public abstract class MoveEvent extends DiscreteEvent {
 	 * move event : move a robot to the specified 'destination'. The destination is reached at 'date'.
 	 * @param robot
 	 * @param p
+	 * @throws DataFormatException 
 	 */
 	public MoveEvent(Robot robot, Point p) throws DataFormatException {
 		super(robot.getNextFreeTime() + robot.getCrossingTileTime(robot.getCoord()));

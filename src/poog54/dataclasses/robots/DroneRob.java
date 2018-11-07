@@ -30,6 +30,9 @@ public class DroneRob extends Robot {
 	/**
 	 * Constructor This constructor sets the speed and water capacity of a drone. It
 	 * also executes the generic constructor method
+	 * @param theMap 
+	 * @param xCoord 
+	 * @param yCoord 
 	 */
 
 	public DroneRob(TheMap theMap, int xCoord, int yCoord) {

@@ -95,7 +95,7 @@ public abstract class Robot extends Drawable {
 	}
 
 	/**
-	 * @return
+	 * @return algomap
 	 */
 	public AlgoTile[][] getAlgoMap() {
 
@@ -155,7 +155,7 @@ public abstract class Robot extends Drawable {
 
 	/**
 	 * @param p
-	 * @return
+	 * @return the path from the current location of the robot and the specified destination
 	 */
 	public Path getPathToPoint(Point p) {
 		Path path = pathFinder.Astar(this.getCoord(), p, this.getAlgoMap());
@@ -183,11 +183,17 @@ public abstract class Robot extends Drawable {
 		return tankUpTime;
 	}
 
+	/**
+	 * @return speeds data
+	 */
 	public Speed getSpeed() {
 		return speed;
 	}
 
-	/* Return the time to enter a tile of the type, in seconds */
+	/**
+	 * @param p
+	 * @return the time to enter a tile of the type, in seconds
+	 */
 	public int getCrossingTileTime(Point p) {
 		if(p==null) return 0;
 		TypeField type = this.theMap.getTile(p).getTypeField();
@@ -275,10 +281,13 @@ public abstract class Robot extends Drawable {
 
 	/**
 	 * Speed assignment Abstract cause it depends on the Robot Type
+	 * @param speed 
 	 */
 	public abstract void setSpeed(int speed);
 
-	/** Target fire assignment */
+	/** Target fire assignment 
+	 * @param fire
+	 */
 	public void setTargetFire(WildFire fire) {
 		if (fire == null) {
 			// cancel fire assignment

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import poog54.enums.TypeField;
 import poog54.io.Drawable;
 
 /**
@@ -42,11 +43,18 @@ public class TheMap {
 	}
 
 	private void buildWaterTileList() {
-		Set<Entry<Point, Tile>> tmpSet = this.tileMatrix.entrySet();
+		Tile mapTile;
+		int i,j;
+		
+		// read the water tiles position
 		this.waterTileList = new ArrayList<Point>();
-		Iterator<Entry<Point, Tile>> it = tmpSet.iterator();
-		while (it.hasNext()) {
-			this.waterTileList.add(it.next().getValue().getCoord());
+		for(i=0;i<getNbLines();i++){
+			for(j=0;j<getNbLines();j++){
+				mapTile=getTile(i, j);
+				if(mapTile.getTypeField()==TypeField.EAU){
+					this.waterTileList.add(mapTile.getCoord());
+				}
+			}
 		}
 	}
 

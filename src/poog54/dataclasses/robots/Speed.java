@@ -35,31 +35,31 @@ public class Speed {
 	}
 	
 	/**
-	 * @return
+	 * @return the speed on a water tile
 	 */
 	public int getSpeedWater() {
 		return water;
 	}
 	/**
-	 * @return
+	 * @return the speed on a forest tile
 	 */
 	public int getSpeedForest() {
 		return forest;
 	}
 	/**
-	 * @return
+	 * @return the speed on a rock tile
 	 */
 	public int getSpeedRock	() {
 		return rock;
 	}
 	/**
-	 * @return
+	 * @return the speed on a house tile
 	 */
 	public int getSpeedHouse() {
 		return house;
 	}
 	/**
-	 * @return
+	 * @return the speed on an empty field tile
 	 */
 	public int getSpeedEmptyField() {
 		return emptyField;

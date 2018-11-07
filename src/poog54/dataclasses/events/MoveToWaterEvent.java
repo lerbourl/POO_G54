@@ -17,6 +17,7 @@ public class MoveToWaterEvent extends MoveEvent {
 	 * Constructor
 	 * move event : move a robot along its specified target path.
 	 * @param robot
+	 * @throws DataFormatException 
 	 */
 	public MoveToWaterEvent(Robot robot) throws DataFormatException {
 		super(robot, robot.getTargetWater().getPath().dequeueFirst());
