@@ -45,7 +45,7 @@ Run with:
 			
 Exemple :
 	
-	$ ant -Dmap=carte/mushroomOfHell-20x20.map -Dstrategy=captain -Dspeedup=15 run
+	$ ant -Dmap=cartes/mushroomOfHell-20x20.map -Dstrategy=captain -Dspeedup=15 run
 			
 with strategy one of :
 first_class, sergeant, captain, major, colonel, general.

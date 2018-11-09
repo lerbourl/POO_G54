@@ -34,7 +34,7 @@ public class SolveMapWithStrategy {
 			System.exit(1);
 		}
 		try {
-			GUISimulator gui = new GUISimulator(800, 800, Color.BLACK);
+			GUISimulator gui = new GUISimulator(1920, 1920, Color.BLACK);
 			@SuppressWarnings("unused")
 			Simulator sim = new Simulator(gui, args[0], args[1], Integer.parseInt(args[2]));
 		} catch (FileNotFoundException e) {
