@@ -98,7 +98,7 @@ public class Simulator implements Simulable {
 	 */
 	public void addEvent(DiscreteEvent e) {
 		this.eventQueue.add(e);
-		System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
+		//System.out.println("NEW EVENT ADDED AT t=" + e.getDate() + " : " + e.toString());
 	}
 
 	/**
