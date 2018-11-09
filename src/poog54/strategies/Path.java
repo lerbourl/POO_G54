@@ -24,14 +24,28 @@ public class Path {
 	}
 
 	/**
-	 * @return
+	 * @param e
+	 */
+	public void addFirst(Point e) {
+		this.thePath.addFirst(e);
+	}
+
+	/**
+	 * @return head of the queue
+	 */
+	public Point dequeueFirst() {
+		return this.thePath.pollFirst();
+	}
+
+	/**
+	 * @return thePath, result of A* algorithm
 	 */
 	public Deque<Point> getThepath() {
 		return thePath;
 	}
 
 	/**
-	 * @return
+	 * @return travel time
 	 */
 	public double getTraveltime() {
 		return travelTime;
@@ -45,31 +59,17 @@ public class Path {
 	}
 
 	/**
-	 * @param e
-	 */
-	public void addFirst(Point e) {
-		this.thePath.addFirst(e);
-	}
-
-	/**
-	 * @return
-	 */
-	public Point dequeueFirst() {
-		return this.thePath.pollFirst();
-	}
-
-	/**
-	 * @return
-	 */
-	public Point removeLast() {
-		return this.thePath.pollLast();
-	}
-
-	/**
-	 * @return
+	 * @return true if empty
 	 */
 	public boolean isEmpty() {
 		return this.thePath.isEmpty();
+	}
+
+	/**
+	 * @return tail of the queue
+	 */
+	public Point removeLast() {
+		return this.thePath.pollLast();
 	}
 
 	@Override

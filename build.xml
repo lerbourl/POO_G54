@@ -23,16 +23,37 @@ Please refer to "ant info" or read README.md for how to use instructions -->
 	</target>
 	
 	<target name="info" description="run instructions">
-		<echo>Group 54 presents: The big POO java project !
+		<echo>
+Group 54 presents: The big POO java project !
+			
+Compile with:
+			
+	$ ant compile
+			
 Build with:
+			
 	$ ant jar
-Clean the builds with:
+			
+Clean the bin with:
+			
 	$ ant clean
+			
 Run with:
+			
 	$ ant -Dmap=yourMapPath.map -Dstrategy=strategy -Dspeedup=speedupfactor run
+			
+			
+Exemple :
+	
+	$ ant -Dmap=carte/mushroomOfHell-20x20.map -Dstrategy=captain -Dspeedup=15 run
+			
 with strategy one of :
-first_class, sergeant, captain, major, colonel, general
-See the README for more details...</echo>
+first_class, sergeant, captain, major, colonel, general.
+			
+advice : Run will compile and build on it's own.
+			
+See the README for more details...
+</echo>
 	</target>
 
 	<target name="compile" description="compiles the tasks">
