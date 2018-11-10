@@ -1,9 +1,9 @@
 /**
  * Strategy Major:
- * -> a Walking robot is always assigned to its closest fire (Sergeant strategy)
+ * -> a Walking robot is always assigned to its closest fire
  * -> a Drone robot is always assigned to its farthest fire
  * -> the other robots are assigned to their closest and unassigned fire if there are any
- * or the fires with the fewest affected robots (Captain strategy)
+ * or the fires with the fewest affected robots
  */
 
 package poog54.strategies.masters;
@@ -34,21 +34,21 @@ public class FiremanMasterMajor extends FiremanMaster {
 		if (!this.data.getWfList().isEmpty()) {
 			// there are remaining fires
 			
-			// strategy depends on the robot type
+			// strategy depends on the robot type:
 			switch (rob.getClass().getName()) {
 			
 			case "poog54.dataclasses.robots.WalkingRob":
-				// get closest fire
+				// walking robots are assigned to their closest fire
 				assignedFire = getClosestFire(rob);
 				break;
 				
 			case "poog54.dataclasses.robots.DroneRob":
-				// get farthest fire
+				// drone robots are assigned to their farthest fire
 				assignedFire = getFarthestFire(rob);
 				break;
 				
 			default:
-				// get the fire with the fewest assigned robots
+				// the other robots are assigned to the fire with the fewest firefighters affected
 				assignedFire = getFireWithFewestRob(rob);
 			}
 			

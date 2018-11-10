@@ -1,33 +1,33 @@
 # BENCHMARK STRATEGIES
 ## MAP carteSujet.map
 Strategy			Duration
--first_class		24416
--sergeant			23934
--captain			21938
--major				19234
--colonel			15632
+-first_class		24368
+-sergeant			23356
+-captain			21607
+-major				18809
+-colonel			15209
 
 
 ## MAP desertOfDeath-20x20.map
 Strategy			Duration
--first_class		17660
--sergeant			17552
--captain			17318
--major				17617
--colonel			16331
+-first_class		11497
+-sergeant			11336
+-captain			11446
+-major				11518
+-colonel			11433
 
 ## MAP mushroomOfHell-20x20.map
 Strategy			Duration
--first_class		20198
--sergeant			16152
--captain			12143
--major				15884
--colonel			11554
+-first_class		9778
+-sergeant			11976
+-captain			9747
+-major				11225
+-colonel			8349
 
 ## MAP spiralOfMadness-50x50.map
 Strategy			Duration
--first_class		54124
--sergeant			52687
--captain			51644
--major				53199
--colonel			51720
+-first_class		32212
+-sergeant			32101
+-captain			31542
+-major				32008
+-colonel			31516

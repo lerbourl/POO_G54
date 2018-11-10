@@ -61,10 +61,12 @@ import poog54.strategies.PathFinder;
 		WildFire wf = wfListIt.next();
 		Target target, closestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 
+		// go through the fire list and select the fire closest to the current position of this robot
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
 			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 			if (target.getPath().getTraveltime() < closestTarget.getPath().getTraveltime()) {
+				// this fire is closer to the robot
 				closestTarget = target;
 			}
 		}
@@ -92,10 +94,12 @@ import poog54.strategies.PathFinder;
 		WildFire wf = wfListIt.next();
 		Target target, farthestTarget = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 
+		// go through the fire list and select the fire farthest to the current position of this robot
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
 			target = new Target(wf, pathFinder.Astar(p, wf.getCoord(), robot.getAlgoMap()));
 			if (target.getPath().getTraveltime() > farthestTarget.getPath().getTraveltime()) {
+				// this fire is farther from the robot
 				farthestTarget = target;
 			}
 		}
@@ -167,10 +171,12 @@ import poog54.strategies.PathFinder;
 		Target mostIsolatedFire = null;
 		ListIterator<Robot> robListIt;
 		ListIterator<WildFire> wfListIt = this.data.getWfList().listIterator();
+		
+		// skips small fires if remains fires with an intensity > robot water capacity
 		boolean skipSmallFires = this.data.getWfList().get(0).getIntensity()>robot.getWaterCapacity();
 		
 		// get the closest robot for each fire
-		// and select the fire for which the distance to the closest robot is max
+		// and select the fire for which the distance (cost) to the closest robot is max
 		while (wfListIt.hasNext()) {
 			wf = wfListIt.next();
 			closestDistance = Double.MAX_VALUE;
@@ -198,13 +204,6 @@ import poog54.strategies.PathFinder;
 				mostIsolatedFire = new Target(wf, robot.getPathToPoint(wf.getCoord()));
 			}
 		}
-		
-		if (mostIsolatedFire == null) {
-			// there are only small fires remaining
-			// select the closest
-			mostIsolatedFire = getClosestFire(robot);
-		}
-		
 		return mostIsolatedFire;
 	}
 
@@ -218,8 +217,12 @@ import poog54.strategies.PathFinder;
 		while (selectedFire == null) {
 			currentFire = wfPriorityQueue.peek();
 			if (this.data.getWfList().contains(currentFire.getFire())) {
+				// this fire is still glowing
+				// -> select it !
 				selectedFire = currentFire;
 			} else {
+				// this fire is already extinguished
+				// -> remove it from the priority queue
 				wfPriorityQueue.remove();
 			}
 		}
@@ -238,6 +241,9 @@ import poog54.strategies.PathFinder;
 		ListIterator<Point> waterListIt;
 		ListIterator<WildFire> wfListIt = this.data.getWfList().listIterator();
 		PathFinder pathFinder = new PathFinder(this.data.getMap().getNbLines(), this.data.getMap().getNbColums());
+		
+		// fires which are sorted according to their proximity to water tiles
+		// the closest ones have the highest priority and are at the top of the list
 		PriorityQueue<Target> robPriorityFires = new PriorityQueue<Target>(this.data.getWfList().size(), (wf1, wf2) -> {
 			return wf1.getPath().getTraveltime() < wf2.getPath().getTraveltime() ? -1
 					: wf1.getPath().getTraveltime() > wf2.getPath().getTraveltime() ? 1 : 0;
@@ -252,6 +258,7 @@ import poog54.strategies.PathFinder;
 				waterTile = waterListIt.next();
 				target = new Target(wf, pathFinder.Astar(waterTile, wf.getCoord(), robot.getAlgoMap()));
 				if (target.getPath().getTraveltime() < distance) {
+					// this water tile is closer...
 					closestWaterTarget = target;
 					distance = closestWaterTarget.getPath().getTraveltime();
 				}

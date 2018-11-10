@@ -21,6 +21,8 @@ import poog54.io.Simulator;
  */
 public class FiremanMasterColonel extends FiremanMaster {
 	// fires are sorted by proximity with water tiles
+	// the distance cost depends on the robot type
+	// so wheeled robots and tracked robots have a different priority queue
 	private PriorityQueue<Target> wheeledRobFirePriority;
 	private PriorityQueue<Target> trackedRobFirePriority;
 	
@@ -35,6 +37,9 @@ public class FiremanMasterColonel extends FiremanMaster {
 	public void setData(SimulationData data) {
 		super.setData(data);
 		
+		// fires are sorted by proximity with water tiles
+		// it does not depend on the current position of the robots
+		// so the priority queues are initialized once at instantiation time
 		Robot rob;
 		rob = new WheeledRob(this.data.getMap(), 0, 0);
 		this.wheeledRobFirePriority = getFirePriorityQueue(rob);
@@ -56,30 +61,34 @@ public class FiremanMasterColonel extends FiremanMaster {
 			switch (rob.getClass().getName()) {
 			
 			case "poog54.dataclasses.robots.WalkingRob":
-				// get closest fire
+				// walking robots are assigned to their closest fire
 				assignedFire = getClosestFire(rob);
 				break;
 				
 			case "poog54.dataclasses.robots.DroneRob":
-				// get farthest fire
+				// drone robots are assigned to fires the farthest from other robots
 				assignedFire = getMostIsolatedFire(rob);
 				break;
 
 			case "poog54.dataclasses.robots.TrackedRob":
-				if (rob.getWaterLevel()<rob.getWaterCapacity())
-				// pour on the closest fire before tanking up
-				assignedFire=getClosestFire(rob);
+				if (rob.getWaterLevel() < rob.getWaterCapacity())
+					// pour on the closest fire before tanking up
+					// this event can occur when the assigned fire is extinguished by another robot
+					assignedFire = getClosestFire(rob);
 			else
 				// get the fire which is the closest from a water tile
+				// /!\ the priority queue depends on the robot type /!\
 				assignedFire = getFireClosestFromWater(this.trackedRobFirePriority);
 			break;
 			
 			case "poog54.dataclasses.robots.WheeledRob":
 				if (rob.getWaterLevel()<rob.getWaterCapacity())
 					// pour on the closest fire before tanking up
+					// this event can occur when the assigned fire is extinguished by another robot
 					assignedFire=getClosestFire(rob);
 				else
 					// get the fire which is the closest from a water tile
+					// /!\ the priority queue depends on the robot type /!\
 					assignedFire = getFireClosestFromWater(this.wheeledRobFirePriority);
 				break;
 

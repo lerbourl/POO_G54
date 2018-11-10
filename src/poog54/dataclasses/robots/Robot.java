@@ -135,7 +135,7 @@ public abstract class Robot extends Drawable {
 		waterTileListIt = this.theMap.getWaterTileListIt();
 		waterPoint = waterTileListIt.next();
 		this.targetWater = new Target(waterPoint, getPathToPoint(waterPoint));
-		// enumerates water tiles and selects the closest
+		// enumerates water tiles and selects the closest one
 		while (waterTileListIt.hasNext()) {
 			waterPoint = waterTileListIt.next();
 			mapTarget = new Target(waterPoint, getPathToPoint(waterPoint));
